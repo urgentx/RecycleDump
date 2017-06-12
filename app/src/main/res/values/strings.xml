@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">RecycleDump</string>
+    <string name="title_activity_main">RecycleDump</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_recycle_info">Recycle Info Activity</string>
+    <string name="what_s_on_the_agenda_today">What\'s on the agenda today?</string>
+    <string name="title_activity_locations">Disposal Locations</string>
+    <string name="item_name">Item name</string>
+    <string name="save_item">Save item</string>
+</resources>

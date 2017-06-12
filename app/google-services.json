@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "758826616739",
+    "firebase_url": "https://onyx-cosmos-170110.firebaseio.com",
+    "project_id": "onyx-cosmos-170110",
+    "storage_bucket": "onyx-cosmos-170110.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:758826616739:android:8bed3af7fe50bc2e",
+        "android_client_info": {
+          "package_name": "com.urgentx.recycledump"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "758826616739-llpiqu24r5tabpapqrdiifp0or6stg5p.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.urgentx.recycledump",
+            "certificate_hash": "5eba32fc03d60b618740e7713e01fcd6ed265f52"
+          }
+        },
+        {
+          "client_id": "758826616739-vt7dh4p2s58180lhbu41vuc9382j10s5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBE5svfVe7gIyHXQKIkd8JtzC5XuFnzljM"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "758826616739-vt7dh4p2s58180lhbu41vuc9382j10s5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

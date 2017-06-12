@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
+
+    <Button
+        android:id="@+id/mainRecycleBtn"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.5"
+        android:backgroundTint="@color/colorPrimary"
+        android:drawableEnd="@drawable/ic_recycle"
+        android:drawableRight="@drawable/ic_recycle"
+        android:text="Recycle"
+        android:textColor="@color/colorBtnTintLight" />
+
+    <Button
+        android:id="@+id/mainDumpBtn"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.5"
+        android:backgroundTint="@color/colorAccent"
+        android:drawableLeft="@drawable/ic_dump"
+        android:drawableStart="@drawable/ic_dump"
+        android:text="Dump"
+        android:textColor="@color/colorBtnTintLight" />
+
+
+</LinearLayout>
