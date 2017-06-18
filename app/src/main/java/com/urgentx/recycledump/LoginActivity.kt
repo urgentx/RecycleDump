@@ -3,57 +3,82 @@ package com.urgentx.recycledump
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import com.google.android.gms.auth.api.Auth
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.android.gms.auth.api.signin.GoogleSignInResult
-import com.google.android.gms.common.ConnectionResult
-import com.google.android.gms.common.api.GoogleApiClient
+import android.widget.Toast
+import android.widget.Toast.LENGTH_LONG
 import kotlinx.android.synthetic.main.activity_login.*
+import com.google.firebase.auth.FirebaseAuth
+import com.firebase.ui.auth.AuthUI
+import java.util.*
+import com.firebase.ui.auth.ErrorCodes
+import com.firebase.ui.auth.ResultCodes
+import com.firebase.ui.auth.IdpResponse
 
-class LoginActivity : AppCompatActivity(), GoogleApiClient.OnConnectionFailedListener {
-    val RC_SIGN_IN = 12345
-    override fun onConnectionFailed(p0: ConnectionResult) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+
+
+
+class LoginActivity : AppCompatActivity() {
+
+    private val RC_SIGN_IN = 123
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-        var gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken("758826616739-vt7dh4p2s58180lhbu41vuc9382j10s5.apps.googleusercontent.com")
-                .requestEmail()
-                .build()
-
-        var mGoogleApiClient = GoogleApiClient.Builder(this)
-                .enableAutoManage(this /* FragmentActivity */, this /* OnConnectionFailedListener */)
-                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
-                .build()
-
-        sign_in_button.setOnClickListener({
-            val signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient)
-            startActivityForResult(signInIntent, RC_SIGN_IN)
+        loginBtn.setOnClickListener({
+            val auth = FirebaseAuth.getInstance()
+            if (auth.currentUser != null) {
+                // already signed in
+                startActivity(Intent(this, MainActivity::class.java))
+            } else {
+                // not signed in, obviously!
+                signIn()
+            }
         })
     }
 
-    public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
-        if (requestCode == RC_SIGN_IN) {
-            val result = Auth.GoogleSignInApi.getSignInResultFromIntent(data)
-            handleSignInResult(result)
-        }
+    private fun signIn() {
+        startActivityForResult(
+                AuthUI.getInstance()
+                        .createSignInIntentBuilder()
+                        .setAvailableProviders(
+                                Arrays.asList(AuthUI.IdpConfig.Builder(AuthUI.EMAIL_PROVIDER).build(),
+                                        AuthUI.IdpConfig.Builder(AuthUI.GOOGLE_PROVIDER).build(),
+                                        AuthUI.IdpConfig.Builder(AuthUI.FACEBOOK_PROVIDER).build()))
+                        .setIsSmartLockEnabled(!BuildConfig.DEBUG)
+                        .build(),
+                RC_SIGN_IN)
     }
 
-    private fun handleSignInResult(result: GoogleSignInResult) {
-        if (result.isSuccess) {
-            // Signed in successfully, show authenticated UI.
-            //var acct = result.signInAccount;
-            startActivity(Intent(this, MainActivity::class.java))
-            finish()
-        } else {
-            // Signed out, show unauthenticated UI.
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
+        super.onActivityResult(requestCode, resultCode, data)
+        // RC_SIGN_IN is the request code you passed into startActivityForResult(...) when starting the sign in flow.
+        if (requestCode == RC_SIGN_IN) {
+            val response = IdpResponse.fromResultIntent(data)
+
+            // Successfully signed in
+            if (resultCode == ResultCodes.OK) {
+                startActivity(Intent(this, MainActivity::class.java))
+                finish()
+                return
+            } else {
+                // Sign in failed
+                if (response == null) {
+                    // User pressed back button
+                    Toast.makeText(this, R.string.sign_in_cancelled, LENGTH_LONG).show()
+                    return
+                }
+
+                if (response.errorCode == ErrorCodes.NO_NETWORK) {
+                    Toast.makeText(this, R.string.no_internet_connection, LENGTH_LONG).show()
+                    return
+                }
+
+                if (response.errorCode == ErrorCodes.UNKNOWN_ERROR) {
+                    Toast.makeText(this, R.string.unknown_error, LENGTH_LONG).show()
+                    return
+                }
+            }
+            Toast.makeText(this, R.string.unknown_error, LENGTH_LONG).show()
         }
     }
 }

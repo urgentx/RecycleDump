@@ -14,6 +14,7 @@ import android.transition.TransitionManager
 import android.view.Menu
 import android.view.MenuItem
 import android.view.ViewGroup
+import com.firebase.ui.auth.AuthUI
 import com.google.firebase.database.FirebaseDatabase
 import com.urgentx.recycledump.util.Item
 import kotlinx.android.synthetic.main.activity_main.*
@@ -105,6 +106,17 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             }
             R.id.nav_send -> {
 
+            }
+
+            R.id.nav_sign_out -> {
+                AuthUI.getInstance()
+                        .signOut(this)
+                        .addOnCompleteListener({
+                            // user is now signed out
+                            startActivity(Intent(this, LoginActivity::class.java))
+                            finish()
+                        })
+                return true
             }
         }
 
