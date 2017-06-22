@@ -1,43 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="@dimen/stdMargin1"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.urgentx.recycledump.RecycleInfoActivity"
     tools:showIn="@layout/activity_recycle_info">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="@dimen/stdMargin1"
+        android:text="@string/please_describe_your_item" />
 
     <EditText
         android:id="@+id/recycleInfoName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
         android:ems="10"
-        android:inputType="textPersonName"
         android:hint="@string/item_name"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        android:inputType="textPersonName"
+        android:layout_marginBottom="@dimen/stdMargin1"/>
+
+    <android.support.v7.widget.AppCompatSpinner
+        android:id="@+id/recycleInfoCategory"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/stdMargin1"/>
+
+    <EditText
+        android:id="@+id/recycleInfoWeight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="@string/weight_kg"
+        android:inputType="number"
+        android:layout_marginBottom="@dimen/stdMargin1"/>
+
+    <EditText
+        android:id="@+id/recycleInfoVolume"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="@string/volume_m_cubed"
+        android:inputType="numberDecimal"
+        android:layout_marginBottom="@dimen/stdMargin1"/>
+
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"/>
 
     <Button
         android:id="@+id/recycleInfoSaveBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
         android:text="@string/save_item"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
-</android.support.constraint.ConstraintLayout>
+        android:layout_gravity="right"
+        />
+
+
+</LinearLayout>

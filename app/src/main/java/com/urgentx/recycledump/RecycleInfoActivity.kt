@@ -1,11 +1,8 @@
 package com.urgentx.recycledump
 
 import android.os.Bundle
-import android.support.design.widget.FloatingActionButton
-import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
-import android.widget.EditText
 import android.widget.Toast
 import android.widget.Toast.LENGTH_LONG
 import com.urgentx.recycledump.presenter.RecycleInfoPresenter
@@ -16,7 +13,7 @@ import kotlinx.android.synthetic.main.content_recycle_info.*
 class RecycleInfoActivity : AppCompatActivity(), IRecycleInfoView {
 
     private var presenter: RecycleInfoPresenter? = RecycleInfoPresenter()
-    private var itemName: EditText? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,13 +21,10 @@ class RecycleInfoActivity : AppCompatActivity(), IRecycleInfoView {
         val toolbar = findViewById(R.id.toolbar) as Toolbar
         setSupportActionBar(toolbar)
 
-        itemName = recycleInfoName
-
         recycleInfoSaveBtn.setOnClickListener({
-            itemName?.let {
-                var item = Item(it.text.toString(), 0)
+                var item = Item(recycleInfoName.text.toString(), 0, recycleInfoCategory.selectedItemPosition,
+                       Integer.parseInt(recycleInfoWeight.text.toString()), recycleInfoVolume.text.toString().toDouble())
                 presenter!!.saveItem(item)
-            }
         })
 
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
