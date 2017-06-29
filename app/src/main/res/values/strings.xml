@@ -34,4 +34,12 @@
     <string name="recycle_info_category12">Chemicals</string>
     <string name="weight_kg">Weight (kg)</string>
     <string name="volume_m_cubed"><![CDATA[Volume (m<sup>3</sup>)]]></string>
+    <string name="my_items">My items</string>
+    <string name="gallery">Gallery</string>
+    <string name="slideshow">Slideshow</string>
+    <string name="tools">Tools</string>
+    <string name="communicate">Communicate</string>
+    <string name="share">Share</string>
+    <string name="send">Send</string>
+    <string name="sign_out">Sign out</string>
 </resources>
