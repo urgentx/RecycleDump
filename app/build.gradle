@@ -5,7 +5,7 @@ apply plugin: 'kotlin-android-extensions'
 
 android {
     compileSdkVersion 25
-    buildToolsVersion "25.0.0"
+    buildToolsVersion "25.0.2"
     defaultConfig {
         applicationId "com.urgentx.recycledump"
         minSdkVersion 16
@@ -33,6 +33,7 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.github.siyamed:android-shape-imageview:0.9.3@aar'
+    compile 'com.github.traex.expandablelayout:library:1.2.2'
     compile 'com.android.support:design:25.4.0'
     compile 'com.firebaseui:firebase-ui-auth:2.0.1'
     compile 'com.facebook.android:facebook-android-sdk:4.23.0'
@@ -41,6 +42,8 @@ dependencies {
     implementation 'com.android.support:appcompat-v7:25.4.0'
     implementation 'com.google.firebase:firebase-database:11.0.1'
     compile 'com.google.android.gms:play-services-auth:11.0.1'
+    implementation 'com.android.support:support-v4:25.4.0'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
 }
 
 apply plugin: 'com.google.gms.google-services'

@@ -8,4 +8,6 @@
     <color name="fbBlue">#3b5998</color>
 
     <color name="fontColorLight">#FFFFFF</color>
+
+    <color name="bgColorLight">#FFFFFF</color>
 </resources>

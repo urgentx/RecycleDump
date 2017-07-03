@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.support.design.widget.NavigationView
+import android.support.v4.app.Fragment
 import android.support.v4.view.GravityCompat
 import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.ActionBarDrawerToggle
@@ -11,18 +12,18 @@ import android.support.v7.app.AppCompatActivity
 import android.transition.Fade
 import android.transition.Scene
 import android.transition.TransitionManager
+import android.view.Gravity
 import android.view.Menu
 import android.view.MenuItem
 import android.view.ViewGroup
 import com.firebase.ui.auth.AuthUI
-import com.google.firebase.database.FirebaseDatabase
-import com.urgentx.recycledump.util.Item
+import com.urgentx.recycledump.view.MyItemsFragment
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.activity_main.view.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.content_main.*
 import kotlinx.android.synthetic.main.main_scene1.*
 import kotlinx.android.synthetic.main.main_scene2.*
+
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
@@ -89,8 +90,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         // Handle navigation view item clicks here.
         when (item.itemId) {
-            R.id.nav_camera -> {
-                // Handle the camera action
+            R.id.nav_items -> {
+                handleClick(1)
             }
             R.id.nav_gallery -> {
 
@@ -123,5 +124,31 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val drawer = findViewById(R.id.drawer_layout) as DrawerLayout
         drawer.closeDrawer(GravityCompat.START)
         return true
+    }
+
+    fun handleClick(clickType: Int) {
+
+        // Handle navigation view item clicks here.
+        if (clickType != 0) {
+            var fragment: Fragment? = null
+            var fragmentClass: Class<*>? = null
+            if (clickType == 1) {
+                fragmentClass = MyItemsFragment::class.java
+
+            } else if (clickType == 2) {
+
+            }
+
+            try {
+                fragment = fragmentClass!!.newInstance() as Fragment
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+
+            val fragmentManager = supportFragmentManager
+            fragmentManager.beginTransaction().replace(R.id.mainContainerBelowToolbar, fragment).commit()
+
+        }
+        drawer_layout.closeDrawer(Gravity.LEFT, true)
     }
 }
