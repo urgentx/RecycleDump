@@ -1,4 +1,4 @@
-package com.urgentx.recycledump
+package com.urgentx.recycledump.view
 
 import android.content.Intent
 import android.os.Build
@@ -17,7 +17,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.ViewGroup
 import com.firebase.ui.auth.AuthUI
-import com.urgentx.recycledump.view.MyItemsFragment
+import com.urgentx.recycledump.R
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.content_main.*

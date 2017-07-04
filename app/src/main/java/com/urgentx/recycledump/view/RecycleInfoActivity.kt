@@ -1,10 +1,11 @@
-package com.urgentx.recycledump
+package com.urgentx.recycledump.view
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.widget.Toast
 import android.widget.Toast.LENGTH_LONG
+import com.urgentx.recycledump.R
 import com.urgentx.recycledump.presenter.RecycleInfoPresenter
 import com.urgentx.recycledump.util.Item
 import com.urgentx.recycledump.view.IView.IRecycleInfoView
@@ -22,9 +23,13 @@ class RecycleInfoActivity : AppCompatActivity(), IRecycleInfoView {
         setSupportActionBar(toolbar)
 
         recycleInfoSaveBtn.setOnClickListener({
-                var item = Item(recycleInfoName.text.toString(), 0, recycleInfoCategory.selectedItemPosition,
-                       Integer.parseInt(recycleInfoWeight.text.toString()), recycleInfoVolume.text.toString().toDouble())
-                presenter!!.saveItem(item)
+            var item = Item()
+            item.name = recycleInfoName.text.toString()
+            item.type = 0
+            item.category = recycleInfoCategory.selectedItemPosition
+            item.weight = Integer.parseInt(recycleInfoWeight.text.toString())
+            item.volume = recycleInfoVolume.text.toString().toDouble()
+            presenter!!.saveItem(item)
         })
 
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
@@ -42,7 +47,7 @@ class RecycleInfoActivity : AppCompatActivity(), IRecycleInfoView {
 
     override fun onDestroy() {
         super.onDestroy()
-        if(isFinishing){
+        if (isFinishing) {
             presenter = null
         }
     }

@@ -5,10 +5,12 @@
     android:background="@color/bgColorLight"
     tools:context="com.urgentx.recycledump.view.MyItemsFragment">
 
-    <com.andexert.expandablelayout.library.ExpandableLayoutListView
-        android:id="@+id/myItemsLv"
+    <ListView
+        android:id="@+id/myItemsList"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        />
+        android:layout_height="match_parent"
+        android:scrollbars="vertical"/>
+
+
 
 </FrameLayout>

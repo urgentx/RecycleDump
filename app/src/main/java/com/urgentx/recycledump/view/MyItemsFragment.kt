@@ -7,11 +7,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
-
 import com.urgentx.recycledump.R
+import com.urgentx.recycledump.presenter.MyItemsPresenter
+import com.urgentx.recycledump.util.Item
+import com.urgentx.recycledump.view.IView.IMyItemsView
 import kotlinx.android.synthetic.main.fragment_my_items.*
 
-class MyItemsFragment : Fragment() {
+
+class MyItemsFragment : Fragment(), IMyItemsView{
+
+
+    private var presenter: MyItemsPresenter? = MyItemsPresenter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,22 +30,41 @@ class MyItemsFragment : Fragment() {
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         val view = inflater!!.inflate(R.layout.fragment_my_items, container, false)
-
-
-
         return view
     }
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        presenter?.getItems()
+
+    }
+
+    override fun onResume() {
+        super.onResume()
+        presenter?.onViewAttached(this)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        presenter?.onViewDetached()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        presenter = null
+    }
+
+    override fun itemsRetrieved(items: ArrayList<Item>) {
         val values = ArrayList<String>()
-        values.add("Old rag")
-        values.add("Nissan Sentra")
-        values.add("Big exercise ball")
+        items.mapTo(values) { it.name }
 
-        myItemsLv.adapter = ArrayAdapter(activity, R.layout.my_items_item, values)
+        myItemsList.adapter = (ArrayAdapter(activity, R.layout.my_items_item, values))
 
+    }
+
+    override fun errorOccurred() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     companion object {

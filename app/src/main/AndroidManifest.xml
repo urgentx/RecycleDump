@@ -19,17 +19,17 @@
         android:theme="@style/AppTheme"
         tools:replace="android:icon">
         <activity
-            android:name=".MainActivity"
+            android:name=".view.MainActivity"
             android:label="@string/title_activity_main"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".RecycleInfoActivity"
+            android:name=".view.RecycleInfoActivity"
             android:label="@string/title_activity_recycle_info"
-            android:parentActivityName=".MainActivity"
+            android:parentActivityName=".view.MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.urgentx.recycledump.MainActivity" />
+                android:value="com.urgentx.recycledump.view.MainActivity" />
         </activity>
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
@@ -44,13 +44,13 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name=".LocationsActivity"
+            android:name=".view.LocationsActivity"
             android:label="@string/title_activity_locations">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.urgentx.recycledump.MainActivity" />
+                android:value="com.urgentx.recycledump.view.MainActivity" />
         </activity>
-        <activity android:name=".LoginActivity">
+        <activity android:name=".view.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

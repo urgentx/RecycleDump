@@ -1,4 +1,4 @@
-package com.urgentx.recycledump
+package com.urgentx.recycledump.view
 
 import android.content.Intent
 import android.os.Bundle
@@ -12,8 +12,8 @@ import java.util.*
 import com.firebase.ui.auth.ErrorCodes
 import com.firebase.ui.auth.ResultCodes
 import com.firebase.ui.auth.IdpResponse
-
-
+import com.urgentx.recycledump.BuildConfig
+import com.urgentx.recycledump.R
 
 
 class LoginActivity : AppCompatActivity() {
