@@ -3,6 +3,10 @@ package com.urgentx.recycledump.view
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v7.widget.GridLayoutManager
+import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
+import android.support.v7.widget.RecyclerView.*
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,11 +14,12 @@ import android.widget.ArrayAdapter
 import com.urgentx.recycledump.R
 import com.urgentx.recycledump.presenter.MyItemsPresenter
 import com.urgentx.recycledump.util.Item
+import com.urgentx.recycledump.util.adapter.MyItemsAdapter
 import com.urgentx.recycledump.view.IView.IMyItemsView
 import kotlinx.android.synthetic.main.fragment_my_items.*
 
 
-class MyItemsFragment : Fragment(), IMyItemsView{
+class MyItemsFragment : Fragment(), IMyItemsView {
 
 
     private var presenter: MyItemsPresenter? = MyItemsPresenter()
@@ -56,11 +61,10 @@ class MyItemsFragment : Fragment(), IMyItemsView{
     }
 
     override fun itemsRetrieved(items: ArrayList<Item>) {
-        val values = ArrayList<String>()
-        items.mapTo(values) { it.name }
-
-        myItemsList.adapter = (ArrayAdapter(activity, R.layout.my_items_item, values))
-
+        myItemsList.setHasFixedSize(true)
+        var adapter = MyItemsAdapter(activity, items, R.layout.my_items_item)
+        myItemsList.adapter = adapter
+        myItemsList.layoutManager = LinearLayoutManager(activity, VERTICAL, false)
     }
 
     override fun errorOccurred() {

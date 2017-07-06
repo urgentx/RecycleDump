@@ -59,7 +59,6 @@ class MyItemsApiInteractor {
                         i++
                     }
                 }
-
                 override fun onCancelled(databaseError: DatabaseError) {
 
 
@@ -67,6 +66,5 @@ class MyItemsApiInteractor {
             }
             itemsReference.child(itemName).addListenerForSingleValueEvent(itemListener)
         }
-
     }
 }

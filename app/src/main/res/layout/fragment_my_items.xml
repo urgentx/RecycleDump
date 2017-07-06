@@ -5,7 +5,7 @@
     android:background="@color/bgColorLight"
     tools:context="com.urgentx.recycledump.view.MyItemsFragment">
 
-    <ListView
+    <android.support.v7.widget.RecyclerView
         android:id="@+id/myItemsList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
