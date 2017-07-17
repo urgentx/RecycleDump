@@ -40,7 +40,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         mainDisposeBtn.setOnClickListener({ handleDisposeBtnClick() })
 
-        mainReportBtn.setOnClickListener({ startActivity(Intent(this, LocationsActivity::class.java)) })
+        mainReportBtn.setOnClickListener({ startActivity(Intent(this, PlacesActivity::class.java)) })
 
         nav_view.setNavigationItemSelectedListener(this)
     }
@@ -149,6 +149,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             fragmentManager.beginTransaction().replace(R.id.mainContainerBelowToolbar, fragment).commit()
 
         }
-        drawer_layout.closeDrawer(Gravity.LEFT, true)
+        drawer_layout.closeDrawer(Gravity.START, true)
     }
 }

@@ -44,7 +44,7 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name=".view.LocationsActivity"
+            android:name=".view.PlacesActivity"
             android:label="@string/title_activity_locations">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

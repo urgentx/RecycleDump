@@ -2,6 +2,7 @@ package com.urgentx.recycledump.view
 
 import android.support.v4.app.FragmentActivity
 import android.os.Bundle
+import android.widget.Toast
 
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -10,10 +11,14 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.urgentx.recycledump.R
+import com.urgentx.recycledump.presenter.PlacesPresenter
+import com.urgentx.recycledump.util.Place
+import com.urgentx.recycledump.view.IView.IPlacesView
 
-class LocationsActivity : FragmentActivity(), OnMapReadyCallback {
+class PlacesActivity : FragmentActivity(), OnMapReadyCallback, IPlacesView {
 
     private var mMap: GoogleMap? = null
+    private var presenter: PlacesPresenter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,6 +27,20 @@ class LocationsActivity : FragmentActivity(), OnMapReadyCallback {
         val mapFragment = supportFragmentManager
                 .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
+
+        if(presenter == null){
+            presenter = PlacesPresenter()
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        presenter?.onViewAttached(this)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        presenter?.onViewDetached()
     }
 
 
@@ -38,8 +57,21 @@ class LocationsActivity : FragmentActivity(), OnMapReadyCallback {
         mMap = googleMap
 
         // Add a marker in Sydney and move the camera
-        val sydney = LatLng(-34.00, 151.00)
+        val sydney = LatLng(-36.8823072, 174.71699050000007)
         mMap!!.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
         mMap!!.moveCamera(CameraUpdateFactory.newLatLng(sydney))
+
+        presenter?.savePlace(Place("Z Castle", 1, 2, sydney.latitude, sydney.longitude))
+    }
+
+    override fun placesRetrieved() {
+
+    }
+
+    override fun placeSaved() {
+        Toast.makeText(this, "Place saved.", Toast.LENGTH_LONG).show()
+    }
+
+    override fun errorOccurred() {
     }
 }
