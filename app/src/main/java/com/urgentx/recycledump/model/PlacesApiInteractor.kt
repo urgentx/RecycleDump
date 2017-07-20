@@ -18,7 +18,7 @@ class PlacesApiInteractor {
         val placeLocationsRef = database.getReference("placelocations")
         val geoFire = GeoFire(placeLocationsRef)
 
-        geoFire.setLocation("castle-z", GeoLocation(place.lat, place.long),
+        geoFire.setLocation(place.name, GeoLocation(place.lat, place.long),
                 { key, error ->
                     if (error != null) {
                         callback.onBinaryError()

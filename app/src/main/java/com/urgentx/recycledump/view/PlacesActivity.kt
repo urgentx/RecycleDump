@@ -1,34 +1,65 @@
 package com.urgentx.recycledump.view
 
-import android.support.v4.app.FragmentActivity
+import android.content.pm.PackageManager
+import android.location.Location
 import android.os.Bundle
+import android.support.v4.app.ActivityCompat
+import android.support.v4.app.FragmentActivity
+import android.support.v4.content.ContextCompat
+import android.util.Log
+import android.view.MenuItem
 import android.widget.Toast
-
+import com.google.android.gms.common.ConnectionResult
+import com.google.android.gms.common.api.GoogleApiClient
+import com.google.android.gms.location.LocationServices
+import com.google.android.gms.location.places.Places
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MarkerOptions
 import com.urgentx.recycledump.R
 import com.urgentx.recycledump.presenter.PlacesPresenter
-import com.urgentx.recycledump.util.Place
 import com.urgentx.recycledump.view.IView.IPlacesView
+import com.google.android.gms.maps.model.MarkerOptions
+import com.urgentx.recycledump.util.Place
+import kotlinx.android.synthetic.main.activity_locations.*
 
-class PlacesActivity : FragmentActivity(), OnMapReadyCallback, IPlacesView {
+
+class PlacesActivity : FragmentActivity(), OnMapReadyCallback, IPlacesView, GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks {
+
 
     private var mMap: GoogleMap? = null
     private var presenter: PlacesPresenter? = null
+    private var mGoogleApiClient: GoogleApiClient? = null
+
+    private var mLastKnownLocation: Location? = null
+    private var mCameraPosition: CameraPosition? = null
+
+    private val PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1
+    private val DEFAULT_ZOOM = 1.0f
+
+    private var mLocationPermissionGranted = false
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_locations)
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-        val mapFragment = supportFragmentManager
-                .findFragmentById(R.id.map) as SupportMapFragment
-        mapFragment.getMapAsync(this)
 
-        if(presenter == null){
+        // Build the Play services client for use by the Fused Location Provider and the Places API.
+        // Use the addApi() method to request the Google Places API and the Fused Location Provider.
+        mGoogleApiClient = GoogleApiClient.Builder(this)
+                .enableAutoManage(this /* FragmentActivity */,
+                        this /* OnConnectionFailedListener */)
+                .addConnectionCallbacks(this)
+                .addApi(LocationServices.API)
+                .addApi(Places.GEO_DATA_API)
+                .addApi(Places.PLACE_DETECTION_API)
+                .build()
+        mGoogleApiClient?.connect()
+
+        if (presenter == null) {
             presenter = PlacesPresenter()
         }
     }
@@ -43,6 +74,33 @@ class PlacesActivity : FragmentActivity(), OnMapReadyCallback, IPlacesView {
         presenter?.onViewDetached()
     }
 
+    override fun onConnected(p0: Bundle?) {
+        val mapFragment = supportFragmentManager
+                .findFragmentById(R.id.map) as SupportMapFragment
+        mapFragment.getMapAsync(this)
+    }
+
+    override fun onConnectionSuspended(p0: Int) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun onConnectionFailed(p0: ConnectionResult) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        mLocationPermissionGranted = false
+        when (requestCode) {
+            PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION -> {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    mLocationPermissionGranted = true
+                }
+            }
+        }
+        updateLocationUI()
+
+    }
 
     /**
      * Manipulates the map once available.
@@ -56,12 +114,70 @@ class PlacesActivity : FragmentActivity(), OnMapReadyCallback, IPlacesView {
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
 
-        // Add a marker in Sydney and move the camera
-        val sydney = LatLng(-36.8823072, 174.71699050000007)
-        mMap!!.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
-        mMap!!.moveCamera(CameraUpdateFactory.newLatLng(sydney))
+        // Turn on the My Location layer and the related control on the map.
+        updateLocationUI()
 
-        presenter?.savePlace(Place("Z Castle", 1, 2, sydney.latitude, sydney.longitude))
+        // Get the current location of the device and set the position of the map.
+        getDeviceLocation()
+
+        mMap?.setOnMapClickListener({ point ->
+            presenter?.savePlace(Place("New place", 1, 2, point.latitude, point.longitude))
+            mMap?.clear()
+            mMap?.addMarker(MarkerOptions().position(point))
+        })
+    }
+
+    private fun updateLocationUI() {
+        /*
+     * Request location permission, so that we can get the location of the
+     * device. The result of the permission request is handled by a callback,
+     * onRequestPermissionsResult.
+     */
+        if (ContextCompat.checkSelfPermission(this.applicationContext,
+                android.Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED) {
+            mLocationPermissionGranted = true
+        } else {
+            ActivityCompat.requestPermissions(this,
+                    arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION),
+                    PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION)
+        }
+
+        if (mLocationPermissionGranted) {
+            mMap?.isMyLocationEnabled = true
+            mMap?.uiSettings?.isMyLocationButtonEnabled = true
+        } else {
+            mMap?.isMyLocationEnabled = false
+            mMap?.uiSettings?.isMyLocationButtonEnabled = false
+            mLastKnownLocation = null
+        }
+
+        getDeviceLocation()
+    }
+
+    private fun getDeviceLocation() {
+        if (ContextCompat.checkSelfPermission(this.applicationContext,
+                android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            mLocationPermissionGranted = true
+            mLastKnownLocation = LocationServices.FusedLocationApi
+                    .getLastLocation(mGoogleApiClient)
+        } else {
+            ActivityCompat.requestPermissions(this,
+                    arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION),
+                    PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION)
+        }
+        // Set the map's camera position to the current location of the device.
+        if (mCameraPosition != null) {
+            mMap?.moveCamera(CameraUpdateFactory.newCameraPosition(mCameraPosition))
+        } else if (mLastKnownLocation != null) {
+            mMap?.moveCamera(CameraUpdateFactory.newLatLngZoom(
+                    LatLng((mLastKnownLocation as Location).latitude,
+                            (mLastKnownLocation as Location).longitude), DEFAULT_ZOOM))
+        } else {
+            Log.d("LocationActivity", "Current location is null. Using defaults.")
+            mMap?.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(36.8482, 174.8318), DEFAULT_ZOOM))
+            mMap?.uiSettings?.isMyLocationButtonEnabled = false
+        }
     }
 
     override fun placesRetrieved() {
@@ -75,3 +191,4 @@ class PlacesActivity : FragmentActivity(), OnMapReadyCallback, IPlacesView {
     override fun errorOccurred() {
     }
 }
+
