@@ -2,6 +2,7 @@ package com.urgentx.recycledump.view
 
 import android.content.pm.PackageManager
 import android.location.Location
+import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.ActivityCompat
 import android.support.v4.app.FragmentActivity
@@ -27,7 +28,9 @@ import com.urgentx.recycledump.util.Place
 import kotlinx.android.synthetic.main.activity_locations.*
 
 
-class PlacesActivity : FragmentActivity(), OnMapReadyCallback, IPlacesView, GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks {
+class PlacesActivity : FragmentActivity(), OnMapReadyCallback, IPlacesView, GoogleApiClient.OnConnectionFailedListener,
+        GoogleApiClient.ConnectionCallbacks, AddPlaceFragment.OnFragmentInteractionListener {
+
 
 
     private var mMap: GoogleMap? = null
@@ -121,8 +124,11 @@ class PlacesActivity : FragmentActivity(), OnMapReadyCallback, IPlacesView, Goog
         getDeviceLocation()
 
         mMap?.setOnMapClickListener({ point ->
-            presenter?.savePlace(Place("New place", 1, 2, point.latitude, point.longitude))
-            mMap?.clear()
+
+//            presenter?.savePlace(Place("New place", 1, 2, point.latitude, point.longitude))
+//            mMap?.clear()
+            val addPlaceFragment = AddPlaceFragment.newInstance(point.latitude, point.longitude)
+            addPlaceFragment.show(supportFragmentManager, "addplacefragtag")
             mMap?.addMarker(MarkerOptions().position(point))
         })
     }
@@ -189,6 +195,9 @@ class PlacesActivity : FragmentActivity(), OnMapReadyCallback, IPlacesView, Goog
     }
 
     override fun errorOccurred() {
+    }
+
+    override fun onFragmentInteraction(uri: Uri) {
     }
 }
 
