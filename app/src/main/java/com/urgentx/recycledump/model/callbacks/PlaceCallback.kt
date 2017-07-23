@@ -2,9 +2,9 @@ package com.urgentx.recycledump.model.callbacks
 
 import com.urgentx.recycledump.util.Place
 
-interface PlacesCallback{
+interface PlaceCallback {
 
-    fun placesRetrieved(places: ArrayList<Place>)
+    fun placeRetrieved(place: Place)
 
     fun onError()
 }

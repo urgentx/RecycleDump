@@ -2,27 +2,27 @@ package com.urgentx.recycledump.presenter
 
 import com.urgentx.recycledump.model.PlacesApiInteractor
 import com.urgentx.recycledump.model.callbacks.BinaryCallback
-import com.urgentx.recycledump.model.callbacks.PlacesCallback
+import com.urgentx.recycledump.model.callbacks.PlaceCallback
 import com.urgentx.recycledump.util.Place
 import com.urgentx.recycledump.view.IView.IPlacesView
 
-class PlacesPresenter : PlacesCallback, BinaryCallback {
+class PlacesPresenter : PlaceCallback {
 
     var view: IPlacesView? = null
     val apiInteractor: PlacesApiInteractor = PlacesApiInteractor()
 
-
-    var placeSaved: Boolean = false
+    val places = ArrayList<Place>()
     var error: Int = 0
 
-    fun savePlace(place: Place){
-        apiInteractor.savePlace(place, this)
+    fun retrievePlaces(latitude: Double, longitude: Double){
+        apiInteractor.retrievePlaces(latitude, longitude, this)
     }
 
     private fun updateView() {
         view?.let {
-            if(placeSaved){
-                view!!.placeSaved()
+            if(places.isNotEmpty()){
+                (view as IPlacesView).placesRetrieved(places)
+                places.clear()
             }
 
             when(error){
@@ -43,23 +43,12 @@ class PlacesPresenter : PlacesCallback, BinaryCallback {
         view = null
     }
 
-    override fun placesRetrieved(places: ArrayList<Place>) {
-
+    override fun placeRetrieved(place: Place) {
+        places.add(place)
         updateView()
     }
 
     override fun onError() {
 
     }
-
-    override fun onBinarySuccess() {
-        placeSaved = true
-        updateView()
-    }
-
-    override fun onBinaryError() {
-
-    }
-
-
 }

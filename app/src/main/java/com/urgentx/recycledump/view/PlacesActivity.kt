@@ -8,7 +8,6 @@ import android.support.v4.app.ActivityCompat
 import android.support.v4.app.FragmentActivity
 import android.support.v4.content.ContextCompat
 import android.util.Log
-import android.view.MenuItem
 import android.widget.Toast
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.api.GoogleApiClient
@@ -21,11 +20,10 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.urgentx.recycledump.R
-import com.urgentx.recycledump.presenter.PlacesPresenter
 import com.urgentx.recycledump.view.IView.IPlacesView
 import com.google.android.gms.maps.model.MarkerOptions
+import com.urgentx.recycledump.presenter.PlacesPresenter
 import com.urgentx.recycledump.util.Place
-import kotlinx.android.synthetic.main.activity_locations.*
 
 
 class PlacesActivity : FragmentActivity(), OnMapReadyCallback, IPlacesView, GoogleApiClient.OnConnectionFailedListener,
@@ -179,20 +177,21 @@ class PlacesActivity : FragmentActivity(), OnMapReadyCallback, IPlacesView, Goog
             mMap?.moveCamera(CameraUpdateFactory.newLatLngZoom(
                     LatLng((mLastKnownLocation as Location).latitude,
                             (mLastKnownLocation as Location).longitude), DEFAULT_ZOOM))
+            presenter?.retrievePlaces((mLastKnownLocation as Location).latitude, (mLastKnownLocation as Location).longitude)
         } else {
             Log.d("LocationActivity", "Current location is null. Using defaults.")
             mMap?.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(36.8482, 174.8318), DEFAULT_ZOOM))
+            presenter?.retrievePlaces(36.8482, 174.8318)
             mMap?.uiSettings?.isMyLocationButtonEnabled = false
         }
     }
 
-    override fun placesRetrieved() {
-
+    override fun placesRetrieved(places: ArrayList<Place>) {
+        for(place in places){
+            mMap?.addMarker(MarkerOptions().position(LatLng(place.lat, place.long)).title(place.name))
+        }
     }
 
-    override fun placeSaved() {
-        Toast.makeText(this, "Place saved.", Toast.LENGTH_LONG).show()
-    }
 
     override fun errorOccurred() {
     }

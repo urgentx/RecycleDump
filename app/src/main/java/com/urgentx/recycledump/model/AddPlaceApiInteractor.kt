@@ -5,17 +5,17 @@ import com.firebase.geofire.GeoLocation
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.urgentx.recycledump.model.callbacks.BinaryCallback
-import com.urgentx.recycledump.model.callbacks.PlacesCallback
+import com.urgentx.recycledump.model.callbacks.PlaceCallback
 import com.urgentx.recycledump.util.Place
 
 
 class AddPlaceApiInteractor {
 
     private val database = FirebaseDatabase.getInstance()
-    private val user = FirebaseAuth.getInstance().currentUser
 
     fun savePlace(place: Place, callback: BinaryCallback) {
-        val placeLocationsRef = database.getReference("placelocations")
+        val placeLocationsRef = database.getReference("placelocations") //Geofire directory
+        val placesRef = database.getReference("places")
         val geoFire = GeoFire(placeLocationsRef)
 
         geoFire.setLocation(place.name, GeoLocation(place.lat, place.long),
@@ -23,12 +23,16 @@ class AddPlaceApiInteractor {
                     if (error != null) {
                         callback.onBinaryError()
                     } else {
-                        callback.onBinarySuccess()
+                        placesRef.child(key).setValue(place).addOnCompleteListener(
+                                { callback.onBinarySuccess() })
+                                .addOnFailureListener({
+                                    callback.onBinaryError()
+                                })
                     }
                 })
     }
 
-    fun getPlaces(callback: PlacesCallback) {
+    fun getPlaces(callback: PlaceCallback) {
 
     }
 }
