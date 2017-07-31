@@ -1,78 +1,95 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.urgentx.recycledump.view.AddPlaceFragment"
     android:orientation="vertical"
-    android:padding="@dimen/stdMargin1">
+    android:padding="@dimen/stdMargin1"
+    tools:context="com.urgentx.recycledump.view.AddPlaceFragment">
 
-    <ImageView
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:src="@drawable/dummy_place"
-        android:layout_marginBottom="@dimen/stdMargin1"/>
+        android:background="@color/colorBtnGrey">
+
+        <ImageView
+            android:id="@+id/addPlaceImage"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/addPlacePhotoBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_margin="@dimen/stdMargin1"
+            android:backgroundTint="@color/colorPrimary"
+            android:tint="@color/colorBtnTintLight"
+            app:srcCompat="@drawable/ic_add_a_photo_black_24dp" />
+
+    </RelativeLayout>
+
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Give this place a name"
-        android:labelFor="@id/recycleInfoName"/>
+        android:labelFor="@id/recycleInfoName"
+        android:text="Give this place a name" />
 
     <EditText
         android:id="@+id/placeName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/stdMargin1"
         android:ems="10"
-        android:inputType="textPersonName"
-        android:layout_marginBottom="@dimen/stdMargin1"/>
+        android:inputType="textPersonName" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Can you dump or recycle here?"
-        android:labelFor="@id/placeType"/>
+        android:labelFor="@id/placeType"
+        android:text="Can you dump or recycle here?" />
 
     <ToggleButton
         android:id="@+id/placeType"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textOff="recycle"
-        android:textOn="dump"/>
+        android:textOn="dump" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="What types of item does this place accept?"
         android:labelFor="@+id/placeCategory"
-        />
+        android:text="What types of item does this place accept?" />
 
     <ListView
         android:id="@+id/placeCategory"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_weight="1"
         android:divider="@null"
-        android:dividerHeight="0dp"
-        android:layout_weight="1"/>
+        android:dividerHeight="0dp" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_horizontal">
+        android:gravity="center_horizontal"
+        android:orientation="horizontal">
 
         <Button
             android:id="@+id/addPlaceSubmitBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Submit"
-            android:backgroundTint="@color/colorPrimary"/>
+            android:backgroundTint="@color/colorPrimary"
+            android:text="Submit" />
 
         <Button
             android:id="@+id/addPlaceCancelBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Cancel"
-            />
+            android:text="Cancel" />
 
     </LinearLayout>
 

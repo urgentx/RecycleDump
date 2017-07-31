@@ -1,10 +1,13 @@
 package com.urgentx.recycledump.view
 
+import android.app.Activity
 import android.content.Context
+import android.content.Intent
+import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
 import android.support.v4.app.DialogFragment
-import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,16 +20,11 @@ import com.urgentx.recycledump.presenter.AddPlacePresenter
 import com.urgentx.recycledump.util.Place
 import com.urgentx.recycledump.util.adapter.CategoryListAdapter
 import com.urgentx.recycledump.view.IView.IAddPlaceView
+import kotlinx.android.synthetic.main.fragment_add_place.*
 
-/**
- * A simple [Fragment] subclass.
- * Activities that contain this fragment must implement the
- * [AddPlaceFragment.OnFragmentInteractionListener] interface
- * to handle interaction events.
- * Use the [AddPlaceFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class AddPlaceFragment : IAddPlaceView, DialogFragment() {
+
+    private val REQUEST_IMAGE_CAPTURE = 1
 
     private var placeLat: Double = 0.0
     private var placeLong: Double = 0.0
@@ -72,8 +70,25 @@ class AddPlaceFragment : IAddPlaceView, DialogFragment() {
             dismiss()
         })
 
+        view.findViewById(R.id.addPlacePhotoBtn).setOnClickListener { dispatchTakePictureIntent() }
+
         return view
 
+    }
+
+    private fun dispatchTakePictureIntent() {
+        val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        if (takePictureIntent.resolveActivity(activity.packageManager) != null) {
+            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == Activity.RESULT_OK) {
+            val extras = data?.extras
+            val imageBitmap = extras?.get("data") as Bitmap
+            addPlaceImage.setImageBitmap(imageBitmap)
+        }
     }
 
 
@@ -98,15 +113,6 @@ class AddPlaceFragment : IAddPlaceView, DialogFragment() {
         mListener = null
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     *
-     *
-     * See the Android Training lesson [Communicating with Other Fragments](http://developer.android.com/training/basics/fragments/communicating.html) for more information.
-     */
     interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         fun onFragmentInteraction(uri: Uri)
