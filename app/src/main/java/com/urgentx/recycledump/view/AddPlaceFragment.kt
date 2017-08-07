@@ -6,25 +6,30 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
 import android.provider.MediaStore
 import android.support.v4.app.DialogFragment
+import android.support.v4.content.FileProvider
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ListView
-import android.widget.ToggleButton
+import android.widget.*
 import com.urgentx.recycledump.R
 import com.urgentx.recycledump.presenter.AddPlacePresenter
 import com.urgentx.recycledump.util.Place
 import com.urgentx.recycledump.util.adapter.CategoryListAdapter
 import com.urgentx.recycledump.view.IView.IAddPlaceView
 import kotlinx.android.synthetic.main.fragment_add_place.*
+import java.io.File
+import java.io.IOException
+import java.text.SimpleDateFormat
+import java.util.*
 
 class AddPlaceFragment : IAddPlaceView, DialogFragment() {
 
     private val REQUEST_IMAGE_CAPTURE = 1
+
+    var currentPhotoPath: String? = null
 
     private var placeLat: Double = 0.0
     private var placeLong: Double = 0.0
@@ -79,15 +84,36 @@ class AddPlaceFragment : IAddPlaceView, DialogFragment() {
     private fun dispatchTakePictureIntent() {
         val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         if (takePictureIntent.resolveActivity(activity.packageManager) != null) {
-            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
+            //File where photo should go
+            var photoFile: File? = null
+            try {
+                photoFile = createImageFile()
+            } catch (e: IOException) {
+                //Error during file creation
+            }
+            if (photoFile != null) {
+                val photoURI = FileProvider.getUriForFile(activity, "com.urgentx.recycledump.fileprovider",
+                        photoFile)
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
+                startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
+            }
         }
+    }
+
+    private fun createImageFile(): File {
+        //Create an image file name
+        val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
+        val fileName = "JPEG_" + timeStamp + "_"
+        val storageDir = activity.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+        val image = File.createTempFile(fileName, ".jpg", storageDir)
+        //Save file: path for use with ACTION_VIEW intents
+        currentPhotoPath = image.absolutePath
+        return image
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == Activity.RESULT_OK) {
-            val extras = data?.extras
-            val imageBitmap = extras?.get("data") as Bitmap
-            addPlaceImage.setImageBitmap(imageBitmap)
+            Toast.makeText(activity, "File saved at:" + currentPhotoPath, Toast.LENGTH_LONG).show()
         }
     }
 
