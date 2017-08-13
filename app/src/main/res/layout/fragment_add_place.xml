@@ -38,7 +38,7 @@
         android:text="Give this place a name" />
 
     <EditText
-        android:id="@+id/placeName"
+        android:id="@+id/addPlaceName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/stdMargin1"
@@ -48,11 +48,11 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:labelFor="@id/placeType"
+        android:labelFor="@id/addPlaceType"
         android:text="Can you dump or recycle here?" />
 
     <ToggleButton
-        android:id="@+id/placeType"
+        android:id="@+id/addPlaceType"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textOff="recycle"
@@ -61,11 +61,11 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:labelFor="@+id/placeCategory"
+        android:labelFor="@+id/addPlaceCategory"
         android:text="What types of item does this place accept?" />
 
     <ListView
-        android:id="@+id/placeCategory"
+        android:id="@+id/addPlaceCategory"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"

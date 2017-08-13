@@ -3,7 +3,6 @@ package com.urgentx.recycledump.view
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
@@ -19,7 +18,6 @@ import com.urgentx.recycledump.presenter.AddPlacePresenter
 import com.urgentx.recycledump.util.Place
 import com.urgentx.recycledump.util.adapter.CategoryListAdapter
 import com.urgentx.recycledump.view.IView.IAddPlaceView
-import kotlinx.android.synthetic.main.fragment_add_place.*
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
@@ -60,15 +58,15 @@ class AddPlaceFragment : IAddPlaceView, DialogFragment() {
         selected.add(false)
         selected.add(false)
 
-        val categoriesLv = view.findViewById(R.id.placeCategory) as ListView
+        val categoriesLv = view.findViewById(R.id.addPlaceCategory) as ListView
         val categoriesAdapter = CategoryListAdapter(activity, R.layout.category_row, categories, selected)
         categoriesLv.adapter = categoriesAdapter
 
-        val placeName = view.findViewById(R.id.placeName) as EditText
-        val placeType = view.findViewById(R.id.placeType) as ToggleButton
+        val placeName = view.findViewById(R.id.addPlaceName) as EditText
+        val placeType = view.findViewById(R.id.addPlaceType) as ToggleButton
 
         (view.findViewById(R.id.addPlaceSubmitBtn) as Button).setOnClickListener({
-            presenter.savePlace(Place(placeName.text.toString(), placeType.isChecked.compareTo(false), 3, placeLat, placeLong))
+            presenter.savePlace(Place(placeName.text.toString(), placeType.isChecked.compareTo(false), 3, placeLat, placeLong, ""), currentPhotoPath)
         })
 
         (view.findViewById(R.id.addPlaceCancelBtn) as Button).setOnClickListener({

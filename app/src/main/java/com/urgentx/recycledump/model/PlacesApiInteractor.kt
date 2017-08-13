@@ -7,6 +7,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.google.firebase.storage.FirebaseStorage
 import com.urgentx.recycledump.model.callbacks.PlaceCallback
 import com.urgentx.recycledump.util.Place
 
@@ -30,9 +31,16 @@ class PlacesApiInteractor {
                     override fun onDataChange(p0: DataSnapshot?) {
                         val place = p0?.getValue(Place::class.java)
                         if (place != null) {
-                            callback.placeRetrieved(place)
+                            //Get place image and add to Place object
+                            val picStorage = FirebaseStorage.getInstance().reference.child("placepics").child(key + ".jpg").downloadUrl
+                                    .addOnSuccessListener { uri ->
+                                        place.img = uri.toString()
+                                        callback.placeRetrieved(place)
+                                    }
+                                    .addOnFailureListener({ callback.onError() })
                         }
                     }
+
                     override fun onCancelled(p0: DatabaseError?) {
                     }
                 })

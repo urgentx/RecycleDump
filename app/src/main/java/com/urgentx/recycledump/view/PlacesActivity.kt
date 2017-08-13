@@ -8,6 +8,8 @@ import android.support.v4.app.ActivityCompat
 import android.support.v4.app.FragmentActivity
 import android.support.v4.content.ContextCompat
 import android.util.Log
+import android.view.View
+import android.widget.TextView
 import android.widget.Toast
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.api.GoogleApiClient
@@ -17,23 +19,21 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.CameraPosition
-import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.*
 import com.urgentx.recycledump.R
 import com.urgentx.recycledump.view.IView.IPlacesView
-import com.google.android.gms.maps.model.MarkerOptions
 import com.urgentx.recycledump.presenter.PlacesPresenter
 import com.urgentx.recycledump.util.Place
 
 
-class PlacesActivity : FragmentActivity(), OnMapReadyCallback, IPlacesView, GoogleApiClient.OnConnectionFailedListener,
-        GoogleApiClient.ConnectionCallbacks, AddPlaceFragment.OnFragmentInteractionListener {
-
+class PlacesActivity : FragmentActivity(), OnMapReadyCallback, GoogleApiClient.OnConnectionFailedListener,
+        GoogleApiClient.ConnectionCallbacks, IPlacesView, AddPlaceFragment.OnFragmentInteractionListener, PlaceFragment.OnFragmentInteractionListener{
 
 
     private var mMap: GoogleMap? = null
     private var presenter: PlacesPresenter? = null
     private var mGoogleApiClient: GoogleApiClient? = null
+    private val places = ArrayList<Place>() //Holds places retrieved, use to build place dialog.
 
     private var mLastKnownLocation: Location? = null
     private var mCameraPosition: CameraPosition? = null
@@ -122,13 +122,23 @@ class PlacesActivity : FragmentActivity(), OnMapReadyCallback, IPlacesView, Goog
         getDeviceLocation()
 
         mMap?.setOnMapClickListener({ point ->
-
-//            presenter?.savePlace(Place("New place", 1, 2, point.latitude, point.longitude))
-//            mMap?.clear()
             val addPlaceFragment = AddPlaceFragment.newInstance(point.latitude, point.longitude)
             addPlaceFragment.show(supportFragmentManager, "addplacefragtag")
             mMap?.addMarker(MarkerOptions().position(point))
         })
+
+        mMap?.setOnMarkerClickListener { marker ->
+            places?.filter {
+                it.name.equals(marker?.title)
+            }
+                    ?.map {
+                        PlaceFragment.newInstance(it.name, it.img)
+                    }
+                    ?.forEach {
+                        it.show(supportFragmentManager, "placefragtag")
+                    }
+            true
+        }
     }
 
     private fun updateLocationUI() {
@@ -187,8 +197,17 @@ class PlacesActivity : FragmentActivity(), OnMapReadyCallback, IPlacesView, Goog
     }
 
     override fun placesRetrieved(places: ArrayList<Place>) {
+        this.places.addAll(places)
         for(place in places){
-            mMap?.addMarker(MarkerOptions().position(LatLng(place.lat, place.long)).title(place.name))
+            var color : Float = BitmapDescriptorFactory.HUE_ORANGE
+            if(place.type == 0) {
+                color = BitmapDescriptorFactory.HUE_GREEN
+            }
+            mMap?.addMarker(MarkerOptions().position(LatLng(place.lat, place.long))
+                    .title(place.name)
+                    .icon(BitmapDescriptorFactory.defaultMarker(color))
+                    )
+
         }
     }
 
