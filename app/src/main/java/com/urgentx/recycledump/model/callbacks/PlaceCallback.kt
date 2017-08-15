@@ -4,7 +4,7 @@ import com.urgentx.recycledump.util.Place
 
 interface PlaceCallback {
 
-    fun placeRetrieved(place: Place)
+    fun placesRetrieved(places: ArrayList<Place>)
 
     fun onError()
 }

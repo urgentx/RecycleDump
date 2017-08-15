@@ -33,7 +33,7 @@ class PlacesActivity : FragmentActivity(), OnMapReadyCallback, GoogleApiClient.O
     private var mMap: GoogleMap? = null
     private var presenter: PlacesPresenter? = null
     private var mGoogleApiClient: GoogleApiClient? = null
-    private val places = ArrayList<Place>() //Holds places retrieved, use to build place dialog.
+    private var places = ArrayList<Place>() //Holds places retrieved, use to build place dialog.
 
     private var mLastKnownLocation: Location? = null
     private var mCameraPosition: CameraPosition? = null
@@ -42,6 +42,7 @@ class PlacesActivity : FragmentActivity(), OnMapReadyCallback, GoogleApiClient.O
     private val DEFAULT_ZOOM = 1.0f
 
     private var mLocationPermissionGranted = false
+    private var locationRetrieved = false
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -187,17 +188,20 @@ class PlacesActivity : FragmentActivity(), OnMapReadyCallback, GoogleApiClient.O
             mMap?.moveCamera(CameraUpdateFactory.newLatLngZoom(
                     LatLng((mLastKnownLocation as Location).latitude,
                             (mLastKnownLocation as Location).longitude), DEFAULT_ZOOM))
-            presenter?.retrievePlaces((mLastKnownLocation as Location).latitude, (mLastKnownLocation as Location).longitude)
+            if(!locationRetrieved){
+                locationRetrieved = true
+                presenter?.retrievePlaces((mLastKnownLocation as Location).latitude, (mLastKnownLocation as Location).longitude)
+            }
         } else {
             Log.d("LocationActivity", "Current location is null. Using defaults.")
-            mMap?.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(36.8482, 174.8318), DEFAULT_ZOOM))
-            presenter?.retrievePlaces(36.8482, 174.8318)
-            mMap?.uiSettings?.isMyLocationButtonEnabled = false
+//            mMap?.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(36.8482, 174.8318), DEFAULT_ZOOM))
+//            presenter?.retrievePlaces(36.8482, 174.8318)
+//            mMap?.uiSettings?.isMyLocationButtonEnabled = false
         }
     }
 
     override fun placesRetrieved(places: ArrayList<Place>) {
-        this.places.addAll(places)
+        this.places = places
         for(place in places){
             var color : Float = BitmapDescriptorFactory.HUE_ORANGE
             if(place.type == 0) {

@@ -11,21 +11,21 @@ class PlacesPresenter : PlaceCallback {
     var view: IPlacesView? = null
     val apiInteractor: PlacesApiInteractor = PlacesApiInteractor()
 
-    val places = ArrayList<Place>()
+    var places: ArrayList<Place>? = null
     var error: Int = 0
 
-    fun retrievePlaces(latitude: Double, longitude: Double){
+    fun retrievePlaces(latitude: Double, longitude: Double) {
         apiInteractor.retrievePlaces(latitude, longitude, this)
     }
 
     private fun updateView() {
         view?.let {
-            if(places.isNotEmpty()){
-                (view as IPlacesView).placesRetrieved(places)
-                places.clear()
+            places?.let {
+                (view as IPlacesView).placesRetrieved(places!!)
+                places = null
             }
 
-            when(error){
+            when (error) {
                 1 -> view!!.errorOccurred()
             }
 
@@ -43,8 +43,8 @@ class PlacesPresenter : PlaceCallback {
         view = null
     }
 
-    override fun placeRetrieved(place: Place) {
-        places.add(place)
+    override fun placesRetrieved(places: ArrayList<Place>) {
+        this.places = places
         updateView()
     }
 
