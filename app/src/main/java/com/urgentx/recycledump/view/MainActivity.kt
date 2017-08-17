@@ -93,9 +93,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             R.id.nav_items -> {
                 handleClick(1)
             }
-            R.id.nav_gallery -> {
-
-            }
+            R.id.nav_home -> {
+                for (fragment in supportFragmentManager.fragments) {
+                    supportFragmentManager.beginTransaction().remove(fragment).commit()
+                }            }
             R.id.nav_slideshow -> {
 
             }
@@ -136,7 +137,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 fragmentClass = MyItemsFragment::class.java
 
             } else if (clickType == 2) {
-
             }
 
             try {
@@ -146,7 +146,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             }
 
             val fragmentManager = supportFragmentManager
-            fragmentManager.beginTransaction().replace(R.id.mainContainerBelowToolbar, fragment).commit()
+            fragmentManager.beginTransaction().replace(R.id.mainContainerBelowToolbar, fragment).addToBackStack("maincontainerfrag").commit()
 
         }
         drawer_layout.closeDrawer(Gravity.START, true)

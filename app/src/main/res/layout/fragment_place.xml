@@ -2,27 +2,30 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:gravity="center_horizontal"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:padding="@dimen/stdMargin2">
 
     <TextView
         android:id="@+id/placeName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/stdMargin1"
+        android:textSize="@dimen/mediumText1"
+        android:text="Place Name"
         />
 
     <ImageView
         android:id="@+id/placeImage"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:scaleType="centerCrop"/>
 
     <TextView
         android:id="@+id/placeAccepts"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
-    <TextView
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="place fragment"/>
+        android:text="This place will accept your:"/>
+
+
 
 </LinearLayout>
