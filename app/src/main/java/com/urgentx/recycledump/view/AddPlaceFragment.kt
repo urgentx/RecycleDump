@@ -3,6 +3,7 @@ package com.urgentx.recycledump.view
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
@@ -18,6 +19,7 @@ import com.urgentx.recycledump.presenter.AddPlacePresenter
 import com.urgentx.recycledump.util.Place
 import com.urgentx.recycledump.util.adapter.CategoryListAdapter
 import com.urgentx.recycledump.view.IView.IAddPlaceView
+import kotlinx.android.synthetic.main.fragment_add_place.*
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
@@ -112,6 +114,8 @@ class AddPlaceFragment : IAddPlaceView, DialogFragment() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == Activity.RESULT_OK) {
             Toast.makeText(activity, "File saved at:" + currentPhotoPath, Toast.LENGTH_LONG).show()
+            val drawable = Drawable.createFromPath(currentPhotoPath)
+            addPlaceImage.setImageDrawable(drawable)
         }
     }
 
