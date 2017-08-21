@@ -20,42 +20,17 @@ class PlacesApiInteractor {
     fun retrievePlaces(latitude: Double, longitude: Double, callback: PlaceCallback) {
         val placeLocationsRef = database.getReference("placelocations")
         val geoFire = GeoFire(placeLocationsRef)
-        val places = ArrayList<Place>()
-        var numPlaces = 0
-        var placesRetrieved = 0
 
+        //Retrieve nearest places to user within set radius, then query the actual places node for the details of each one.
         geoFire.queryAtLocation(GeoLocation(latitude, longitude), 100.0).addGeoQueryEventListener(object : GeoQueryEventListener {
             override fun onGeoQueryReady() {
             }
-
             override fun onKeyEntered(key: String?, location: GeoLocation?) {
                 val locationQuery = database.getReference("places").child(key)
                 locationQuery.addValueEventListener(object : ValueEventListener {
                     override fun onDataChange(p0: DataSnapshot?) {
-                        val place = p0?.getValue(Place::class.java)
-                        if (place != null) {
-                            numPlaces ++
-                            //Get place image and add to Place object
-                            FirebaseStorage.getInstance().reference.child("placepics").child(key + ".jpg").downloadUrl
-                                    .addOnSuccessListener { uri ->
-                                        place.img = uri.toString()
-                                        places.add(place)
-                                        placesRetrieved ++
-                                        if(placesRetrieved >= numPlaces){
-                                            callback.placesRetrieved(places)
-                                        }
-                                    }
-                                    .addOnFailureListener({
-                                        placesRetrieved ++
-                                        place.img = ""
-                                        places.add(place)
-                                        if(placesRetrieved >= numPlaces) {
-                                            callback.placesRetrieved(places)
-                                        }
-                                    })
-                        }
+                        processGeoQueryResult(p0, key, callback)
                     }
-
                     override fun onCancelled(p0: DatabaseError?) {
                         Log.d("firebase", p0.toString())
                     }
@@ -72,5 +47,21 @@ class PlacesApiInteractor {
             }
 
         })
+    }
+
+    fun processGeoQueryResult(data: DataSnapshot?, key: String?, callback: PlaceCallback){
+        val place = data?.getValue(Place::class.java)
+        if (place != null) {
+            //Get place image and add to Place object
+            FirebaseStorage.getInstance().reference.child("placepics").child(key + ".jpg").downloadUrl
+                    .addOnSuccessListener { uri ->
+                        place.img = uri.toString()
+                        callback.placeRetrieved(place)
+                    }
+                    .addOnFailureListener({
+                        place.img = ""
+                        callback.placeRetrieved(place)
+                    })
+        }
     }
 }

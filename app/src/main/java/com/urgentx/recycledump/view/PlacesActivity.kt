@@ -129,15 +129,13 @@ class PlacesActivity : FragmentActivity(), OnMapReadyCallback, GoogleApiClient.O
         })
 
         mMap?.setOnMarkerClickListener { marker ->
-            places?.filter {
-                it.name.equals(marker?.title)
+            places.filter {
+                it.name == marker?.title
+            }.map({
+                PlaceFragment.newInstance(it.name, it.img)
+            }).forEach {
+                it.show(supportFragmentManager, "placefragtag")
             }
-                    ?.map {
-                        PlaceFragment.newInstance(it.name, it.img)
-                    }
-                    ?.forEach {
-                        it.show(supportFragmentManager, "placefragtag")
-                    }
             true
         }
     }
@@ -200,19 +198,28 @@ class PlacesActivity : FragmentActivity(), OnMapReadyCallback, GoogleApiClient.O
         }
     }
 
-    override fun placesRetrieved(places: ArrayList<Place>) {
-        this.places = places
-        for(place in places){
-            var color : Float = BitmapDescriptorFactory.HUE_ORANGE
-            if(place.type == 0) {
-                color = BitmapDescriptorFactory.HUE_GREEN
-            }
-            mMap?.addMarker(MarkerOptions().position(LatLng(place.lat, place.long))
-                    .title(place.name)
-                    .icon(BitmapDescriptorFactory.defaultMarker(color))
-                    )
+    override fun placeRetrieved(place: Place) {
+        places.add(place)
+        addPlaceMarker(place)
+    }
 
+
+    override fun placesRetrieved(places: ArrayList<Place>) {
+        this.places.addAll(places)
+        for(place in places){
+            addPlaceMarker(place)
         }
+    }
+
+    private fun addPlaceMarker(place: Place){
+        var color : Float = BitmapDescriptorFactory.HUE_ORANGE
+        if(place.type == 0) {
+            color = BitmapDescriptorFactory.HUE_GREEN
+        }
+        mMap?.addMarker(MarkerOptions().position(LatLng(place.lat, place.long))
+                .title(place.name)
+                .icon(BitmapDescriptorFactory.defaultMarker(color))
+        )
     }
 
 

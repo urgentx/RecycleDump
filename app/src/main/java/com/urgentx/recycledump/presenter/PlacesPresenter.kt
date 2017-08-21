@@ -43,9 +43,12 @@ class PlacesPresenter : PlaceCallback {
         view = null
     }
 
-    override fun placesRetrieved(places: ArrayList<Place>) {
-        this.places = places
-        updateView()
+    override fun placeRetrieved(place: Place) {
+        view?.let {
+            it.placeRetrieved(place)
+            return
+        }
+        places?.add(place)
     }
 
     override fun onError() {
