@@ -10,7 +10,7 @@ import android.widget.RelativeLayout
 import com.urgentx.recycledump.R
 
 
-class CategoryListAdapter(context: Context, resource: Int, objects: ArrayList<String>, internal var selected: ArrayList<Boolean>) : ArrayAdapter<String>(context, resource, objects) {
+class CategoryListAdapter(context: Context, resource: Int, objects: ArrayList<String>, private var selected: ArrayList<Boolean>) : ArrayAdapter<String>(context, resource, objects) {
 
     private var mResourceId = 0
     private val mLayoutInflater: LayoutInflater

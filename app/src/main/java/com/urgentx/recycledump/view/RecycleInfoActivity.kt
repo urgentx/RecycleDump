@@ -3,11 +3,13 @@ package com.urgentx.recycledump.view
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import android.widget.Toast.LENGTH_LONG
 import com.urgentx.recycledump.R
 import com.urgentx.recycledump.presenter.RecycleInfoPresenter
 import com.urgentx.recycledump.util.Item
+import com.urgentx.recycledump.util.adapter.CategorySpinnerAdapter
 import com.urgentx.recycledump.view.IView.IRecycleInfoView
 import kotlinx.android.synthetic.main.content_recycle_info.*
 
@@ -33,6 +35,11 @@ class RecycleInfoActivity : AppCompatActivity(), IRecycleInfoView {
         })
 
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+
+        val categories = arrayOf("Paper - including newsprint; ledger paper; computer paper; corrugated cardboard; and mixed paper.",
+                "Glass", "Metal - both ferrous and nonferrous, including cans; parts from abandoned vehicles; plumbing; fences; metal doors and screens; tools; machinery; and any other discarded metal objects.")
+        val adapter = CategorySpinnerAdapter(this, R.layout.category_spinner_row, R.id.categorySpinnerTitle, categories)
+        recycleInfoCategory.adapter = adapter
     }
 
     override fun onResume() {
