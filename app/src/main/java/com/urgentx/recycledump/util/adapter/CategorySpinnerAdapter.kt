@@ -44,8 +44,8 @@ class CategorySpinnerAdapter(context: Context?, resource: Int, textViewResourceI
     private fun setupIcon(position: Int, view: View){
         var  icon = R.drawable.ic_reusable
         when(position){
-            0 -> icon = R.drawable.ic_reusable
-            1 -> icon = R.drawable.ic_paper
+            0 -> icon = R.drawable.ic_paper
+            1 -> icon = R.drawable.ic_reusable
             2 -> icon = R.drawable.ic_metals
             3 -> icon = R.drawable.ic_glass
             4 -> icon = R.drawable.ic_textiles

@@ -41,7 +41,16 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".view.RecycleInfoActivity"
-            android:label="@string/title_activity_recycle_info"
+            android:label="@string/add_an_item"
+            android:parentActivityName=".view.MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.urgentx.recycledump.view.MainActivity" />
+        </activity>
+        <activity
+            android:name=".view.DumpInfoActivity"
+            android:label="@string/add_an_item"
             android:parentActivityName=".view.MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data

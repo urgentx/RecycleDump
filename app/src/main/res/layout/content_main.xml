@@ -42,7 +42,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_margin="@dimen/stdMargin1"
-        android:background="@color/colorAccent"
+        android:background="@drawable/btn_orange_bg"
         android:clickable="true"
         android:focusable="true"
         android:gravity="center"

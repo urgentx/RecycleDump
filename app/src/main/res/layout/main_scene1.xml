@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout android:id="@+id/mainDisposeBtn"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/mainDisposeBtn"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary"
+    android:background="@drawable/btn_green_bg"
     android:clickable="true"
     android:gravity="center"
-    android:orientation="vertical"
-   >
+    android:orientation="vertical">
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/stdMargin1"
-        android:src="@drawable/ic_recycle"
-        android:tint="@color/colorBtnTintLight" />
+        android:tint="@color/colorBtnTintLight"
+        app:srcCompat="@drawable/ic_recycle" />
 
     <TextView
         android:layout_width="wrap_content"

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.urgentx.recycledump.view.RecycleInfoActivity"
-    tools:showIn="@layout/activity_recycle_info">
+    tools:showIn="@layout/activity_dump_info">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -19,7 +19,7 @@
             android:padding="@dimen/stdMargin1">
 
             <EditText
-                android:id="@+id/recycleInfoName"
+                android:id="@+id/dumpInfoName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/stdMargin1"
@@ -34,13 +34,13 @@
                 android:text="@string/choose_category" />
 
             <android.support.v7.widget.AppCompatSpinner
-                android:id="@+id/recycleInfoCategory"
+                android:id="@+id/dumpInfoCategory"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/stdMargin1" />
 
             <EditText
-                android:id="@+id/recycleInfoWeight"
+                android:id="@+id/dumpInfoWeight"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/stdMargin1"
@@ -48,7 +48,7 @@
                 android:inputType="number" />
 
             <EditText
-                android:id="@+id/recycleInfoVolume"
+                android:id="@+id/dumpInfoVolume"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/stdMargin1"
@@ -60,7 +60,7 @@
     </ScrollView>
 
     <Button
-        android:id="@+id/recycleInfoSaveBtn"
+        android:id="@+id/dumpInfoSaveBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/stdMargin1"

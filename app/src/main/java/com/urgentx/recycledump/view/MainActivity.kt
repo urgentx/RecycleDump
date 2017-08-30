@@ -60,6 +60,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             //Send user to categorise their item.
             startActivity(Intent(this, RecycleInfoActivity::class.java))
         })
+
+        mainDumpBtn.setOnClickListener({
+            //Send user to categorise their dump item.
+            startActivity(Intent(this, DumpInfoActivity::class.java))
+        })
     }
 
     override fun onBackPressed() {

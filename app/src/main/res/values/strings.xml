@@ -20,10 +20,10 @@
     <string name="unknown_error">Oops, something went wrong.</string>
     <string name="please_describe_your_item">Please describe your item to find a place for it.</string>
 
-    <string name="recycle_info_category1">Reusable goods</string>
-    <string name="recycle_info_category1_desc">including intact or repairable home or industrial appliances; household goods; clothing; intact materials in demolition debris, such as lumber; building materials such as doors, windows, cabinets, and sinks; business supplies and equipment; lighting fixtures; and any manufactured item or naturally occurring object that can be repaired or used again as is.</string>
-    <string name="recycle_info_category2">Paper</string>
-    <string name="recycle_info_category2_desc">including newsprint; ledger paper; computer paper; corrugated cardboard; and mixed paper.</string>
+    <string name="recycle_info_category1">Paper</string>
+    <string name="recycle_info_category1_desc">including newsprint; ledger paper; computer paper; corrugated cardboard; and mixed paper.</string>
+    <string name="recycle_info_category2">Reusable goods</string>
+    <string name="recycle_info_category2_desc">including intact or repairable home or industrial appliances; household goods; clothing; intact materials in demolition debris, such as lumber; building materials such as doors, windows, cabinets, and sinks; business supplies and equipment; lighting fixtures; and any manufactured item or naturally occurring object that can be repaired or used again as is.</string>
     <string name="recycle_info_category3">Metals</string>
     <string name="recycle_info_category3_desc">including both ferrous and nonferrous, including cans; parts from abandoned vehicles; plumbing; fences; metal doors and screens; tools; machinery; and any other discarded metal objects.</string>
     <string name="recycle_info_category4">Glass</string>
@@ -45,7 +45,7 @@
     <string name="recycle_info_category12">Chemicals</string>
     <string name="recycle_info_category12_desc">including acids; bases; solvents; fuels; lubricating oils; and medicines.</string>
     <string name="weight_kg">Weight (kg)</string>
-    <string name="volume_m_cubed"><![CDATA[Volume (m<sup>3</sup>)]]></string>
+    <string name="volume_m_cubed">Volume (m&lt;sup&gt;3&lt;/sup&gt;)</string>
     <string name="home">Home</string>
     <string name="my_items">My items</string>
     <string name="gallery">Gallery</string>
@@ -58,4 +58,6 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="choose_category">Recycle category:</string>
+    <string name="add_an_item">Add an item</string>
 </resources>
