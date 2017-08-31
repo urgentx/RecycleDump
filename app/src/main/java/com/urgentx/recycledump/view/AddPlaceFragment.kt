@@ -15,7 +15,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import com.urgentx.recycledump.R
+import com.urgentx.recycledump.generateCategories
+import com.urgentx.recycledump.generateCategoryNames
 import com.urgentx.recycledump.presenter.AddPlacePresenter
+import com.urgentx.recycledump.util.MultiSelectSpinner
 import com.urgentx.recycledump.util.Place
 import com.urgentx.recycledump.util.adapter.CategoryListAdapter
 import com.urgentx.recycledump.view.IView.IAddPlaceView
@@ -24,6 +27,7 @@ import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
 class AddPlaceFragment : IAddPlaceView, DialogFragment() {
 
@@ -53,22 +57,16 @@ class AddPlaceFragment : IAddPlaceView, DialogFragment() {
         // Inflate the layout for this fragment
         val view = inflater!!.inflate(R.layout.fragment_add_place, container, false)
 
-        val categories = arrayListOf("Reusable goods", "Paper", "Metals", "Glass")
-        val selected = ArrayList<Boolean>()
-        selected.add(false)
-        selected.add(false)
-        selected.add(false)
-        selected.add(false)
+        val categories = generateCategoryNames(activity)
 
-        val categoriesLv = view.findViewById(R.id.addPlaceCategory) as ListView
-        val categoriesAdapter = CategoryListAdapter(activity, R.layout.category_row, categories, selected)
-        categoriesLv.adapter = categoriesAdapter
+        val msSpinner = view.findViewById(R.id.addPlaceMultiSelectSpinner) as MultiSelectSpinner
+        msSpinner.setItems(categories)
 
         val placeName = view.findViewById(R.id.addPlaceName) as EditText
         val placeType = view.findViewById(R.id.addPlaceType) as ToggleButton
 
         (view.findViewById(R.id.addPlaceSubmitBtn) as Button).setOnClickListener({
-            presenter.savePlace(Place(placeName.text.toString(), placeType.isChecked.compareTo(false), 3, placeLat, placeLong, ""), currentPhotoPath)
+            presenter.savePlace(Place(placeName.text.toString(), placeType.isChecked.compareTo(false), ArrayList(msSpinner.selectedIndicies), placeLat, placeLong, ""), currentPhotoPath)
         })
 
         (view.findViewById(R.id.addPlaceCancelBtn) as Button).setOnClickListener({

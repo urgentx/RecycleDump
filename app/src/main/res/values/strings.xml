@@ -39,7 +39,7 @@
     <string name="recycle_info_category9">Wood</string>
     <string name="recycle_info_category9_desc">including unreusable lumber; tree rounds; and pallets.</string>
     <string name="recycle_info_category10">Ceramics</string>
-    <string name="recycle_info_category10_desc">including rock; tile; china; brick; concrete; plaster; and asphalt.</string>
+    <string name="recycle_info_category10_desc">\nincluding rock; tile; china; brick; concrete; plaster; and asphalt.</string>
     <string name="recycle_info_category11">Soils</string>
     <string name="recycle_info_category11_desc">including excavation soils from barren or developed land; and excess soils from people's yards.</string>
     <string name="recycle_info_category12">Chemicals</string>

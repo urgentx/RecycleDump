@@ -7,15 +7,15 @@ class Place : Parcelable {
 
     var name: String = "Undefined place"
     var type: Int = 0
-    var category: Int = 0
+    var categories: ArrayList<Int>
     var lat: Double = 0.0
     var long: Double = 0.0
     var img: String = ""
 
-   constructor(name: String, type: Int, category: Int, lat: Double, long: Double, img: String){
+   constructor(name: String, type: Int, categories: ArrayList<Int>, lat: Double, long: Double, img: String){
        this.name = name
        this.type = type
-       this.category = category
+       this.categories = categories
        this.lat = lat
        this.long = long
        this.img = img
@@ -24,7 +24,7 @@ class Place : Parcelable {
     constructor(){
         this.name = "Undefined place"
         this.type = 0
-        this.category = 0
+        this.categories = ArrayList()
         this.lat = 0.0
         this.long = 0.0
         this.img = ""
@@ -32,7 +32,7 @@ class Place : Parcelable {
     constructor(parcel: Parcel) : this() {
         name = parcel.readString()
         type = parcel.readValue(Int::class.java.classLoader) as Int
-        category = parcel.readValue(Int::class.java.classLoader) as Int
+        categories = parcel.readValue(ArrayList::class.java.classLoader) as ArrayList<Int>
         lat = parcel.readValue(Double::class.java.classLoader) as Double
         long = parcel.readValue(Double::class.java.classLoader) as Double
         img = parcel.readString()
@@ -41,7 +41,7 @@ class Place : Parcelable {
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(name)
         parcel.writeValue(type)
-        parcel.writeValue(category)
+        parcel.writeValue(categories)
         parcel.writeValue(lat)
         parcel.writeValue(long)
         parcel.writeString(img)

@@ -65,6 +65,12 @@
         android:labelFor="@+id/addPlaceCategory"
         android:text="What types of item does this place accept?" />
 
+    <com.urgentx.recycledump.util.MultiSelectSpinner
+        android:id="@+id/addPlaceMultiSelectSpinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+
     <ListView
         android:id="@+id/addPlaceCategory"
         android:layout_width="match_parent"

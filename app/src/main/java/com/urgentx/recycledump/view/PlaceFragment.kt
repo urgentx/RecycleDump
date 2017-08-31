@@ -11,23 +11,24 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
 import com.urgentx.recycledump.R
+import com.urgentx.recycledump.generateCategoryNames
 
 class PlaceFragment :  DialogFragment() {
 
 
     private var mListener: OnFragmentInteractionListener? = null
 
-    private var placeName: String? = null
-    private var placeImg: String? = null
+    private var placeName = "<Place name>"
+    private var placeImg = "<Image URL>"
+    private var placeCategories = ArrayList<Int>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (arguments != null) {
             placeName = arguments.getString(ARG_PLACE_NAME)
             placeImg = arguments.getString(ARG_PLACE_IMG)
+            placeCategories = arguments.getIntegerArrayList(ARG_PLACE_CAT)
         }
-
-
     }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
@@ -41,6 +42,14 @@ class PlaceFragment :  DialogFragment() {
                 .load(placeImg)
                 .into(view.findViewById(R.id.placeImage) as ImageView)
 
+        val categories = generateCategoryNames(activity)
+        var categoriesString = "This place will accept your:\n"
+
+        for (position in placeCategories){
+            categoriesString += "\u2022 ${categories.get(position)}\n"
+        }
+
+        (view.findViewById(R.id.placeAccepts) as TextView).text = categoriesString
 
         return view
 
@@ -76,6 +85,7 @@ class PlaceFragment :  DialogFragment() {
     companion object {
         private val ARG_PLACE_NAME = "param_1"
         private val ARG_PLACE_IMG = "param_2"
+        private val ARG_PLACE_CAT = "param_3"
 
 
         /**
@@ -89,11 +99,12 @@ class PlaceFragment :  DialogFragment() {
          * @return A new instance of fragment AddPlaceFragment.
          */
         // TODO: Rename and change types and number of parameters
-        fun newInstance(placeName: String, placeImg: String): PlaceFragment {
+        fun newInstance(placeName: String, placeImg: String, placeCategories: ArrayList<Int>): PlaceFragment {
             val fragment = PlaceFragment()
             val args = Bundle()
             args.putString(ARG_PLACE_NAME, placeName)
             args.putString(ARG_PLACE_IMG, placeImg)
+            args.putIntegerArrayList(ARG_PLACE_CAT, placeCategories)
             fragment.arguments = args
             return fragment
         }

@@ -132,7 +132,7 @@ class PlacesActivity : FragmentActivity(), OnMapReadyCallback, GoogleApiClient.O
             places.filter {
                 it.name == marker?.title
             }.map({
-                PlaceFragment.newInstance(it.name, it.img)
+                PlaceFragment.newInstance(it.name, it.img, it.categories)
             }).forEach {
                 it.show(supportFragmentManager, "placefragtag")
             }
