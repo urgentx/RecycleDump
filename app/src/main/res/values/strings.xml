@@ -60,4 +60,6 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="choose_category">Recycle category:</string>
     <string name="add_an_item">Add an item</string>
+    <string name="collect_coming_soon">Collect (coming soon)</string>
+    <string name="contact">Contact</string>
 </resources>

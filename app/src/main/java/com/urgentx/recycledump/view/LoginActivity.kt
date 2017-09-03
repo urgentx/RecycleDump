@@ -29,6 +29,7 @@ class LoginActivity : AppCompatActivity() {
             if (auth.currentUser != null) {
                 // already signed in
                 startActivity(Intent(this, MainActivity::class.java))
+                finish()
             } else {
                 // not signed in, obviously!
                 signIn()

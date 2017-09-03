@@ -101,17 +101,15 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             R.id.nav_home -> {
                 for (fragment in supportFragmentManager.fragments) {
                     supportFragmentManager.beginTransaction().remove(fragment).commit()
-                }            }
-            R.id.nav_slideshow -> {
-
+                }
             }
-            R.id.nav_manage -> {
 
+            R.id.nav_collect -> {
             }
             R.id.nav_share -> {
 
             }
-            R.id.nav_send -> {
+            R.id.nav_contact -> {
 
             }
 
