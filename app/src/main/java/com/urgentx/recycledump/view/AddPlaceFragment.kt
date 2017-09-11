@@ -32,7 +32,6 @@ import kotlin.collections.ArrayList
 class AddPlaceFragment : IAddPlaceView, DialogFragment() {
 
     private val REQUEST_IMAGE_CAPTURE = 1
-
     var currentPhotoPath: String? = null
 
     private var placeLat: Double = 0.0

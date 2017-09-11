@@ -3,6 +3,7 @@ package com.urgentx.recycledump.model
 import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
+import com.google.firebase.storage.FirebaseStorage
 import com.urgentx.recycledump.model.callbacks.MyItemsCallback
 import com.urgentx.recycledump.util.Item
 
@@ -12,7 +13,6 @@ class MyItemsApiInteractor {
     private val database = FirebaseDatabase.getInstance()
     private val user = FirebaseAuth.getInstance().currentUser
 
-
     fun getItems(callback: MyItemsCallback) {
         val usersReference = database.getReference("users")
 
@@ -20,12 +20,11 @@ class MyItemsApiInteractor {
 
         val postListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-                // Get Post object and use the values to update the UI
                 val itemNames = ArrayList<String>()
-                for(itemSnapshot in dataSnapshot.children){
-                    var itemName = itemSnapshot.key
-                    Log.d("Firebase Database", "Item name is: $itemName")
-                    itemNames.add(itemName)
+                for (itemSnapshot in dataSnapshot.children) {
+                    var itemKey = itemSnapshot.key
+                    Log.d("Firebase Database", "Item name is: $itemKey")
+                    itemNames.add(itemKey)
                 }
                 retrieveItems(itemNames, callback)
             }
@@ -38,27 +37,41 @@ class MyItemsApiInteractor {
         usersReference.child(uid).child("items").addListenerForSingleValueEvent(postListener)
     }
 
-    private fun  retrieveItems(itemNames: ArrayList<String>, callback: MyItemsCallback) {
+    private fun retrieveItems(itemKeys: ArrayList<String>, callback: MyItemsCallback) {
         val itemsReference = database.getReference("items")
 
         val items = ArrayList<Item>()
 
-        var i = 0
+        var i = 0 //Keep track of # items
 
-        for(itemName in itemNames){
+        for (itemName in itemKeys) {
             val itemListener = object : ValueEventListener {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
                     var item = dataSnapshot.getValue(Item::class.java)
                     if (item != null) {
-                        Log.d("Firebase", "Item weight: ${item?.weight}")
-                        items.add(item)
-                    }
-                    if(i >= itemNames.size - 1){
-                        callback.itemsRetrieved(items)
-                    } else {
-                        i++
+                        //Get place image and add to Place object
+                        FirebaseStorage.getInstance().reference.child("itempics").child(dataSnapshot.key + ".jpg").downloadUrl
+                                .addOnSuccessListener { uri ->
+                                    item.img = uri.toString()
+                                    items.add(item)
+                                    if (i >= itemKeys.size - 1) {
+                                        callback.itemsRetrieved(items)
+                                    } else {
+                                        i++
+                                    }
+                                }
+                                .addOnFailureListener({
+                                    item.img = ""
+                                    items.add(item)
+                                    if (i >= itemKeys.size - 1) {
+                                        callback.itemsRetrieved(items)
+                                    } else {
+                                        i++
+                                    }
+                                })
                     }
                 }
+
                 override fun onCancelled(databaseError: DatabaseError) {
 
 

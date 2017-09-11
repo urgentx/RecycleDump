@@ -1,21 +1,35 @@
 package com.urgentx.recycledump.view
 
+import android.app.Activity
+import android.content.Intent
+import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.os.Environment
+import android.provider.MediaStore
+import android.support.v4.content.FileProvider
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.text.Html
 import android.widget.Toast
 import com.urgentx.recycledump.R
+import com.urgentx.recycledump.generateCategories
 import com.urgentx.recycledump.presenter.RecycleInfoPresenter
 import com.urgentx.recycledump.util.Item
 import com.urgentx.recycledump.util.adapter.CategorySpinnerAdapter
 import com.urgentx.recycledump.view.IView.IRecycleInfoView
 import kotlinx.android.synthetic.main.content_dump_info.*
-import kotlinx.android.synthetic.main.content_recycle_info.*
+import kotlinx.android.synthetic.main.fragment_add_place.*
+import java.io.File
+import java.io.IOException
+import java.text.SimpleDateFormat
+import java.util.*
 
 class DumpInfoActivity : AppCompatActivity(), IRecycleInfoView {
 
     private var presenter: RecycleInfoPresenter? = RecycleInfoPresenter()
+
+    private val REQUEST_IMAGE_CAPTURE = 1
+    var currentPhotoPath: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,36 +45,15 @@ class DumpInfoActivity : AppCompatActivity(), IRecycleInfoView {
             item.category = dumpInfoCategory.selectedItemPosition
             item.weight = Integer.parseInt(dumpInfoWeight.text.toString())
             item.volume = dumpInfoVolume.text.toString().toDouble()
-            presenter!!.saveItem(item)
+            presenter!!.saveItem(item, currentPhotoPath)        })
+
+        dumpInfoPhotoBtn.setOnClickListener({
+            dispatchTakePictureIntent()
         })
 
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
 
-        val category1 = "${getString(R.string.recycle_info_category1)} - ${getString(R.string.recycle_info_category1_desc)}"
-        val category2 = "${getString(R.string.recycle_info_category2)} - ${getString(R.string.recycle_info_category2_desc)}"
-        val category3 = "${getString(R.string.recycle_info_category3)} - ${getString(R.string.recycle_info_category3_desc)}"
-        val category4 = "${getString(R.string.recycle_info_category4)} - ${getString(R.string.recycle_info_category4_desc)}"
-        val category5 = "${getString(R.string.recycle_info_category5)} - ${getString(R.string.recycle_info_category5_desc)}"
-        val category6 = "${getString(R.string.recycle_info_category6)} - ${getString(R.string.recycle_info_category6_desc)}"
-        val category7 = "${getString(R.string.recycle_info_category7)} - ${getString(R.string.recycle_info_category7_desc)}"
-        val category8 = "${getString(R.string.recycle_info_category8)} - ${getString(R.string.recycle_info_category8_desc)}"
-        val category9 = "${getString(R.string.recycle_info_category9)} - ${getString(R.string.recycle_info_category9_desc)}"
-        val category10 = "${getString(R.string.recycle_info_category10)} - ${getString(R.string.recycle_info_category10_desc)}"
-        val category11 = "${getString(R.string.recycle_info_category11)} - ${getString(R.string.recycle_info_category11_desc)}"
-        val category12 = "${getString(R.string.recycle_info_category12)} - ${getString(R.string.recycle_info_category12_desc)}"
-
-        val categories = arrayOf(category1,
-                category2,
-                category3,
-                category4,
-                category5,
-                category6,
-                category7,
-                category8,
-                category9,
-                category10,
-                category11,
-                category12)
+        val categories = generateCategories(this)
         val adapter = CategorySpinnerAdapter(this, R.layout.category_spinner_row, R.id.categorySpinnerTitle, categories)
         dumpInfoCategory.adapter = adapter
     }
@@ -88,6 +81,44 @@ class DumpInfoActivity : AppCompatActivity(), IRecycleInfoView {
 
     override fun errorOccurred() {
         Toast.makeText(this, "Database error.", Toast.LENGTH_LONG).show()
+    }
+
+    private fun dispatchTakePictureIntent() {
+        val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        if (takePictureIntent.resolveActivity(packageManager) != null) {
+            //File where photo should go
+            var photoFile: File? = null
+            try {
+                photoFile = createImageFile()
+            } catch (e: IOException) {
+                //Error during file creation
+            }
+            if (photoFile != null) {
+                val photoURI = FileProvider.getUriForFile(this, "com.urgentx.recycledump.fileprovider",
+                        photoFile)
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
+                startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
+            }
+        }
+    }
+
+    private fun createImageFile(): File {
+        //Create an image file name
+        val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
+        val fileName = "JPEG_" + timeStamp + "_"
+        val storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+        val image = File.createTempFile(fileName, ".jpg", storageDir)
+        //Save file: path for use with ACTION_VIEW intents
+        currentPhotoPath = image.absolutePath
+        return image
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == Activity.RESULT_OK) {
+            Toast.makeText(this, "File saved at:" + currentPhotoPath, Toast.LENGTH_LONG).show()
+            val drawable = Drawable.createFromPath(currentPhotoPath)
+            dumpInfoImage.setImageDrawable(drawable)
+        }
     }
 
 }

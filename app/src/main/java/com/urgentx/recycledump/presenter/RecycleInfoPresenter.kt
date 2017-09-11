@@ -13,8 +13,8 @@ class RecycleInfoPresenter : RecycleInfoCallback {
     var itemSaved: Boolean = false
     var error: Int = 0
 
-    fun saveItem(item: Item){
-        apiInteractor.storeItem(this, item)
+    fun saveItem(item: Item, imgPath: String?) {
+        apiInteractor.storeItem(this, item, imgPath)
     }
 
     private fun updateView() {
@@ -24,7 +24,7 @@ class RecycleInfoPresenter : RecycleInfoCallback {
                 itemSaved = false
             }
 
-            if(error == 1){
+            if (error == 1) {
                 it.errorOccurred()
                 error = 0
             }

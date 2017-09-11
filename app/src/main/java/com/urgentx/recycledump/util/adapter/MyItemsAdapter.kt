@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import com.bumptech.glide.Glide
 import com.urgentx.recycledump.R
 import com.urgentx.recycledump.util.Item
 
@@ -22,7 +23,9 @@ class MyItemsAdapter(private var context: Context, private var items: MutableLis
         holder.name.text = item.name
         holder.volume.text = item.volume.toString()
         holder.weight.text = item.weight.toString()
-        holder.image.setImageResource(R.mipmap.ic_launcher_round)
+        Glide.with(context)
+                .load(item.img)
+                .into(holder.image)
     }
 
     override fun getItemCount(): Int {

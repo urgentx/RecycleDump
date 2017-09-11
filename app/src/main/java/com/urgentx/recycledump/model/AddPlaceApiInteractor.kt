@@ -42,7 +42,7 @@ class AddPlaceApiInteractor {
 
         //If user added pic, upload with place key to Firebase storage.
 
-        if(picUrl != null){
+        if(picUrl != null) {
             val picStorage = FirebaseStorage.getInstance().reference.child("placepics").child(key + ".jpg")
             val file = Uri.fromFile(File(picUrl))
             val uploadTask = picStorage.putFile(file)
@@ -50,9 +50,5 @@ class AddPlaceApiInteractor {
             uploadTask.addOnSuccessListener { callback.onBinarySuccess() }
                     .addOnFailureListener { callback.onBinaryError() }
         }
-    }
-
-    fun getPlaces(callback: PlaceCallback) {
-
     }
 }
