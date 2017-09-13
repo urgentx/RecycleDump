@@ -19,6 +19,8 @@
     <string name="no_internet_connection">No internet connection.</string>
     <string name="unknown_error">Oops, something went wrong.</string>
     <string name="please_describe_your_item">Please describe your item to find a place for it.</string>
+    <string name="recyclable">Recyclable</string>
+    <string name="non_recyclable">Non-recyclable</string>
 
     <string name="recycle_info_category1">Paper</string>
     <string name="recycle_info_category1_desc">including newsprint; ledger paper; computer paper; corrugated cardboard; and mixed paper.</string>

@@ -45,7 +45,7 @@ class RecycleInfoActivity : AppCompatActivity(), IRecycleInfoView {
         recycleInfoSaveBtn.setOnClickListener({
             var item = Item()
             item.name = recycleInfoName.text.toString()
-            item.type = 0
+            item.type = 0 //Recycle
             item.category = recycleInfoCategory.selectedItemPosition
             item.weight = Integer.parseInt(recycleInfoWeight.text.toString())
             item.volume = recycleInfoVolume.text.toString().toDouble()

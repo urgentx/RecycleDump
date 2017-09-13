@@ -41,7 +41,7 @@ class DumpInfoActivity : AppCompatActivity(), IRecycleInfoView {
         dumpInfoSaveBtn.setOnClickListener({
             var item = Item()
             item.name = dumpInfoName.text.toString()
-            item.type = 0
+            item.type = 1 //Dump
             item.category = dumpInfoCategory.selectedItemPosition
             item.weight = Integer.parseInt(dumpInfoWeight.text.toString())
             item.volume = dumpInfoVolume.text.toString().toDouble()

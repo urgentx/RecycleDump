@@ -12,4 +12,5 @@
 
     <dimen name="mediumText1">20sp</dimen>
     <dimen name="largeText1">30sp</dimen>
+    <dimen name="stdLine">0.5dp</dimen>
 </resources>

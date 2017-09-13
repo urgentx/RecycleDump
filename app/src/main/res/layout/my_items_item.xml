@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:orientation="vertical">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -14,29 +18,23 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/mediumText1"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/myItemCategory"
+            android:id="@+id/myItemType"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Recyclable"
-            android:textStyle="italic"
-            />
+            android:textStyle="italic" />
 
         <TextView
             android:id="@+id/myItemWeight"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            />
+            android:layout_height="wrap_content" />
 
         <TextView
             android:id="@+id/myItemVolume"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            />
-
-
+            android:layout_height="wrap_content" />
     </LinearLayout>
 
     <com.github.siyamed.shapeimageview.CircularImageView
@@ -44,10 +42,20 @@
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_alignParentRight="true"
-        android:elevation="3dp"
-        app:siBorderWidth="0dp"
         android:layout_centerVertical="true"
         android:layout_marginRight="@dimen/stdMargin2"
-        android:scaleType="centerCrop"/>
+        android:elevation="3dp"
+        android:scaleType="centerCrop"
+        app:siBorderWidth="0dp" />
 
-</RelativeLayout>
+    </RelativeLayout>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/stdLine"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="@dimen/stdMargin1"
+        android:background="@color/colorBtnGrey" />
+
+</LinearLayout>

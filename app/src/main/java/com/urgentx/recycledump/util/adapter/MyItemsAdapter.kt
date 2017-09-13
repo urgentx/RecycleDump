@@ -1,7 +1,9 @@
 package com.urgentx.recycledump.util.adapter
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.support.v7.widget.RecyclerView
+import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,8 +23,9 @@ class MyItemsAdapter(private var context: Context, private var items: MutableLis
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = items[position]
         holder.name.text = item.name
-        holder.volume.text = item.volume.toString()
-        holder.weight.text = item.weight.toString()
+        holder.type.text = if(item.type == 0) context.getString(R.string.recyclable) else context.getString(R.string.non_recyclable)
+        holder.volume.text = "${Html.fromHtml(context.getString(R.string.volume_m_cubed))}: ${item.volume}"
+        holder.weight.text = "${context.getString(R.string.weight_kg)}: ${item.weight}"
         Glide.with(context)
                 .load(item.img)
                 .into(holder.image)
@@ -32,20 +35,11 @@ class MyItemsAdapter(private var context: Context, private var items: MutableLis
         return items.size
     }
 
-    open class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-
-        var image: ImageView
-        var name: TextView
-        var weight: TextView
-        var volume: TextView
-
-        init {
-            image = view.findViewById(R.id.myItemImage) as ImageView
-            name = view.findViewById(R.id.myItemName) as TextView
-            weight = view.findViewById(R.id.myItemWeight) as TextView
-            volume = view.findViewById(R.id.myItemVolume) as TextView
-        }
+    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        var image: ImageView = view.findViewById(R.id.myItemImage) as ImageView
+        var name: TextView = view.findViewById(R.id.myItemName) as TextView
+        var type: TextView = view.findViewById(R.id.myItemType) as TextView
+        var weight: TextView = view.findViewById(R.id.myItemWeight) as TextView
+        var volume: TextView = view.findViewById(R.id.myItemVolume) as TextView
     }
-
-
 }
