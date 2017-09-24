@@ -28,7 +28,7 @@
                     android:id="@+id/dumpInfoImage"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:scaleType="centerCrop"/>
+                    android:scaleType="centerCrop" />
 
                 <android.support.design.widget.FloatingActionButton
                     android:id="@+id/dumpInfoPhotoBtn"
@@ -43,14 +43,20 @@
 
             </RelativeLayout>
 
-            <EditText
-                android:id="@+id/dumpInfoName"
+            <android.support.design.widget.TextInputLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/stdMargin1"
-                android:ems="10"
-                android:hint="@string/item_name"
-                android:inputType="textPersonName" />
+                app:errorEnabled="true">
+                <EditText
+                    android:id="@+id/dumpInfoName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/stdMargin1"
+                    android:ems="10"
+                    android:hint="@string/item_name"
+                    android:inputType="textPersonName" />
+            </android.support.design.widget.TextInputLayout>
+
 
             <TextView
                 android:layout_width="wrap_content"
@@ -64,21 +70,32 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/stdMargin1" />
 
-            <EditText
-                android:id="@+id/dumpInfoWeight"
+            <android.support.design.widget.TextInputLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/stdMargin1"
-                android:hint="@string/weight_kg"
-                android:inputType="number" />
+                app:errorEnabled="true">
+                <EditText
+                    android:id="@+id/dumpInfoWeight"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/stdMargin1"
+                    android:hint="@string/weight_kg"
+                    android:inputType="number" />
 
-            <EditText
-                android:id="@+id/dumpInfoVolume"
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/stdMargin1"
-                android:hint="@string/volume_m_cubed"
-                android:inputType="numberDecimal" />
+                app:errorEnabled="true">
+                <EditText
+                    android:id="@+id/dumpInfoVolume"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/stdMargin1"
+                    android:hint="@string/volume_m_cubed"
+                    android:inputType="numberDecimal" />
+            </android.support.design.widget.TextInputLayout>
 
         </LinearLayout>
 

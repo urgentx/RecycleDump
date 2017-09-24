@@ -46,8 +46,8 @@
     <string name="recycle_info_category11_desc">including excavation soils from barren or developed land; and excess soils from people's yards.</string>
     <string name="recycle_info_category12">Chemicals</string>
     <string name="recycle_info_category12_desc">including acids; bases; solvents; fuels; lubricating oils; and medicines.</string>
-    <string name="weight_kg">Weight (kg)</string>
-    <string name="volume_m_cubed">Volume (m&lt;sup&gt;3&lt;/sup&gt;)</string>
+    <string name="weight_kg">Weight (kilograms)</string>
+    <string name="volume_m_cubed">Volume (cubic meters)</string>
     <string name="home">Home</string>
     <string name="my_items">My items</string>
     <string name="gallery">Gallery</string>
@@ -64,4 +64,5 @@
     <string name="add_an_item">Add an item</string>
     <string name="collect_coming_soon">Collect (coming soon)</string>
     <string name="contact">Contact</string>
+    <string name="please_enter_a_valid_name">Please enter a valid name.</string>
 </resources>

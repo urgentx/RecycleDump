@@ -43,7 +43,5 @@ class RecycleInfoApiInteractor {
             uploadTask.addOnSuccessListener { callback.onSuccess() }
                     .addOnFailureListener { callback.onError() }
         }
-
-
     }
 }

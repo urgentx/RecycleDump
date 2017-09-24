@@ -10,18 +10,20 @@ import android.support.v4.content.FileProvider
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.text.Html
-import android.widget.ArrayAdapter
+import android.widget.Spinner
 import android.widget.Toast
 import android.widget.Toast.LENGTH_LONG
+import com.jakewharton.rxbinding2.widget.RxAdapterView
+import com.jakewharton.rxbinding2.widget.RxTextView
 import com.urgentx.recycledump.R
 import com.urgentx.recycledump.generateCategories
 import com.urgentx.recycledump.presenter.RecycleInfoPresenter
 import com.urgentx.recycledump.util.Item
 import com.urgentx.recycledump.util.adapter.CategorySpinnerAdapter
 import com.urgentx.recycledump.view.IView.IRecycleInfoView
-import kotlinx.android.synthetic.main.content_dump_info.*
+import io.reactivex.Observable
 import kotlinx.android.synthetic.main.content_recycle_info.*
-import kotlinx.android.synthetic.main.fragment_add_place.*
+import kotlinx.android.synthetic.main.nav_header_main2.*
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
@@ -41,7 +43,8 @@ class RecycleInfoActivity : AppCompatActivity(), IRecycleInfoView {
         val toolbar = findViewById(R.id.recycleInfoToolbar) as Toolbar
         setSupportActionBar(toolbar)
 
-        recycleInfoVolume.hint = Html.fromHtml(getString(R.string.volume_m_cubed))
+        setupValidation()
+
         recycleInfoSaveBtn.setOnClickListener({
             var item = Item()
             item.name = recycleInfoName.text.toString()
@@ -63,6 +66,54 @@ class RecycleInfoActivity : AppCompatActivity(), IRecycleInfoView {
         val adapter = CategorySpinnerAdapter(this, R.layout.category_spinner_row, R.id.categorySpinnerTitle, categories)
         recycleInfoCategory.adapter = adapter
     }
+
+    private fun setupValidation() {
+
+        val nameInputValid = RxTextView.afterTextChangeEvents(recycleInfoName)
+                .map {
+                    val input = it.view().text.takeIf { !it.isNullOrBlank() } ?: return@map false //Check if blank
+                    return@map true
+                }
+
+        val weightInputValid = RxTextView.afterTextChangeEvents(recycleInfoWeight)
+                .map {
+                    val input = it.view().text.takeIf { !it.isNullOrBlank() } ?: return@map false
+                    try {
+                        input.toString().toDouble()
+                        return@map true
+                    } catch (e: NumberFormatException) {
+                        return@map false
+                    }
+                }
+
+        val volumeInputValid = RxTextView.afterTextChangeEvents(recycleInfoVolume)
+                .map {
+                    val input = it.view().text.takeIf { !it.isNullOrBlank() } ?: return@map false
+                    try { //Check if number
+                        input.toString().toDouble()
+                        return@map true
+                    } catch (e: NumberFormatException) {
+                        return@map false
+                    }
+                }
+
+        //Subscribe error messages after we've typed something.
+        RxTextView.afterTextChangeEvents(recycleInfoName).skipInitialValue().take(1)
+                .subscribe {
+                    nameInputValid.subscribe { if (!it) recycleInfoName.error = "Enter a valid name." } }
+
+        RxTextView.afterTextChangeEvents(recycleInfoWeight).skipInitialValue().take(1)
+                .subscribe { weightInputValid.subscribe { if (!it) recycleInfoWeight.error = "Weight must be a number." } }
+
+        RxTextView.afterTextChangeEvents(recycleInfoVolume).skipInitialValue().take(1)
+                .subscribe { volumeInputValid.subscribe { if (!it) recycleInfoVolume.error = "Volume must be a number." } }
+
+        val allFieldsValid = Observable.combineLatest(arrayOf(nameInputValid, weightInputValid, volumeInputValid),
+                {return@combineLatest (it[0] as Boolean) && (it[1] as Boolean) && (it[2] as Boolean) })
+
+        allFieldsValid.subscribe{recycleInfoSaveBtn.isEnabled = it}
+    }
+
 
     override fun onResume() {
         super.onResume()
@@ -126,5 +177,5 @@ class RecycleInfoActivity : AppCompatActivity(), IRecycleInfoView {
             recycleInfoImage.setImageDrawable(drawable)
         }
     }
-
 }
+

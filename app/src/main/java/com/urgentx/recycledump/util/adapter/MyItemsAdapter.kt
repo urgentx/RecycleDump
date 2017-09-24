@@ -13,7 +13,6 @@ import com.bumptech.glide.Glide
 import com.urgentx.recycledump.R
 import com.urgentx.recycledump.util.Item
 
-
 class MyItemsAdapter(private var context: Context, private var items: MutableList<Item>, private var itemLayout: Int) : RecyclerView.Adapter<MyItemsAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ViewHolder {
