@@ -63,8 +63,9 @@ class MyItemsFragment : Fragment(), IMyItemsView {
     override fun itemsRetrieved(items: ArrayList<Item>) {
         myItemsList.setHasFixedSize(true)
         var adapter = MyItemsAdapter(activity, items, R.layout.my_items_item)
-        myItemsList.adapter = adapter
+        adapter.setHasStableIds(true)
         myItemsList.layoutManager = LinearLayoutManager(activity, VERTICAL, false)
+        myItemsList.adapter = adapter
     }
 
     override fun errorOccurred() {

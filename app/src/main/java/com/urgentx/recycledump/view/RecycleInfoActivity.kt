@@ -9,11 +9,8 @@ import android.provider.MediaStore
 import android.support.v4.content.FileProvider
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
-import android.text.Html
-import android.widget.Spinner
 import android.widget.Toast
 import android.widget.Toast.LENGTH_LONG
-import com.jakewharton.rxbinding2.widget.RxAdapterView
 import com.jakewharton.rxbinding2.widget.RxTextView
 import com.urgentx.recycledump.R
 import com.urgentx.recycledump.generateCategories
@@ -23,7 +20,6 @@ import com.urgentx.recycledump.util.adapter.CategorySpinnerAdapter
 import com.urgentx.recycledump.view.IView.IRecycleInfoView
 import io.reactivex.Observable
 import kotlinx.android.synthetic.main.content_recycle_info.*
-import kotlinx.android.synthetic.main.nav_header_main2.*
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
@@ -100,20 +96,19 @@ class RecycleInfoActivity : AppCompatActivity(), IRecycleInfoView {
         //Subscribe error messages after we've typed something.
         RxTextView.afterTextChangeEvents(recycleInfoName).skipInitialValue().take(1)
                 .subscribe {
-                    nameInputValid.subscribe { if (!it) recycleInfoName.error = "Enter a valid name." } }
+                    nameInputValid.subscribe { if (!it) recycleInfoName.error = "Enter a valid name" } }
 
         RxTextView.afterTextChangeEvents(recycleInfoWeight).skipInitialValue().take(1)
-                .subscribe { weightInputValid.subscribe { if (!it) recycleInfoWeight.error = "Weight must be a number." } }
+                .subscribe { weightInputValid.subscribe { if (!it) recycleInfoWeight.error = "Enter a valid weight" } }
 
         RxTextView.afterTextChangeEvents(recycleInfoVolume).skipInitialValue().take(1)
-                .subscribe { volumeInputValid.subscribe { if (!it) recycleInfoVolume.error = "Volume must be a number." } }
+                .subscribe { volumeInputValid.subscribe { if (!it) recycleInfoVolume.error = "Enter a valid volume" } }
 
         val allFieldsValid = Observable.combineLatest(arrayOf(nameInputValid, weightInputValid, volumeInputValid),
                 {return@combineLatest (it[0] as Boolean) && (it[1] as Boolean) && (it[2] as Boolean) })
 
         allFieldsValid.subscribe{recycleInfoSaveBtn.isEnabled = it}
     }
-
 
     override fun onResume() {
         super.onResume()

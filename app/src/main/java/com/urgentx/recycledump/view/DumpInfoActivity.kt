@@ -94,13 +94,13 @@ class DumpInfoActivity : AppCompatActivity(), IRecycleInfoView {
         //Subscribe error messages after we've typed something.
         RxTextView.afterTextChangeEvents(dumpInfoName).skipInitialValue().take(1)
                 .subscribe {
-                    nameInputValid.subscribe { if (!it) dumpInfoName.error = "Enter a valid name." } }
+                    nameInputValid.subscribe { if (!it) dumpInfoName.error = "Enter a valid name" } }
 
         RxTextView.afterTextChangeEvents(dumpInfoWeight).skipInitialValue().take(1)
-                .subscribe { weightInputValid.subscribe { if (!it) dumpInfoWeight.error = "Weight must be a number." } }
+                .subscribe { weightInputValid.subscribe { if (!it) dumpInfoWeight.error = "Enter a valid weight" } }
 
         RxTextView.afterTextChangeEvents(dumpInfoVolume).skipInitialValue().take(1)
-                .subscribe { volumeInputValid.subscribe { if (!it) dumpInfoVolume.error = "Volume must be a number." } }
+                .subscribe { volumeInputValid.subscribe { if (!it) dumpInfoVolume.error = "Enter a valid volume" } }
 
         val allFieldsValid = Observable.combineLatest(arrayOf(nameInputValid, weightInputValid, volumeInputValid),
                 {return@combineLatest (it[0] as Boolean) && (it[1] as Boolean) && (it[2] as Boolean) })

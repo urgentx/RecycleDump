@@ -1,52 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:animateLayoutChanges="true"
     android:orientation="vertical">
 
     <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-    <LinearLayout
+        android:id="@+id/myItemLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:animateLayoutChanges="true">
 
-        <TextView
-            android:id="@+id/myItemName"
+        <LinearLayout
+            android:id="@+id/myItemDetails"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/mediumText1"
-            android:textStyle="bold" />
+            android:layout_marginBottom="30dp"
+            android:orientation="vertical"
+            android:layout_centerVertical="true">
 
-        <TextView
-            android:id="@+id/myItemType"
+            <TextView
+                android:id="@+id/myItemName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/mediumText1"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/myItemType"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="italic" />
+
+            <TextView
+                android:id="@+id/myItemWeight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/myItemVolume"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <com.github.siyamed.shapeimageview.CircularImageView
+            android:id="@+id/myItemImage"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/stdMargin2"
+            android:elevation="3dp"
+            android:scaleType="centerCrop"
+            app:siBorderWidth="0dp" />
+
+        <Button
+            android:id="@+id/myItemCheckMap"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textStyle="italic" />
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="30dp"
+            android:layout_below="@id/myItemDetails"
+            android:layout_marginRight="@dimen/stdMargin2"
+            android:backgroundTint="@color/colorPrimary"
+            android:text="Check map"
+            android:visibility="gone" />
 
-        <TextView
-            android:id="@+id/myItemWeight"
+        <Button
+            android:id="@+id/myItemDelete"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <TextView
-            android:id="@+id/myItemVolume"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
-
-    <com.github.siyamed.shapeimageview.CircularImageView
-        android:id="@+id/myItemImage"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:layout_marginRight="@dimen/stdMargin2"
-        android:elevation="3dp"
-        android:scaleType="centerCrop"
-        app:siBorderWidth="0dp" />
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/myItemCheckMap"
+            android:layout_toLeftOf="@id/myItemCheckMap"
+            android:layout_marginRight="@dimen/stdMargin1"
+            android:text="Remove item"
+            android:visibility="gone" />
 
     </RelativeLayout>
 
