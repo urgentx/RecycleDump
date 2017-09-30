@@ -7,10 +7,12 @@ import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.RecyclerView.*
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import com.jakewharton.rxbinding2.widget.RxAdapter
 import com.urgentx.recycledump.R
 import com.urgentx.recycledump.presenter.MyItemsPresenter
 import com.urgentx.recycledump.util.Item
@@ -21,8 +23,8 @@ import kotlinx.android.synthetic.main.fragment_my_items.*
 
 class MyItemsFragment : Fragment(), IMyItemsView {
 
-
     private var presenter: MyItemsPresenter? = MyItemsPresenter()
+    private var adapter: MyItemsAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,8 +42,15 @@ class MyItemsFragment : Fragment(), IMyItemsView {
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        adapter = MyItemsAdapter(activity, ArrayList(), R.layout.my_items_item)
+        adapter?.setHasStableIds(true)
+        myItemsList.layoutManager = LinearLayoutManager(activity, VERTICAL, false)
+        myItemsList.adapter = adapter
         presenter?.getItems()
+
+        adapter?.deleteSubject?.subscribe {
+            Log.d("Items", "Delete this $it")
+            presenter?.deleteItem(it) }
 
     }
 
@@ -61,15 +70,15 @@ class MyItemsFragment : Fragment(), IMyItemsView {
     }
 
     override fun itemsRetrieved(items: ArrayList<Item>) {
-        myItemsList.setHasFixedSize(true)
-        var adapter = MyItemsAdapter(activity, items, R.layout.my_items_item)
-        adapter.setHasStableIds(true)
-        myItemsList.layoutManager = LinearLayoutManager(activity, VERTICAL, false)
-        myItemsList.adapter = adapter
+        adapter?.addItems(items.toTypedArray())
     }
 
     override fun errorOccurred() {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun itemDeleted(itemID: String) {
+        adapter?.removeItem(itemID)
     }
 
     companion object {

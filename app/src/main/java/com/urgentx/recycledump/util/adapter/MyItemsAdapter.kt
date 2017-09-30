@@ -12,14 +12,18 @@ import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
 import com.bumptech.glide.Glide
+import com.jakewharton.rxbinding2.view.RxView
 import com.urgentx.recycledump.R
 import com.urgentx.recycledump.util.Item
+import io.reactivex.subjects.PublishSubject
 
-class MyItemsAdapter(private var context: Context, private var items: MutableList<Item>, private var itemLayout: Int) : RecyclerView.Adapter<MyItemsAdapter.ViewHolder>() {
+class MyItemsAdapter(private var context: Context, private var items: ArrayList<Item>, private var itemLayout: Int) : RecyclerView.Adapter<MyItemsAdapter.ViewHolder>() {
+
+    val deleteSubject = PublishSubject.create<String>()!! //Bridge to view for button clicks, holds Item IDs.
+    val checkMapSubject = PublishSubject.create<Int>()!!
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ViewHolder {
         return ViewHolder(LayoutInflater.from(parent?.context).inflate(itemLayout, parent, false))
-
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -33,7 +37,12 @@ class MyItemsAdapter(private var context: Context, private var items: MutableLis
                 .load(item.img)
                 .into(holder.image)
 
-        if(holder.isExpanded){
+        holder.deleteItemBtn.setOnClickListener {
+            deleteSubject.onNext(item.id)
+            Log.d("myItems", "clicK!")
+        }
+
+        if (holder.isExpanded) {
             holder.checkMapBtn.visibility = View.VISIBLE
             holder.deleteItemBtn.visibility = View.VISIBLE
         } else {
@@ -43,8 +52,6 @@ class MyItemsAdapter(private var context: Context, private var items: MutableLis
         holder.itemLayout.setOnClickListener {
             holder.checkMapBtn.visibility = View.VISIBLE
             holder.deleteItemBtn.visibility = View.VISIBLE
-            holder.checkMapBtn.setOnClickListener{}
-            holder.deleteItemBtn.setOnClickListener{}
             holder.isExpanded = true
         }
     }
@@ -62,6 +69,16 @@ class MyItemsAdapter(private var context: Context, private var items: MutableLis
         return position
     }
 
+    fun addItems(items: Array<Item>) {
+        this.items.addAll(items)
+        notifyDataSetChanged()
+    }
+
+    fun removeItem(itemID: String) {
+        items.remove(items.find { it.id == itemID })
+        notifyDataSetChanged()
+    }
+
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         var image: ImageView = view.findViewById(R.id.myItemImage) as ImageView
         var name: TextView = view.findViewById(R.id.myItemName) as TextView
@@ -73,4 +90,6 @@ class MyItemsAdapter(private var context: Context, private var items: MutableLis
         var itemLayout: RelativeLayout = view.findViewById(R.id.myItemLayout) as RelativeLayout
         var isExpanded = false
     }
+
+
 }

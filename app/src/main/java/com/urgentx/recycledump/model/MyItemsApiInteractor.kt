@@ -4,6 +4,8 @@ import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
+import com.urgentx.recycledump.model.callbacks.BinaryCallback
+import com.urgentx.recycledump.model.callbacks.ItemDeletedCallback
 import com.urgentx.recycledump.model.callbacks.MyItemsCallback
 import com.urgentx.recycledump.util.Item
 
@@ -48,6 +50,7 @@ class MyItemsApiInteractor {
             val itemListener = object : ValueEventListener {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
                     var item = dataSnapshot.getValue(Item::class.java)
+                    item?.id = dataSnapshot.key
                     if (item != null) {
                         //Get place image and add to Place object
                         FirebaseStorage.getInstance().reference.child("itempics").child(dataSnapshot.key + ".jpg").downloadUrl
@@ -69,6 +72,8 @@ class MyItemsApiInteractor {
                                         i++
                                     }
                                 })
+                    } else {
+                        i++
                     }
                 }
 
@@ -79,5 +84,11 @@ class MyItemsApiInteractor {
             }
             itemsReference.child(itemName).addListenerForSingleValueEvent(itemListener)
         }
+    }
+
+    fun deleteItem (itemID: String, callback: ItemDeletedCallback){
+        val operation = database.reference.child("items").child(itemID).removeValue()
+        operation.addOnSuccessListener { callback.itemDeleted(itemID) }
+        operation.addOnFailureListener { callback.deleteError() }
     }
 }

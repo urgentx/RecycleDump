@@ -8,4 +8,6 @@ interface IMyItemsView {
 
     fun errorOccurred()
 
+    fun itemDeleted(itemID: String)
+
 }
