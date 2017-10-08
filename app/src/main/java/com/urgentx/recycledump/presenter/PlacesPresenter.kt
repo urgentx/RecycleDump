@@ -16,6 +16,7 @@ class PlacesPresenter : PlaceCallback {
 
     fun retrievePlaces(latitude: Double, longitude: Double) {
         apiInteractor.retrievePlaces(latitude, longitude, this)
+        apiInteractor.updateUserLocation(latitude, longitude, {}, {})
     }
 
     private fun updateView() {

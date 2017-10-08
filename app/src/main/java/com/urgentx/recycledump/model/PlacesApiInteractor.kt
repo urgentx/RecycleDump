@@ -4,6 +4,7 @@ import android.util.Log
 import com.firebase.geofire.GeoFire
 import com.firebase.geofire.GeoLocation
 import com.firebase.geofire.GeoQueryEventListener
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -25,12 +26,14 @@ class PlacesApiInteractor {
         geoFire.queryAtLocation(GeoLocation(latitude, longitude), 100.0).addGeoQueryEventListener(object : GeoQueryEventListener {
             override fun onGeoQueryReady() {
             }
+
             override fun onKeyEntered(key: String?, location: GeoLocation?) {
                 val locationQuery = database.getReference("places").child(key)
                 locationQuery.addValueEventListener(object : ValueEventListener {
                     override fun onDataChange(p0: DataSnapshot?) {
                         processGeoQueryResult(p0, key, callback)
                     }
+
                     override fun onCancelled(p0: DatabaseError?) {
                         Log.d("firebase", p0.toString())
                     }
@@ -49,7 +52,7 @@ class PlacesApiInteractor {
         })
     }
 
-    fun processGeoQueryResult(data: DataSnapshot?, key: String?, callback: PlaceCallback){
+    fun processGeoQueryResult(data: DataSnapshot?, key: String?, callback: PlaceCallback) {
         val place = data?.getValue(Place::class.java)
         if (place != null) {
             //Get place image and add to Place object
@@ -63,5 +66,20 @@ class PlacesApiInteractor {
                         callback.placeRetrieved(place)
                     })
         }
+    }
+
+    fun updateUserLocation(latitude: Double, longitude: Double, onSuccess: (Boolean) -> Any, onError: (Boolean) -> Any) {
+        val currentUserID = FirebaseAuth.getInstance().currentUser?.uid
+        val userLocationsRef = database.getReference("userlocations")
+        val geoFire = GeoFire(userLocationsRef)
+
+        geoFire.setLocation(currentUserID, GeoLocation(latitude, longitude),
+                { _, error ->
+                    if (error != null) {
+                        onError
+                    } else {
+                        onSuccess
+                    }
+                })
     }
 }

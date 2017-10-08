@@ -44,6 +44,7 @@ class PlacesActivity : FragmentActivity(), OnMapReadyCallback, GoogleApiClient.O
     private var mLocationPermissionGranted = false
     private var locationRetrieved = false
 
+    private var currentItemType: Int? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,6 +65,8 @@ class PlacesActivity : FragmentActivity(), OnMapReadyCallback, GoogleApiClient.O
         if (presenter == null) {
             presenter = PlacesPresenter()
         }
+
+        currentItemType = intent.getIntExtra(PLACE_ID_KEY, -1)
     }
 
     override fun onResume() {
@@ -216,17 +219,21 @@ class PlacesActivity : FragmentActivity(), OnMapReadyCallback, GoogleApiClient.O
         if(place.type == 0) {
             color = BitmapDescriptorFactory.HUE_GREEN
         }
+        if(place.categories.contains(currentItemType)) color = BitmapDescriptorFactory.HUE_VIOLET
+
         mMap?.addMarker(MarkerOptions().position(LatLng(place.lat, place.long))
                 .title(place.name)
                 .icon(BitmapDescriptorFactory.defaultMarker(color))
         )
     }
 
-
     override fun errorOccurred() {
     }
 
     override fun onFragmentInteraction(uri: Uri) {
     }
-}
 
+    companion object {
+       const val PLACE_ID_KEY = "placeidkey"
+    }
+}

@@ -26,7 +26,6 @@ class AddPlaceApiInteractor {
 
         val key = placesRef.push().key
 
-
         geoFire.setLocation(key, GeoLocation(place.lat, place.long),
                 { key, error ->
                     if (error != null) {

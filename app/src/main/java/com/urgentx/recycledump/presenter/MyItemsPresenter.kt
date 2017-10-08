@@ -19,7 +19,6 @@ class MyItemsPresenter : MyItemsCallback, ItemDeletedCallback{
     var deletedIDs = arrayListOf<String>()
 
     var itemSaved: Boolean = false
-    var itemDeleted = false
     var error: Int = 0
 
     fun getItems(){

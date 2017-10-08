@@ -5,7 +5,7 @@ apply plugin: 'kotlin-android-extensions'
 
 android {
     compileSdkVersion 25
-    buildToolsVersion "25.0.2"
+    buildToolsVersion '26.0.2'
     defaultConfig {
         applicationId "com.urgentx.recycledump"
         minSdkVersion 16
@@ -49,6 +49,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-database:11.0.4'
     compile 'com.google.android.gms:play-services-location:11.0.4'
     compile 'com.google.android.gms:play-services-places:11.0.4'
+    compile 'com.google.firebase:firebase-messaging:11.0.4'
     compile 'com.google.firebase:firebase-storage:11.0.4'
     compile 'com.google.android.gms:play-services-auth:11.0.4'
     implementation 'com.android.support:support-v4:25.4.0'

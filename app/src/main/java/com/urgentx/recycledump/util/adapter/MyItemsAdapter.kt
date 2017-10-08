@@ -19,8 +19,8 @@ import io.reactivex.subjects.PublishSubject
 
 class MyItemsAdapter(private var context: Context, private var items: ArrayList<Item>, private var itemLayout: Int) : RecyclerView.Adapter<MyItemsAdapter.ViewHolder>() {
 
-    val deleteSubject = PublishSubject.create<String>()!! //Bridge to view for button clicks, holds Item IDs.
-    val checkMapSubject = PublishSubject.create<Int>()!!
+    val deleteSubject = PublishSubject.create<String>() //Bridge to view for button clicks, holds Item IDs.
+    val checkMapSubject = PublishSubject.create<Int>()
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ViewHolder {
         return ViewHolder(LayoutInflater.from(parent?.context).inflate(itemLayout, parent, false))
@@ -37,10 +37,8 @@ class MyItemsAdapter(private var context: Context, private var items: ArrayList<
                 .load(item.img)
                 .into(holder.image)
 
-        holder.deleteItemBtn.setOnClickListener {
-            deleteSubject.onNext(item.id)
-            Log.d("myItems", "clicK!")
-        }
+        RxView.clicks(holder.deleteItemBtn).subscribe { deleteSubject.onNext(item.id) }
+        RxView.clicks(holder.checkMapBtn).subscribe { checkMapSubject.onNext(item.category) }
 
         if (holder.isExpanded) {
             holder.checkMapBtn.visibility = View.VISIBLE

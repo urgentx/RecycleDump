@@ -1,6 +1,7 @@
 package com.urgentx.recycledump.view
 
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.GridLayoutManager
@@ -18,6 +19,7 @@ import com.urgentx.recycledump.presenter.MyItemsPresenter
 import com.urgentx.recycledump.util.Item
 import com.urgentx.recycledump.util.adapter.MyItemsAdapter
 import com.urgentx.recycledump.view.IView.IMyItemsView
+import kotlinx.android.synthetic.main.content_main.*
 import kotlinx.android.synthetic.main.fragment_my_items.*
 
 
@@ -49,9 +51,13 @@ class MyItemsFragment : Fragment(), IMyItemsView {
         presenter?.getItems()
 
         adapter?.deleteSubject?.subscribe {
-            Log.d("Items", "Delete this $it")
             presenter?.deleteItem(it) }
 
+        adapter?.checkMapSubject?.subscribe {
+            val intent = Intent(activity, PlacesActivity::class.java)
+            intent.putExtra(PlacesActivity.PLACE_ID_KEY, it)
+            startActivity(intent)
+        }
     }
 
     override fun onResume() {

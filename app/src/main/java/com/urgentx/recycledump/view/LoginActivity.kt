@@ -12,8 +12,11 @@ import java.util.*
 import com.firebase.ui.auth.ErrorCodes
 import com.firebase.ui.auth.ResultCodes
 import com.firebase.ui.auth.IdpResponse
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.iid.FirebaseInstanceId
 import com.urgentx.recycledump.BuildConfig
 import com.urgentx.recycledump.R
+import com.urgentx.recycledump.util.firebase.MyFirebaseInstanceIdService
 
 
 class LoginActivity : AppCompatActivity() {
@@ -27,6 +30,7 @@ class LoginActivity : AppCompatActivity() {
         loginBtn.setOnClickListener({
             val auth = FirebaseAuth.getInstance()
             if (auth.currentUser != null) {
+                sendTokenToServer()
                 // already signed in
                 startActivity(Intent(this, MainActivity::class.java))
                 finish()
@@ -58,6 +62,7 @@ class LoginActivity : AppCompatActivity() {
 
             // Successfully signed in
             if (resultCode == ResultCodes.OK) {
+                sendTokenToServer()
                 startActivity(Intent(this, MainActivity::class.java))
                 finish()
                 return
@@ -80,6 +85,14 @@ class LoginActivity : AppCompatActivity() {
                 }
             }
             Toast.makeText(this, R.string.unknown_error, LENGTH_LONG).show()
+        }
+    }
+
+    private fun sendTokenToServer() {
+        val refreshedToken = FirebaseInstanceId.getInstance().token
+        FirebaseAuth.getInstance().currentUser?.let{
+            val userRef = FirebaseDatabase.getInstance().getReference("users").child(it.uid)
+            userRef.child("fcm_token").setValue(refreshedToken)
         }
     }
 }
