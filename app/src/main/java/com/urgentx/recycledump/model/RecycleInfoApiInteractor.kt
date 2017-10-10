@@ -2,10 +2,7 @@ package com.urgentx.recycledump.model
 
 import android.net.Uri
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
 import com.urgentx.recycledump.model.callbacks.RecycleInfoCallback
 import com.urgentx.recycledump.util.Item
@@ -30,12 +27,12 @@ class RecycleInfoApiInteractor {
         item.users = users
 
         itemsReference.child(key).setValue(item).addOnFailureListener({
-                    callback.onError()
-                })
+            callback.onError()
+        })
 
-        usersReference.child(uid).child("items").child(key).setValue(true)
+        usersReference.child(uid).child("items").child(key).setValue(item.category)
 
-        if(imgPath != null) {
+        if (imgPath != null) {
             val picStorage = FirebaseStorage.getInstance().reference.child("itempics").child(key + ".jpg")
             val file = Uri.fromFile(File(imgPath))
             val uploadTask = picStorage.putFile(file)

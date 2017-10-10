@@ -59,7 +59,7 @@ public class MultiSelectSpinner extends android.support.v7.widget.AppCompatSpinn
     public MultiSelectSpinner(Context context, AttributeSet attrs) {
         super(context, attrs);
 
-        _proxyAdapter = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item);
+        _proxyAdapter = new ArrayAdapter<>(context, android.R.layout.simple_spinner_item);
         super.setAdapter(_proxyAdapter);
     }
 
