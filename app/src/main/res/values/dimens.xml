@@ -10,6 +10,7 @@
     <dimen name="nav_header_height">176dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
 
+    <dimen name="smallText2">18sp</dimen>
     <dimen name="mediumText1">20sp</dimen>
     <dimen name="largeText1">30sp</dimen>
     <dimen name="stdLine">0.5dp</dimen>

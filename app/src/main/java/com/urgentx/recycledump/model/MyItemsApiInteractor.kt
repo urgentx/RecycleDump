@@ -2,9 +2,11 @@ package com.urgentx.recycledump.model
 
 import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.*
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
-import com.urgentx.recycledump.model.callbacks.BinaryCallback
 import com.urgentx.recycledump.model.callbacks.ItemDeletedCallback
 import com.urgentx.recycledump.model.callbacks.MyItemsCallback
 import com.urgentx.recycledump.util.Item

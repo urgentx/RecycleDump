@@ -24,21 +24,17 @@ class LoginActivity : AppCompatActivity() {
     private val RC_SIGN_IN = 123
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        val auth = FirebaseAuth.getInstance()
+        if (auth.currentUser != null) {
+            sendTokenToServer()
+            // already signed in
+            startActivity(Intent(this, MainActivity::class.java))
+            finish()
+        }
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-        loginBtn.setOnClickListener({
-            val auth = FirebaseAuth.getInstance()
-            if (auth.currentUser != null) {
-                sendTokenToServer()
-                // already signed in
-                startActivity(Intent(this, MainActivity::class.java))
-                finish()
-            } else {
-                // not signed in, obviously!
-                signIn()
-            }
-        })
+        loginBtn.setOnClickListener{signIn()}
     }
 
     private fun signIn() {

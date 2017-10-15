@@ -16,15 +16,13 @@
         android:required="true" />
 
     <application
-        tools:replace="icon"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-       >
-
+        tools:replace="icon">
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="com.urgentx.recycledump.fileprovider"
@@ -33,7 +31,6 @@
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
-
         </provider>
 
         <activity
@@ -85,15 +82,13 @@
             </intent-filter>
         </activity>
 
-        <service
-            android:name="com.urgentx.recycledump.util.firebase.MyFirebaseMessagingService">
+        <service android:name=".util.firebase.MyFirebaseMessagingService">
             <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-
         <service
-            android:name="com.urgentx.recycledump.util.firebase.MyFirebaseInstanceIdService"
+            android:name=".util.firebase.MyFirebaseInstanceIdService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
@@ -103,11 +98,14 @@
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
             android:resource="@drawable/ic_dump" />
-
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_color"
             android:resource="@color/colorPrimary" />
 
+        <activity android:name=".view.SettingsActivity"
+            android:parentActivityName=".view.MainActivity"
+            android:label="@string/title_activity_settings">
+        </activity>
     </application>
 
 </manifest>
