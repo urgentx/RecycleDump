@@ -36,11 +36,11 @@ class PlaceFragment :  DialogFragment() {
         // Inflate the layout for this fragment
         val view = inflater!!.inflate(R.layout.fragment_place, container, false)
 
-        (view.findViewById(R.id.placeName) as TextView).text = placeName
+        (view.findViewById<TextView>(R.id.placeName)).text = placeName
 
         Glide.with(activity)
                 .load(placeImg)
-                .into(view.findViewById(R.id.placeImage) as ImageView)
+                .into(view.findViewById<ImageView>(R.id.placeImage))
 
         val categories = generateCategoryNames(activity)
         var categoriesString = "This place will accept your:\n"
@@ -49,7 +49,7 @@ class PlaceFragment :  DialogFragment() {
             categoriesString += "\u2022 ${categories.get(position)}\n"
         }
 
-        (view.findViewById(R.id.placeAccepts) as TextView).text = categoriesString
+        (view.findViewById<TextView>(R.id.placeAccepts)).text = categoriesString
 
         return view
 

@@ -19,6 +19,7 @@ import com.urgentx.recycledump.util.Item
 import com.urgentx.recycledump.util.adapter.CategorySpinnerAdapter
 import com.urgentx.recycledump.view.IView.IRecycleInfoView
 import io.reactivex.Observable
+import kotlinx.android.synthetic.main.activity_recycle_info.*
 import kotlinx.android.synthetic.main.content_recycle_info.*
 import java.io.File
 import java.io.IOException
@@ -36,8 +37,7 @@ class RecycleInfoActivity : AppCompatActivity(), IRecycleInfoView {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_recycle_info)
-        val toolbar = findViewById(R.id.recycleInfoToolbar) as Toolbar
-        setSupportActionBar(toolbar)
+        setSupportActionBar(recycleInfoToolbar)
 
         setupValidation()
 

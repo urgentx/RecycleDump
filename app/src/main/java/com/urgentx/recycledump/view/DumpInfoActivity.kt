@@ -19,6 +19,7 @@ import com.urgentx.recycledump.util.Item
 import com.urgentx.recycledump.util.adapter.CategorySpinnerAdapter
 import com.urgentx.recycledump.view.IView.IRecycleInfoView
 import io.reactivex.Observable
+import kotlinx.android.synthetic.main.activity_dump_info.*
 import kotlinx.android.synthetic.main.content_dump_info.*
 import kotlinx.android.synthetic.main.content_recycle_info.*
 import kotlinx.android.synthetic.main.fragment_add_place.*
@@ -37,8 +38,7 @@ class DumpInfoActivity : AppCompatActivity(), IRecycleInfoView {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dump_info)
-        val toolbar = findViewById(R.id.dumpInfoToolbar) as Toolbar
-        setSupportActionBar(toolbar)
+        setSupportActionBar(dumpInfoToolbar)
 
         setupValidation()
 

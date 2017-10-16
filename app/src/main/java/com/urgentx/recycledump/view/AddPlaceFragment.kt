@@ -58,21 +58,21 @@ class AddPlaceFragment : IAddPlaceView, DialogFragment() {
 
         val categories = generateCategoryNames(activity)
 
-        val msSpinner = view.findViewById(R.id.addPlaceMultiSelectSpinner) as MultiSelectSpinner
+        val msSpinner = view.findViewById<MultiSelectSpinner>(R.id.addPlaceMultiSelectSpinner)
         msSpinner.setItems(categories)
 
-        val placeName = view.findViewById(R.id.addPlaceName) as EditText
-        val placeType = view.findViewById(R.id.addPlaceType) as ToggleButton
+        val placeName = view.findViewById<EditText>(R.id.addPlaceName)
+        val placeType = view.findViewById<ToggleButton>(R.id.addPlaceType)
 
-        (view.findViewById(R.id.addPlaceSubmitBtn) as Button).setOnClickListener({
+        (view.findViewById<Button>(R.id.addPlaceSubmitBtn)).setOnClickListener({
             presenter.savePlace(Place(placeName.text.toString(), placeType.isChecked.compareTo(false), ArrayList(msSpinner.selectedIndicies), placeLat, placeLong, ""), currentPhotoPath)
         })
 
-        (view.findViewById(R.id.addPlaceCancelBtn) as Button).setOnClickListener({
+        (view.findViewById<Button>(R.id.addPlaceCancelBtn)).setOnClickListener({
             dismiss()
         })
 
-        view.findViewById(R.id.addPlacePhotoBtn).setOnClickListener { dispatchTakePictureIntent() }
+        view.findViewById<View>(R.id.addPlacePhotoBtn).setOnClickListener { dispatchTakePictureIntent() }
 
         return view
 

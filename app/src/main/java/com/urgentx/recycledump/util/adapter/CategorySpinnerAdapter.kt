@@ -16,12 +16,12 @@ class CategorySpinnerAdapter(context: Context?, resource: Int, textViewResourceI
 
         return if (convertView == null) { //If new item, construct it
             val view = layoutInflater.inflate(resourceId, parent, false) as LinearLayout
-            (view.findViewById(R.id.categorySpinnerTitle) as TextView).text = getItem(position)
+            (view.findViewById<TextView>(R.id.categorySpinnerTitle)).text = getItem(position)
             setupIcon(position, view)
             view
         } else { //If item already exists, update its values and reuse it.
             val view = convertView as LinearLayout
-            (view.findViewById(R.id.categorySpinnerTitle) as TextView).text = getItem(position)
+            (view.findViewById<TextView>(R.id.categorySpinnerTitle)).text = getItem(position)
             setupIcon(position, view)
             view
         }
@@ -30,12 +30,12 @@ class CategorySpinnerAdapter(context: Context?, resource: Int, textViewResourceI
     override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup?): View {
         return if (convertView == null) { //If new item, construct it
             val view = layoutInflater.inflate(resourceId, parent, false) as LinearLayout
-            (view.findViewById(R.id.categorySpinnerTitle) as TextView).text = getItem(position)
+            (view.findViewById<TextView>(R.id.categorySpinnerTitle)).text = getItem(position)
             setupIcon(position, view)
             view
         } else { //If item already exists, update its values and reuse it.
             val view = convertView as LinearLayout
-            (view.findViewById(R.id.categorySpinnerTitle) as TextView).text = getItem(position)
+            (view.findViewById<TextView>(R.id.categorySpinnerTitle)).text = getItem(position)
             setupIcon(position, view)
             view
         }
@@ -57,7 +57,7 @@ class CategorySpinnerAdapter(context: Context?, resource: Int, textViewResourceI
             10 -> icon = R.drawable.ic_soils
             11 -> icon = R.drawable.ic_chemicals
         }
-        (view.findViewById(R.id.categorySpinnerIcon) as ImageView).setImageResource(icon)
+        (view.findViewById<ImageView>(R.id.categorySpinnerIcon)).setImageResource(icon)
     }
 
     override fun getCount(): Int {

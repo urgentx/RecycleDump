@@ -27,7 +27,7 @@ class CategoryListAdapter(context: Context, resource: Int, objects: ArrayList<St
 
             val view = mLayoutInflater.inflate(mResourceId, parent, false) as RelativeLayout
 
-            category = view.findViewById(R.id.category_row_ctv) as CheckedTextView
+            category = view.findViewById<CheckedTextView>(R.id.category_row_ctv)
 
             category.setOnClickListener({
                 (category as CheckedTextView).toggle()
@@ -38,7 +38,7 @@ class CategoryListAdapter(context: Context, resource: Int, objects: ArrayList<St
         } else { //If item already exists, update its values and reuse it.
             val view = convertView as RelativeLayout
 
-            category = view.findViewById(R.id.category_row_ctv) as CheckedTextView
+            category = view.findViewById<CheckedTextView>(R.id.category_row_ctv)
             category.isChecked = selected[position]
             category.setOnClickListener({
                 (category as CheckedTextView).toggle()

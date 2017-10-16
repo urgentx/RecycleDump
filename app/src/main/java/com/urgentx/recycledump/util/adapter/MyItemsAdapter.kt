@@ -78,14 +78,14 @@ class MyItemsAdapter(private var context: Context, private var items: ArrayList<
     }
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        var image: ImageView = view.findViewById(R.id.myItemImage) as ImageView
-        var name: TextView = view.findViewById(R.id.myItemName) as TextView
-        var type: TextView = view.findViewById(R.id.myItemType) as TextView
-        var weight: TextView = view.findViewById(R.id.myItemWeight) as TextView
-        var volume: TextView = view.findViewById(R.id.myItemVolume) as TextView
-        var checkMapBtn: Button = view.findViewById(R.id.myItemCheckMap) as Button
-        var deleteItemBtn: Button = view.findViewById(R.id.myItemDelete) as Button
-        var itemLayout: RelativeLayout = view.findViewById(R.id.myItemLayout) as RelativeLayout
+        var image: ImageView = view.findViewById<ImageView>(R.id.myItemImage)
+        var name: TextView = view.findViewById<TextView>(R.id.myItemName)
+        var type: TextView = view.findViewById<TextView>(R.id.myItemType)
+        var weight: TextView = view.findViewById<TextView>(R.id.myItemWeight)
+        var volume: TextView = view.findViewById<TextView>(R.id.myItemVolume)
+        var checkMapBtn: Button = view.findViewById<Button>(R.id.myItemCheckMap)
+        var deleteItemBtn: Button = view.findViewById<Button>(R.id.myItemDelete)
+        var itemLayout: RelativeLayout = view.findViewById<RelativeLayout>(R.id.myItemLayout)
         var isExpanded = false
     }
 
