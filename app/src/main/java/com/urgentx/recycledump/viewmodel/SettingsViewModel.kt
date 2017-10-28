@@ -1,26 +1,44 @@
 package com.urgentx.recycledump.viewmodel
 
 import android.arch.lifecycle.ViewModel
-import android.util.Log
+import com.urgentx.recycledump.model.Settings
 import com.urgentx.recycledump.model.SettingsApiInteractor
 import com.urgentx.recycledump.util.firebase.FirebaseResult
 import io.reactivex.Observable
 
 
-class SettingsViewModel : ViewModel {
+class SettingsViewModel//Only want errors//Only want success
+(settingsChange: Observable<Settings>) : ViewModel() {
 
-    val settingsChangeSuccess: Observable<Int>
+    val settings: Observable<Settings>
+    val error: Observable<Int>
 
-    constructor(settingsChange: Observable<Int>){
+    init {
         val apiInteractor = SettingsApiInteractor()
-
-        settingsChangeSuccess = settingsChange.filter { it == 0 }
-                .flatMap { apiInteractor.updateEmailPush(true) }
-                .filter{ it == FirebaseResult.SUCCESS }
-                .map { 0 }
-
-        settingsChange.subscribe { Log.d("Settings", "Switch clicked") }
+        val settingsResults = apiInteractor.retrieveSettings()
+        settings = settingsResults.filter { //Only want success
+            when (it){
+                is FirebaseResult.Success ->  true
+                is FirebaseResult.Error ->  false
+            }
+        }.map {
+            when (it) {
+                is FirebaseResult.Success -> it.result as Settings
+                is FirebaseResult.Error ->  Settings(true, true, 150)
+            }
+        }.take(1)
+        error = settingsResults.filter { //Only want errors
+            when (it){
+                is FirebaseResult.Success ->  true
+                is FirebaseResult.Error ->  false
+            }
+        }.map {
+            when (it) {
+                is FirebaseResult.Success -> FirebaseResult.NETWORK_ERROR
+                is FirebaseResult.Error ->  it.type
+            }
+        }
+        settingsChange.subscribe { apiInteractor.updateSettings(it) }
     }
-
 
 }

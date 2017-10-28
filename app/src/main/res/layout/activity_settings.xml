@@ -37,7 +37,8 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center_vertical"
-            android:paddingBottom="@dimen/stdMargin2">
+            android:paddingBottom="@dimen/stdMargin2"
+            android:baselineAligned="false">
             
             <LinearLayout
                 android:layout_width="0dp"
@@ -101,6 +102,7 @@
                 android:text="@string/e_mail"/>
 
             <Switch
+                android:id="@+id/settings_email_sw"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.1"/>
@@ -142,9 +144,12 @@
             </LinearLayout>
 
             <SeekBar
+                android:id="@+id/settings_radius_sb"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.5" />
+                android:layout_weight="0.5"
+                android:max="150"/>
+
 
 
         </LinearLayout>
