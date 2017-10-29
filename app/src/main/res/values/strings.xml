@@ -44,7 +44,7 @@
     <string name="recycle_info_category10">Ceramics</string>
     <string name="recycle_info_category10_desc">\nincluding rock; tile; china; brick; concrete; plaster; and asphalt.</string>
     <string name="recycle_info_category11">Soils</string>
-    <string name="recycle_info_category11_desc">including excavation soils from barren or developed land; and excess soils from people's yards.</string>
+    <string name="recycle_info_category11_desc">including excavation soils from barren or developed land; and excess soils from people\\'s yards.</string>
     <string name="recycle_info_category12">Chemicals</string>
     <string name="recycle_info_category12_desc">including acids; bases; solvents; fuels; lubricating oils; and medicines.</string>
     <string name="weight_kg">Weight (kilograms)</string>
@@ -73,4 +73,6 @@
     <string name="mobile">Mobile</string>
     <string name="receive_a_notification_whenever">Receive a notification whenever a new place accepting one of your current items becomes available</string>
     <string name="notifications">Notifications</string>
+    <string name="inspirational_quote">Recycling turns things into other things… magic!</string>
+    <string name="nature_emoji">Nature emoji</string>
 </resources>

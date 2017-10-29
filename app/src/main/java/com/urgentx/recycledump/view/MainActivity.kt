@@ -9,7 +9,6 @@ import android.support.v4.view.GravityCompat
 import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
-import android.transition.Explode
 import android.transition.Fade
 import android.transition.Scene
 import android.transition.TransitionManager
@@ -18,12 +17,14 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.ViewGroup
 import com.firebase.ui.auth.AuthUI
+import com.google.firebase.auth.FirebaseAuth
 import com.urgentx.recycledump.R
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.content_main.*
 import kotlinx.android.synthetic.main.main_scene1.*
 import kotlinx.android.synthetic.main.main_scene2.*
+import kotlinx.android.synthetic.main.nav_header_main2.*
 
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -80,6 +81,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.main_activity2, menu)
+        mainDrawerUserName.text = FirebaseAuth.getInstance().currentUser?.email
         return true
     }
 
