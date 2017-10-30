@@ -75,4 +75,6 @@
     <string name="notifications">Notifications</string>
     <string name="inspirational_quote">Recycling turns things into other things… magic!</string>
     <string name="nature_emoji">Nature emoji</string>
+    <string name="contact_p1">Your feedback and concerns are important to the developer. Please write to uxcedr@gmail.com</string>
+    <string name="contact_p2">If you are having technical difficulties or would like help with the app, try the Help section from the main screen.</string>
 </resources>
