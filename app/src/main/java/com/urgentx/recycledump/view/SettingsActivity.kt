@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import com.jakewharton.rxbinding2.widget.RxCompoundButton
 import com.jakewharton.rxbinding2.widget.RxSeekBar
+import com.jakewharton.rxbinding2.widget.RxTextView
 import com.urgentx.recycledump.R
 import com.urgentx.recycledump.model.Settings
 import com.urgentx.recycledump.viewmodel.SettingsViewModel
@@ -27,14 +28,15 @@ class SettingsActivity : AppCompatActivity() {
 
         val mobileNotifications = RxCompoundButton.checkedChanges(settings_mobile_sw)
         val emailNotifications = RxCompoundButton.checkedChanges(settings_email_sw)
-        val radiusSetting = RxSeekBar.changes(settings_radius_sb).throttleWithTimeout(2, TimeUnit.SECONDS)
+        val radiusSetting = RxSeekBar.changes(settings_radius_sb).share()
 
         val settings: Observable<Settings> = Observable.combineLatest(
                 mobileNotifications,
                 emailNotifications,
-                radiusSetting,
+                radiusSetting.throttleWithTimeout(2, TimeUnit.SECONDS),
                 Function3 { mobile: Boolean, email: Boolean, radius: Int -> Settings(mobile, email, radius) })
 
+       radiusSetting.map {"${it}km"}.subscribe(RxTextView.text(settings_radius_tv))
 
         val factory = SettingsViewModelFactory(settings)
 
@@ -45,7 +47,5 @@ class SettingsActivity : AppCompatActivity() {
             settings_email_sw.isChecked = t.nEmail
             settings_radius_sb.progress = t.radius
         }
-
     }
-
 }

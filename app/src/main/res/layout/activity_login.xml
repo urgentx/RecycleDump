@@ -23,7 +23,7 @@
         android:textSize="30sp"
         android:text="RecycleDump"
         android:layout_marginBottom="100dp"
-        android:textColor="@color/fontColorLight"/>
+        android:textColor="@color/textColorLight"/>
 
     <Button
         android:id="@+id/loginBtn"

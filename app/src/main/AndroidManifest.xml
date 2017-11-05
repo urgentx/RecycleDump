@@ -101,9 +101,18 @@
             android:name="com.google.firebase.messaging.default_notification_color"
             android:resource="@color/colorPrimary" />
 
-        <activity android:name=".view.SettingsActivity"
+        <activity
+            android:name=".view.SettingsActivity"
+            android:label="@string/title_activity_settings"
+            android:parentActivityName=".view.MainActivity" />
+        <activity
+            android:name=".view.HelpActivity"
+            android:label="@string/title_activity_help"
             android:parentActivityName=".view.MainActivity"
-            android:label="@string/title_activity_settings">
+            android:theme="@style/AppTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.urgentx.recycledump.view.MainActivity" />
         </activity>
     </application>
 

@@ -9,7 +9,8 @@
     <color name="fbBlue">#3b5998</color>
     <color name="lineColor">#bdbdbd</color>
 
-    <color name="fontColorLight">#FFFFFF</color>
+    <color name="textColorLight">#FFFFFF</color>
+    <color name="textColorDark">#000000</color>
 
     <color name="bgColorLight">#FFFFFF</color>
 </resources>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="?attr/actionBarSize"
+    android:gravity="start"
+    android:orientation="vertical"
+    android:padding="@dimen/stdMargin1"
+    tools:context="com.urgentx.recycledump.view.SettingsActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/how_does_the_app_work"
+            android:textColor="@color/textColorDark"
+            android:textSize="@dimen/mediumText1" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/stdMargin1"
+            android:text="@string/help_app_desc" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/stdMargin1"
+            android:text="@string/i_just_want_to_get_rid_of_something"
+            android:textColor="@color/textColorDark"
+            android:textSize="@dimen/mediumText1" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/stdMargin1"
+            android:text="@string/help_disposal_tutorial" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/stdMargin1"
+            android:text="@string/where_does_the_disposal_opportunity_data_come_from"
+            android:textColor="@color/textColorDark"
+            android:textSize="@dimen/mediumText1" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/stdMargin1"
+            android:text="@string/help_data_contribution" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/stdMargin1"
+            android:text="@string/what_s_coming_next_for_recycledump"
+            android:textColor="@color/textColorDark"
+            android:textSize="@dimen/mediumText1" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/stdMargin1"
+            android:text="@string/help_whats_next" />
+
+    </LinearLayout>
+
+
+</ScrollView>
