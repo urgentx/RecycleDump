@@ -10,6 +10,8 @@ import android.support.v4.content.FileProvider
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.text.Html
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.widget.Toast
 import com.jakewharton.rxbinding2.widget.RxTextView
 import com.urgentx.recycledump.R
@@ -49,7 +51,9 @@ class DumpInfoActivity : AppCompatActivity(), IRecycleInfoView {
             item.category = dumpInfoCategory.selectedItemPosition
             item.weight = Integer.parseInt(dumpInfoWeight.text.toString())
             item.volume = dumpInfoVolume.text.toString().toDouble()
-            presenter!!.saveItem(item, currentPhotoPath)        })
+            presenter!!.saveItem(item, currentPhotoPath)
+            dumpInfoProgressLayout.visibility = VISIBLE
+        })
 
         dumpInfoPhotoBtn.setOnClickListener({
             dispatchTakePictureIntent()
@@ -127,10 +131,12 @@ class DumpInfoActivity : AppCompatActivity(), IRecycleInfoView {
 
     override fun itemSaved() {
         Toast.makeText(this, "Item saved.", Toast.LENGTH_LONG).show()
+        finish()
     }
 
     override fun errorOccurred() {
         Toast.makeText(this, "Database error.", Toast.LENGTH_LONG).show()
+        dumpInfoProgressLayout.visibility = GONE
     }
 
     private fun dispatchTakePictureIntent() {

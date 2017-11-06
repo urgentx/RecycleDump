@@ -77,10 +77,11 @@ class MyItemsFragment : Fragment(), IMyItemsView {
 
     override fun itemsRetrieved(items: ArrayList<Item>) {
         adapter?.addItems(items.toTypedArray())
+        myItemsProgressBar.visibility = View.GONE
     }
 
     override fun errorOccurred() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        myItemsProgressBar.visibility = View.GONE
     }
 
     override fun itemDeleted(itemID: String) {
