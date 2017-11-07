@@ -41,11 +41,12 @@ class DumpInfoActivity : AppCompatActivity(), IRecycleInfoView {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dump_info)
         setSupportActionBar(dumpInfoToolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         setupValidation()
 
         dumpInfoSaveBtn.setOnClickListener({
-            var item = Item()
+            val item = Item()
             item.name = dumpInfoName.text.toString()
             item.type = 1 //Dump
             item.category = dumpInfoCategory.selectedItemPosition
@@ -58,8 +59,6 @@ class DumpInfoActivity : AppCompatActivity(), IRecycleInfoView {
         dumpInfoPhotoBtn.setOnClickListener({
             dispatchTakePictureIntent()
         })
-
-        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
 
         val categories = generateCategories(this)
         val adapter = CategorySpinnerAdapter(this, R.layout.category_spinner_row, R.id.categorySpinnerTitle, categories)

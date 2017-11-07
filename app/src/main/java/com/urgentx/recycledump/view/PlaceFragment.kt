@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.urgentx.recycledump.R
 import com.urgentx.recycledump.generateCategoryNames
 
@@ -40,6 +41,7 @@ class PlaceFragment :  DialogFragment() {
 
         Glide.with(activity)
                 .load(placeImg)
+                .apply(RequestOptions.placeholderOf(R.drawable.placeholder))
                 .into(view.findViewById<ImageView>(R.id.placeImage))
 
         val categories = generateCategoryNames(activity)
@@ -88,16 +90,6 @@ class PlaceFragment :  DialogFragment() {
         private val ARG_PLACE_CAT = "param_3"
 
 
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-
-         * @param param1 Parameter 1.
-         * *
-         * @param param2 Parameter 2.
-         * *
-         * @return A new instance of fragment AddPlaceFragment.
-         */
         // TODO: Rename and change types and number of parameters
         fun newInstance(placeName: String, placeImg: String, placeCategories: ArrayList<Int>): PlaceFragment {
             val fragment = PlaceFragment()
