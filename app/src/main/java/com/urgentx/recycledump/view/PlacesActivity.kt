@@ -100,11 +100,10 @@ class PlacesActivity : FragmentActivity(), OnMapReadyCallback, GoogleApiClient.O
                 // If request is cancelled, the result arrays are empty.
                 if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     mLocationPermissionGranted = true
+                    updateLocationUI()
                 }
             }
         }
-        updateLocationUI()
-
     }
 
     /**
@@ -162,13 +161,12 @@ class PlacesActivity : FragmentActivity(), OnMapReadyCallback, GoogleApiClient.O
         if (mLocationPermissionGranted) {
             mMap?.isMyLocationEnabled = true
             mMap?.uiSettings?.isMyLocationButtonEnabled = true
+            getDeviceLocation()
         } else {
             mMap?.isMyLocationEnabled = false
             mMap?.uiSettings?.isMyLocationButtonEnabled = false
             mLastKnownLocation = null
         }
-
-        getDeviceLocation()
     }
 
     private fun getDeviceLocation() {
