@@ -86,4 +86,5 @@
     <string name="help_data_contribution">Details of locations and collectors are contributed to the app in one of two ways: \n\n1. Us obtaining data directly from local councils and pulling it from location-based networks such as Neighbourly. \n\n2. Private collectors of waste/recyclables can upload their information through the app, as well as users who have found useful disposal opportunities themselves. This option enables a truly collaborative approach to recycling and waste management.</string>
     <string name="what_s_coming_next_for_recycledump">What\'s coming next for RecycleDump?</string>
     <string name="help_whats_next">Future releases will focus on collectors and locations; letting them create and manage their disposal opportunity. If you are such a user, you\'ll have access to fine-grained control of your listing.</string>
+    <string name="log_in">Log in</string>
 </resources>
