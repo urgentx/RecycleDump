@@ -13,4 +13,5 @@
     <color name="textColorDark">#000000</color>
 
     <color name="bgColorLight">#FFFFFF</color>
+    <color name="bgTransparentLight">#d6ffffff</color>
 </resources>

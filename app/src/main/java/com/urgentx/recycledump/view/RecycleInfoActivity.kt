@@ -9,6 +9,8 @@ import android.provider.MediaStore
 import android.support.v4.content.FileProvider
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.widget.Toast
 import android.widget.Toast.LENGTH_LONG
 import com.jakewharton.rxbinding2.widget.RxTextView
@@ -50,6 +52,7 @@ class RecycleInfoActivity : AppCompatActivity(), IRecycleInfoView {
             item.volume = recycleInfoVolume.text.toString().toDouble()
             item.img = ""
             presenter!!.saveItem(item, currentPhotoPath)
+            recycleInfoProgressLayout.visibility = VISIBLE
         })
 
         recycleInfoPhotoBtn.setOnClickListener({
@@ -129,10 +132,12 @@ class RecycleInfoActivity : AppCompatActivity(), IRecycleInfoView {
 
     override fun itemSaved() {
         Toast.makeText(this, "Item saved.", LENGTH_LONG).show()
+        finish()
     }
 
     override fun errorOccurred() {
         Toast.makeText(this, "Database error.", LENGTH_LONG).show()
+        recycleInfoProgressLayout.visibility = GONE
     }
 
     private fun dispatchTakePictureIntent() {

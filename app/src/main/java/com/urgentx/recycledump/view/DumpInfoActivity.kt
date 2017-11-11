@@ -10,6 +10,8 @@ import android.support.v4.content.FileProvider
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.text.Html
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.widget.Toast
 import com.jakewharton.rxbinding2.widget.RxTextView
 import com.urgentx.recycledump.R
@@ -39,23 +41,24 @@ class DumpInfoActivity : AppCompatActivity(), IRecycleInfoView {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dump_info)
         setSupportActionBar(dumpInfoToolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         setupValidation()
 
         dumpInfoSaveBtn.setOnClickListener({
-            var item = Item()
+            val item = Item()
             item.name = dumpInfoName.text.toString()
             item.type = 1 //Dump
             item.category = dumpInfoCategory.selectedItemPosition
             item.weight = Integer.parseInt(dumpInfoWeight.text.toString())
             item.volume = dumpInfoVolume.text.toString().toDouble()
-            presenter!!.saveItem(item, currentPhotoPath)        })
+            presenter!!.saveItem(item, currentPhotoPath)
+            dumpInfoProgressLayout.visibility = VISIBLE
+        })
 
         dumpInfoPhotoBtn.setOnClickListener({
             dispatchTakePictureIntent()
         })
-
-        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
 
         val categories = generateCategories(this)
         val adapter = CategorySpinnerAdapter(this, R.layout.category_spinner_row, R.id.categorySpinnerTitle, categories)
@@ -127,10 +130,12 @@ class DumpInfoActivity : AppCompatActivity(), IRecycleInfoView {
 
     override fun itemSaved() {
         Toast.makeText(this, "Item saved.", Toast.LENGTH_LONG).show()
+        finish()
     }
 
     override fun errorOccurred() {
         Toast.makeText(this, "Database error.", Toast.LENGTH_LONG).show()
+        dumpInfoProgressLayout.visibility = GONE
     }
 
     private fun dispatchTakePictureIntent() {
