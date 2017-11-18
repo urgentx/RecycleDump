@@ -87,4 +87,6 @@
     <string name="what_s_coming_next_for_recycledump">What\'s coming next for RecycleDump?</string>
     <string name="help_whats_next">Future releases will focus on collectors and locations; letting them create and manage their disposal opportunity. If you are such a user, you\'ll have access to fine-grained control of your listing.</string>
     <string name="log_in">Log in</string>
+    <string name="recycling">Recycling</string>
+    <string name="accepts_your_item_type">Accepts your item type</string>
 </resources>

@@ -8,6 +8,7 @@ import android.support.v4.app.ActivityCompat
 import android.support.v4.app.FragmentActivity
 import android.support.v4.content.ContextCompat
 import android.util.Log
+import android.view.View
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.api.GoogleApiClient
 import com.google.android.gms.location.LocationServices
@@ -24,6 +25,7 @@ import com.urgentx.recycledump.R
 import com.urgentx.recycledump.presenter.PlacesPresenter
 import com.urgentx.recycledump.util.Place
 import com.urgentx.recycledump.view.IView.IPlacesView
+import kotlinx.android.synthetic.main.activity_locations.*
 
 
 class PlacesActivity : FragmentActivity(), OnMapReadyCallback, GoogleApiClient.OnConnectionFailedListener,
@@ -67,6 +69,10 @@ class PlacesActivity : FragmentActivity(), OnMapReadyCallback, GoogleApiClient.O
         }
 
         currentItemType = intent.getIntExtra(PLACE_ID_KEY, -1)
+
+        if(currentItemType != -1) {
+            placesOwnItemLegend.visibility = View.VISIBLE
+        }
     }
 
     override fun onResume() {
