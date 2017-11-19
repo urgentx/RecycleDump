@@ -46,7 +46,7 @@ class MyItemsApiInteractor {
 
         val items = ArrayList<Item>()
 
-        var i = 0 //Keep track of # items
+        var itemsRetrieved = 0 //Keep track of # items
 
         for (itemName in itemKeys) {
             val itemListener = object : ValueEventListener {
@@ -59,29 +59,27 @@ class MyItemsApiInteractor {
                                 .addOnSuccessListener { uri ->
                                     item.img = uri.toString()
                                     items.add(item)
-                                    if (i >= itemKeys.size - 1) {
+                                    itemsRetrieved++
+                                    if (itemsRetrieved >= itemKeys.size) {
                                         callback.itemsRetrieved(items)
-                                    } else {
-                                        i++
                                     }
                                 }
                                 .addOnFailureListener({
                                     item.img = ""
                                     items.add(item)
-                                    if (i >= itemKeys.size - 1) {
+                                    itemsRetrieved++
+                                    if (itemsRetrieved >= itemKeys.size) {
                                         callback.itemsRetrieved(items)
-                                    } else {
-                                        i++
                                     }
                                 })
-                    } else {
-                        i++
                     }
                 }
 
                 override fun onCancelled(databaseError: DatabaseError) {
-
-
+                    itemsRetrieved++
+                    if (itemsRetrieved >= itemKeys.size) {
+                        callback.itemsRetrieved(items)
+                    }
                 }
             }
             itemsReference.child(itemName).addListenerForSingleValueEvent(itemListener)

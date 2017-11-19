@@ -22,13 +22,11 @@ class RecycleInfoApiInteractor {
 
         val uid = user!!.uid
 
-        val users = ArrayList<String>()
-        users.add(uid)
-        item.users = users
-
         itemsReference.child(key).setValue(item).addOnFailureListener({
             callback.onError()
         })
+
+        itemsReference.child(key).child("users").child(uid).setValue(true)
 
         usersReference.child(uid).child("items").child(key).setValue(item.category)
 
