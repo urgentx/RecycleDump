@@ -25,17 +25,17 @@ class PlaceFragment :  DialogFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        if (arguments != null) {
-            placeName = arguments.getString(ARG_PLACE_NAME)
-            placeImg = arguments.getString(ARG_PLACE_IMG)
-            placeCategories = arguments.getIntegerArrayList(ARG_PLACE_CAT)
+        arguments?.let {
+            placeName = it.getString(ARG_PLACE_NAME)
+            placeImg = it.getString(ARG_PLACE_IMG)
+            placeCategories = it.getIntegerArrayList(ARG_PLACE_CAT)
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        val view = inflater!!.inflate(R.layout.fragment_place, container, false)
+        val view = inflater.inflate(R.layout.fragment_place, container, false)
 
         (view.findViewById<TextView>(R.id.placeName)).text = placeName
 
@@ -44,7 +44,7 @@ class PlaceFragment :  DialogFragment() {
                 .apply(RequestOptions.placeholderOf(R.drawable.placeholder))
                 .into(view.findViewById<ImageView>(R.id.placeImage))
 
-        val categories = generateCategoryNames(activity)
+        val categories = generateCategoryNames(context!!)
         var categoriesString = "This place will accept your:\n"
 
         for (position in placeCategories){

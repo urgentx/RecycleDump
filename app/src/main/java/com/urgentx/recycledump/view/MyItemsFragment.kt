@@ -35,16 +35,16 @@ class MyItemsFragment : Fragment(), IMyItemsView {
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        val view = inflater!!.inflate(R.layout.fragment_my_items, container, false)
+        val view = inflater.inflate(R.layout.fragment_my_items, container, false)
         return view
     }
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        adapter = MyItemsAdapter(activity, ArrayList(), R.layout.my_items_item)
+        adapter = MyItemsAdapter(activity!!, ArrayList(), R.layout.my_items_item)
         adapter?.setHasStableIds(true)
         myItemsList.layoutManager = LinearLayoutManager(activity, VERTICAL, false)
         myItemsList.adapter = adapter

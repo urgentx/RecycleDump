@@ -43,20 +43,18 @@ class AddPlaceFragment : IAddPlaceView, DialogFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        if (arguments != null) {
-            placeLat = arguments.getDouble(ARG_PLACE_LAT)
-            placeLong = arguments.getDouble(ARG_PLACE_LONG)
+        arguments?.let {
+            placeLat = it.getDouble(ARG_PLACE_LAT)
+            placeLong = it.getDouble(ARG_PLACE_LONG)
         }
-
-
     }
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        val view = inflater!!.inflate(R.layout.fragment_add_place, container, false)
+        val view = inflater.inflate(R.layout.fragment_add_place, container, false)
 
-        val categories = generateCategoryNames(activity)
+        val categories = generateCategoryNames(context!!)
 
         val msSpinner = view.findViewById<MultiSelectSpinner>(R.id.addPlaceMultiSelectSpinner)
         msSpinner.setItems(categories)
@@ -80,7 +78,7 @@ class AddPlaceFragment : IAddPlaceView, DialogFragment() {
 
     private fun dispatchTakePictureIntent() {
         val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        if (takePictureIntent.resolveActivity(activity.packageManager) != null) {
+        if (takePictureIntent.resolveActivity(activity!!.packageManager) != null) {
             //File where photo should go
             var photoFile: File? = null
             try {
@@ -89,7 +87,7 @@ class AddPlaceFragment : IAddPlaceView, DialogFragment() {
                 //Error during file creation
             }
             if (photoFile != null) {
-                val photoURI = FileProvider.getUriForFile(activity, "com.urgentx.recycledump.fileprovider",
+                val photoURI = FileProvider.getUriForFile(activity!!, "com.urgentx.recycledump.fileprovider",
                         photoFile)
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
                 startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
@@ -101,7 +99,7 @@ class AddPlaceFragment : IAddPlaceView, DialogFragment() {
         //Create an image file name
         val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
         val fileName = "JPEG_" + timeStamp + "_"
-        val storageDir = activity.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+        val storageDir = activity!!.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
         val image = File.createTempFile(fileName, ".jpg", storageDir)
         //Save file: path for use with ACTION_VIEW intents
         currentPhotoPath = image.absolutePath
@@ -164,17 +162,6 @@ class AddPlaceFragment : IAddPlaceView, DialogFragment() {
         private val ARG_PLACE_LAT = "param1"
         private val ARG_PLACE_LONG = "param2"
 
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-
-         * @param param1 Parameter 1.
-         * *
-         * @param param2 Parameter 2.
-         * *
-         * @return A new instance of fragment AddPlaceFragment.
-         */
-        // TODO: Rename and change types and number of parameters
         fun newInstance(placeLat: Double, placeLong: Double): AddPlaceFragment {
             val fragment = AddPlaceFragment()
             val args = Bundle()
