@@ -9,7 +9,7 @@ import com.jakewharton.rxbinding2.widget.RxTextView
 import com.urgentx.recycledump.R
 import com.urgentx.recycledump.model.Settings
 import com.urgentx.recycledump.viewmodel.SettingsViewModel
-import com.urgentx.recycledump.viewmodel.SettingsViewModelFactory
+import com.urgentx.recycledump.viewmodel.RDViewModelFactory
 import io.reactivex.Observable
 import io.reactivex.functions.Function3
 import kotlinx.android.synthetic.main.activity_settings.*
@@ -38,7 +38,7 @@ class SettingsActivity : AppCompatActivity() {
 
        radiusSetting.map {"${it}km"}.subscribe(RxTextView.text(settings_radius_tv))
 
-        val factory = SettingsViewModelFactory(settings)
+        val factory = RDViewModelFactory(settings)
 
         val model = ViewModelProviders.of(this, factory).get(SettingsViewModel::class.java)
 

@@ -12,10 +12,8 @@ import android.support.v7.app.AppCompatActivity
 import android.transition.Fade
 import android.transition.Scene
 import android.transition.TransitionManager
-import android.view.Gravity
-import android.view.Menu
-import android.view.MenuItem
-import android.view.ViewGroup
+import android.transition.Visibility
+import android.view.*
 import com.firebase.ui.auth.AuthUI
 import com.google.firebase.auth.FirebaseAuth
 import com.urgentx.recycledump.R
@@ -56,6 +54,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             TransitionManager.go(scene2, Fade())
         } else {
             //Just display new buttons w/o animating.
+            mainBtn1.visibility = View.GONE
+            mainRecycleBtn.visibility = View.VISIBLE
+            mainDumpBtn.visibility = View.VISIBLE
         }
 
         mainRecycleBtn.setOnClickListener({
@@ -115,6 +116,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             }
 
             R.id.nav_collect -> {
+                startActivity(Intent(this, CreateCollectorActivity::class.java))
             }
             R.id.nav_share -> {
                 val sendIntent = Intent()

@@ -58,3 +58,5 @@ fun generateCategoryNames(context: Context): Array<String>{
             category11,
             category12)
 }
+
+val debugTagCreateCollector = "createCollector"

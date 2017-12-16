@@ -1,5 +1,6 @@
-package com.urgentx.recycledump
+package com.urgentx.recycledump.di
 
+import com.urgentx.recycledump.App
 import dagger.Module
 import dagger.Provides
 
