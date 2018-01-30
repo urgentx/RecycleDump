@@ -16,13 +16,15 @@
             android:id="@+id/addPlaceImage"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scaleType="centerCrop"/>
+            android:contentDescription="@string/photo_of_your_business"
+            android:scaleType="centerCrop" />
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/addPlacePhotoBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_margin="@dimen/stdMargin1"
             android:backgroundTint="@color/colorPrimary"
@@ -35,8 +37,8 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:labelFor="@id/recycleInfoName"
-        android:text="Give this place a name" />
+        android:labelFor="@id/addPlaceName"
+        android:text="@string/give_this_place_a_name" />
 
     <EditText
         android:id="@+id/addPlaceName"
@@ -50,26 +52,25 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:labelFor="@id/addPlaceType"
-        android:text="Can you dump or recycle here?" />
+        android:text="@string/can_you_dump_or_recycle_here" />
 
     <ToggleButton
         android:id="@+id/addPlaceType"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textOff="recycle"
-        android:textOn="dump" />
+        android:textOff="@string/recycle"
+        android:textOn="@string/dump" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:labelFor="@+id/addPlaceCategory"
-        android:text="What types of item does this place accept?" />
+        android:text="@string/what_types_of_item_does_this_place_accept" />
 
     <com.urgentx.recycledump.util.MultiSelectSpinner
         android:id="@+id/addPlaceMultiSelectSpinner"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        />
+        android:layout_height="wrap_content" />
 
     <ListView
         android:id="@+id/addPlaceCategory"
@@ -90,13 +91,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/colorPrimary"
-            android:text="Submit" />
+            android:text="@string/submit" />
 
         <Button
             android:id="@+id/addPlaceCancelBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Cancel" />
+            android:text="@string/cancel" />
 
     </LinearLayout>
 

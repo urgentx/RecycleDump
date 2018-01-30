@@ -89,4 +89,16 @@
     <string name="log_in">Log in</string>
     <string name="recycling">Recycling</string>
     <string name="accepts_your_item_type">Accepts your item type</string>
+    <string name="business_name">Business name</string>
+    <string name="availability_opening_hours">Availability/Opening Hours:</string>
+    <string name="photo_of_your_business">Photo of your business</string>
+    <string name="give_this_place_a_name">Give this place a name</string>
+    <string name="can_you_dump_or_recycle_here">Can you dump or recycle here?</string>
+    <string name="recycle">recycle</string>
+    <string name="dump">dump</string>
+    <string name="what_types_of_item_does_this_place_accept">What types of item does this place accept?</string>
+    <string name="submit">Submit</string>
+    <string name="cancel">Cancel</string>
+    <string name="photo_of_your_business">Photo of your business</string>
+    <string name="monday">Monday</string>
 </resources>
