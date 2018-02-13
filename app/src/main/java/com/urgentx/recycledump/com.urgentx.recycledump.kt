@@ -1,6 +1,7 @@
 package com.urgentx.recycledump
 
 import android.content.Context
+import android.util.Log
 
 fun generateCategories(context: Context): Array<String>{
     val category1 = "${context.getString(R.string.recycle_info_category1)} - ${context.getString(R.string.recycle_info_category1_desc)}"
@@ -57,6 +58,10 @@ fun generateCategoryNames(context: Context): Array<String>{
             category10,
             category11,
             category12)
+}
+
+fun printToLogcat(message: String?) {
+    Log.d("recyclelog", message)
 }
 
 val debugTagCreateCollector = "createCollector"

@@ -114,7 +114,10 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.urgentx.recycledump.view.MainActivity" />
         </activity>
-        <activity android:name=".view.CreateCollectorActivity" />
+        <activity android:name=".view.CreateCollectorActivity"
+            android:parentActivityName=".view.MainActivity"
+            android:label="Create collector profile"
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>

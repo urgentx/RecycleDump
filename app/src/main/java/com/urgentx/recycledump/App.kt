@@ -19,5 +19,5 @@ class App: Application() {
         appComponent.inject(this)
     }
 
-    fun appComponent() : AppComponent = appComponent
+    fun appComponent(): AppComponent = appComponent
 }

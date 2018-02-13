@@ -9,4 +9,5 @@ class AppModule (val app: App) {
 
     @Provides
     fun provideApp(): App = app
+
 }

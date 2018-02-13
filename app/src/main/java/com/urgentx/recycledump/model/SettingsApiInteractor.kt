@@ -40,10 +40,12 @@ class SettingsApiInteractor {
                     }
                 }
             }
+
             override fun onCancelled(error: DatabaseError?) {
                 resultObservable.onNext(FirebaseResult.Error(NETWORK_ERROR))
             }
         })
         return resultObservable
     }
+
 }
