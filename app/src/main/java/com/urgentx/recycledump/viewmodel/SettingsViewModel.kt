@@ -2,7 +2,7 @@ package com.urgentx.recycledump.viewmodel
 
 import android.arch.lifecycle.ViewModel
 import com.urgentx.recycledump.model.Settings
-import com.urgentx.recycledump.model.SettingsApiInteractor
+import com.urgentx.recycledump.model.api.SettingsApiInteractor
 import com.urgentx.recycledump.util.firebase.FirebaseResult
 import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable

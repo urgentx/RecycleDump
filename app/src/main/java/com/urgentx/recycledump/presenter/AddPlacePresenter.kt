@@ -1,10 +1,9 @@
 package com.urgentx.recycledump.presenter
 
-import com.urgentx.recycledump.model.AddPlaceApiInteractor
+import com.urgentx.recycledump.model.api.AddPlaceApiInteractor
 import com.urgentx.recycledump.model.callbacks.BinaryCallback
 import com.urgentx.recycledump.util.Place
 import com.urgentx.recycledump.view.IView.IAddPlaceView
-import java.net.URI
 
 class AddPlacePresenter : BinaryCallback {
 

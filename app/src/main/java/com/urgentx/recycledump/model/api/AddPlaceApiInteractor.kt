@@ -1,4 +1,4 @@
-package com.urgentx.recycledump.model
+package com.urgentx.recycledump.model.api
 
 import android.net.Uri
 import com.firebase.geofire.GeoFire

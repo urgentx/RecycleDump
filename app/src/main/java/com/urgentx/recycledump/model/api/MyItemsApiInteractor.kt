@@ -1,4 +1,4 @@
-package com.urgentx.recycledump.model
+package com.urgentx.recycledump.model.api
 
 import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
@@ -26,7 +26,7 @@ class MyItemsApiInteractor {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 val itemNames = ArrayList<String>()
                 for (itemSnapshot in dataSnapshot.children) {
-                    var itemKey = itemSnapshot.key
+                    val itemKey = itemSnapshot.key
                     Log.d("Firebase Database", "Item name is: $itemKey")
                     itemNames.add(itemKey)
                 }
@@ -51,7 +51,7 @@ class MyItemsApiInteractor {
         for (itemName in itemKeys) {
             val itemListener = object : ValueEventListener {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
-                    var item = dataSnapshot.getValue(Item::class.java)
+                    val item = dataSnapshot.getValue(Item::class.java)
                     item?.id = dataSnapshot.key
                     if (item != null) {
                         //Get place image and add to Place object

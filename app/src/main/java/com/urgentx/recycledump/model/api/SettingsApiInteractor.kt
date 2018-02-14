@@ -1,10 +1,11 @@
-package com.urgentx.recycledump.model
+package com.urgentx.recycledump.model.api
 
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.urgentx.recycledump.model.Settings
 import com.urgentx.recycledump.util.firebase.FirebaseResult
 import com.urgentx.recycledump.util.firebase.FirebaseResult.Companion.NETWORK_ERROR
 import com.urgentx.recycledump.util.firebase.FirebaseResult.Companion.STRUCTURAL_ERROR

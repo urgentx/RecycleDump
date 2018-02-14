@@ -2,12 +2,12 @@ package com.urgentx.recycledump.viewmodel
 
 import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider
-import com.urgentx.recycledump.model.CollectorDetails
+import com.urgentx.recycledump.model.Collector
 import com.urgentx.recycledump.model.Settings
 import io.reactivex.Observable
 
 class RDViewModelFactory(private val settingsChange: Observable<Settings>? = null,
-                         private val details: Observable<CollectorDetails>? = null) : ViewModelProvider.Factory {
+                         private val collector: Observable<Collector>? = null) : ViewModelProvider.Factory {
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(SettingsViewModel::class.java)) {
@@ -15,7 +15,7 @@ class RDViewModelFactory(private val settingsChange: Observable<Settings>? = nul
                 return SettingsViewModel(it) as T
             }
         } else if (modelClass.isAssignableFrom(CreateCollectorViewModel::class.java)) {
-            details?.let {
+            collector?.let {
                 return CreateCollectorViewModel(it) as T
             }
         }

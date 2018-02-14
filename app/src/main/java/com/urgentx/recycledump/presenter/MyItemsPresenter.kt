@@ -1,14 +1,10 @@
 package com.urgentx.recycledump.presenter
 
-import com.urgentx.recycledump.model.MyItemsApiInteractor
-import com.urgentx.recycledump.model.RecycleInfoApiInteractor
-import com.urgentx.recycledump.model.callbacks.BinaryCallback
+import com.urgentx.recycledump.model.api.MyItemsApiInteractor
 import com.urgentx.recycledump.model.callbacks.ItemDeletedCallback
 import com.urgentx.recycledump.model.callbacks.MyItemsCallback
-import com.urgentx.recycledump.model.callbacks.RecycleInfoCallback
 import com.urgentx.recycledump.util.Item
 import com.urgentx.recycledump.view.IView.IMyItemsView
-import com.urgentx.recycledump.view.IView.IRecycleInfoView
 
 class MyItemsPresenter : MyItemsCallback, ItemDeletedCallback{
 

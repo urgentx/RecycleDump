@@ -1,6 +1,6 @@
 package com.urgentx.recycledump.presenter
 
-import com.urgentx.recycledump.model.RecycleInfoApiInteractor
+import com.urgentx.recycledump.model.api.RecycleInfoApiInteractor
 import com.urgentx.recycledump.model.callbacks.RecycleInfoCallback
 import com.urgentx.recycledump.util.Item
 import com.urgentx.recycledump.view.IView.IRecycleInfoView

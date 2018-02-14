@@ -39,7 +39,7 @@ class PlaceFragment :  DialogFragment() {
 
         (view.findViewById<TextView>(R.id.placeName)).text = placeName
 
-        Glide.with(activity)
+        Glide.with(activity!!)
                 .load(placeImg)
                 .apply(RequestOptions.placeholderOf(R.drawable.placeholder))
                 .into(view.findViewById<ImageView>(R.id.placeImage))
