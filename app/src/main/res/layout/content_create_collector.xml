@@ -21,6 +21,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
+                android:layout_marginBottom="@dimen/stdMargin2"
                 android:background="@color/colorBtnGrey">
 
                 <ImageView
@@ -47,18 +48,45 @@
             <android.support.design.widget.TextInputLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/stdMargin2"
+                android:layout_marginBottom="@dimen/stdMargin2"
                 app:errorEnabled="true">
 
                 <EditText
                     android:id="@+id/createCollectorName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/stdMargin1"
                     android:ems="10"
                     android:hint="@string/business_name"
                     android:inputType="textPersonName" />
             </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/stdMargin2"
+                app:errorEnabled="true">
+
+                <EditText
+                    android:id="@+id/createCollectorPhone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="@string/phone_number"
+                    android:inputType="phone" />
+            </android.support.design.widget.TextInputLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/stdMargin1"
+                android:labelFor="@+id/addPlaceCategory"
+                android:text="@string/what_types_of_item_does_this_place_accept" />
+
+            <com.urgentx.recycledump.util.MultiSelectSpinner
+                android:id="@+id/createCollectorMultiSelectSpinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/stdMargin2" />
 
 
             <TextView
@@ -132,7 +160,8 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/stdMargin2">
 
                 <Button
                     android:id="@+id/createCollectorSundayBtn"
@@ -143,22 +172,11 @@
                     android:text="@string/sunday" />
             </LinearLayout>
 
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/stdMargin2"
-                app:errorEnabled="true">
 
-                <EditText
-                    android:id="@+id/createCollectorPhone"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/stdMargin1"
-                    android:ems="10"
-                    android:hint="@string/phone_number"
-                    android:inputType="phone" />
-            </android.support.design.widget.TextInputLayout>
-
+            <com.google.android.gms.maps.MapView
+                android:layout_width="match_parent"
+                android:layout_height="400dp"
+                android:layout_marginBottom="@dimen/stdMargin2" />
 
         </LinearLayout>
 
@@ -171,6 +189,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_margin="@dimen/stdMargin1"
-        android:text="@string/fui_done" />
+        android:text="@string/fui_done"
+        android:layout_alignParentEnd="true" />
 
 </RelativeLayout>

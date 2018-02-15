@@ -3,15 +3,12 @@ package com.urgentx.recycledump.view
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
 import android.widget.Toast
 import android.widget.Toast.LENGTH_LONG
-import com.borax12.materialdaterangepicker.time.RadialPickerLayout
 import com.borax12.materialdaterangepicker.time.TimePickerDialog
 import com.jakewharton.rxbinding2.view.clicks
 import com.urgentx.recycledump.R
 import com.urgentx.recycledump.model.Collector
-import com.urgentx.recycledump.printToLogcat
 import com.urgentx.recycledump.util.helpers.hourMinToDouble
 import com.urgentx.recycledump.viewmodel.CreateCollectorViewModel
 import com.urgentx.recycledump.viewmodel.RDViewModelFactory
@@ -22,6 +19,7 @@ import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.activity_create_collector.*
 import kotlinx.android.synthetic.main.content_create_collector.*
 import java.util.*
+import kotlin.collections.HashMap
 
 class CreateCollectorActivity : AppCompatActivity() {
 
@@ -99,16 +97,16 @@ class CreateCollectorActivity : AppCompatActivity() {
 
         //Push Collector to VM for processing.
         createCollectorDoneBtn.clicks().subscribe {
+            val hours = HashMap<String, Pair<Double, Double>>()
+            if (monHours.first != null && monHours.second != null) hours["mon"] = Pair(monHours.first!!, monHours.second!!)
+            if (tueHours.first != null && tueHours.second != null) hours["tue"] = Pair(tueHours.first!!, tueHours.second!!)
+            if (wedHours.first != null && wedHours.second != null) hours["wed"] = Pair(wedHours.first!!, wedHours.second!!)
+            if (thuHours.first != null && thuHours.second != null) hours["thu"] = Pair(thuHours.first!!, thuHours.second!!)
+            if (friHours.first != null && friHours.second != null) hours["fri"] = Pair(friHours.first!!, friHours.second!!)
+            if (satHours.first != null && satHours.second != null) hours["sat"] = Pair(satHours.first!!, satHours.second!!)
+            if (sunHours.first != null && sunHours.second != null) hours["sun"] = Pair(sunHours.first!!, sunHours.second!!)
             val collector = Collector(createCollectorName.text.toString(),
-                    arrayListOf(
-                            monHours, tueHours, wedHours, thuHours, friHours, satHours, sunHours
-                    ).map {
-                        if (it.first != null && it.second != null) {
-                            return@map Pair(it.first!!, it.second!!)
-                        } else {
-                            return@map null
-                        }
-                    }.filterNotNull(),
+                    hours,
                     createCollectorPhone.text.toString())
             collectorObservable.onNext(collector)
         }.addTo(compositeDisposable)
