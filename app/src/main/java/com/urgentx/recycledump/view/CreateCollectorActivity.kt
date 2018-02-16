@@ -1,14 +1,18 @@
 package com.urgentx.recycledump.view
 
 import android.arch.lifecycle.ViewModelProviders
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.widget.Toast
 import android.widget.Toast.LENGTH_LONG
 import com.borax12.materialdaterangepicker.time.TimePickerDialog
+import com.google.android.gms.maps.CameraUpdateFactory
 import com.jakewharton.rxbinding2.view.clicks
 import com.urgentx.recycledump.R
+import com.urgentx.recycledump.generateCategoryNames
 import com.urgentx.recycledump.model.Collector
+import com.urgentx.recycledump.util.MultiSelectSpinner
 import com.urgentx.recycledump.util.helpers.hourMinToDouble
 import com.urgentx.recycledump.viewmodel.CreateCollectorViewModel
 import com.urgentx.recycledump.viewmodel.RDViewModelFactory
@@ -20,6 +24,14 @@ import kotlinx.android.synthetic.main.activity_create_collector.*
 import kotlinx.android.synthetic.main.content_create_collector.*
 import java.util.*
 import kotlin.collections.HashMap
+import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.location.places.ui.PlacePicker
+import android.R.attr.data
+import android.app.Activity
+
+
+private const val PLACE_PICKER_REQUEST = 1
 
 class CreateCollectorActivity : AppCompatActivity() {
 
@@ -40,6 +52,10 @@ class CreateCollectorActivity : AppCompatActivity() {
         setContentView(R.layout.activity_create_collector)
         setSupportActionBar(createCollectorToolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        val categories = generateCategoryNames(this)
+
+        createCollectorMultiSelectSpinner.setItems(categories)
 
         val openingHoursClicks = listOf(createCollectorMondayBtn.clicks().map { 0 },
                 createCollectorTuesdayBtn.clicks().map { 1 },
@@ -111,6 +127,11 @@ class CreateCollectorActivity : AppCompatActivity() {
             collectorObservable.onNext(collector)
         }.addTo(compositeDisposable)
 
+        createCollectorSelectLocationBtn.clicks().subscribe {
+            val builder = PlacePicker.IntentBuilder()
+
+            startActivityForResult(builder.build(this), PLACE_PICKER_REQUEST)
+        }.addTo(compositeDisposable)
         //Create VM.
         val factory = RDViewModelFactory(collector = collectorObservable)
         val model = ViewModelProviders.of(this, factory).get(CreateCollectorViewModel::class.java)
@@ -120,7 +141,23 @@ class CreateCollectorActivity : AppCompatActivity() {
             Toast.makeText(this, "Collector profile created.", LENGTH_LONG).show()
             finish()
         }.addTo(compositeDisposable)
+
+
     }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == PLACE_PICKER_REQUEST) {
+            if (resultCode == Activity.RESULT_OK) {
+                val place = PlacePicker.getPlace(data, this)
+                val toastMsg = String.format("Place: %s", place.name)
+                Toast.makeText(this, toastMsg, Toast.LENGTH_LONG).show()
+                //Need an API key.
+            }
+        }
+
+    }
+
 
     override fun onDestroy() {
         super.onDestroy()

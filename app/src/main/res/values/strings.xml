@@ -107,4 +107,6 @@
     <string name="saturday">Saturday</string>
     <string name="sunday">Sunday</string>
     <string name="phone_number">Phone number</string>
+    <string name="select">Select</string>
+    <string name="your_location">Your location:</string>
 </resources>
