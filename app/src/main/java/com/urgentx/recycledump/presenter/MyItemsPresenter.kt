@@ -28,7 +28,7 @@ class MyItemsPresenter : MyItemsCallback, ItemDeletedCallback{
     private fun updateView() {
         view?.let {
             if(items != null) {
-                view!!.itemsRetrieved(items!!)
+                view?.itemsRetrieved(items!!)
                 items = null
             }
 

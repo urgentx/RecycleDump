@@ -19,11 +19,11 @@ import io.reactivex.subjects.PublishSubject
 
 class MyItemsAdapter(private var context: Context, private var items: ArrayList<Item>, private var itemLayout: Int) : RecyclerView.Adapter<MyItemsAdapter.ViewHolder>() {
 
-    val deleteSubject = PublishSubject.create<String>() //Bridge to view for button clicks, holds Item IDs.
-    val checkMapSubject = PublishSubject.create<Int>()
+    val deleteSubject: PublishSubject<String> = PublishSubject.create<String>() //Bridge to view for button clicks, holds Item IDs.
+    val checkMapSubject: PublishSubject<Int> = PublishSubject.create<Int>()
 
-    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ViewHolder {
-        return ViewHolder(LayoutInflater.from(parent?.context).inflate(itemLayout, parent, false))
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        return ViewHolder(LayoutInflater.from(parent.context).inflate(itemLayout, parent, false))
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {

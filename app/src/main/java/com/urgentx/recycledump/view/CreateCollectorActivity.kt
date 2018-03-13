@@ -29,6 +29,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.location.places.ui.PlacePicker
 import android.R.attr.data
 import android.app.Activity
+import com.google.android.gms.location.places.Place
 
 
 private const val PLACE_PICKER_REQUEST = 1
@@ -46,6 +47,8 @@ class CreateCollectorActivity : AppCompatActivity() {
     private var friHours = Pair<Double?, Double?>(null, null)
     private var satHours = Pair<Double?, Double?>(null, null)
     private var sunHours = Pair<Double?, Double?>(null, null)
+
+    private lateinit var place: Place
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -123,13 +126,14 @@ class CreateCollectorActivity : AppCompatActivity() {
             if (sunHours.first != null && sunHours.second != null) hours["sun"] = Pair(sunHours.first!!, sunHours.second!!)
             val collector = Collector(createCollectorName.text.toString(),
                     hours,
-                    createCollectorPhone.text.toString())
+                    createCollectorPhone.text.toString(),
+                    place.latLng.latitude,
+                    place.latLng.longitude)
             collectorObservable.onNext(collector)
         }.addTo(compositeDisposable)
 
         createCollectorSelectLocationBtn.clicks().subscribe {
             val builder = PlacePicker.IntentBuilder()
-
             startActivityForResult(builder.build(this), PLACE_PICKER_REQUEST)
         }.addTo(compositeDisposable)
         //Create VM.
@@ -141,8 +145,6 @@ class CreateCollectorActivity : AppCompatActivity() {
             Toast.makeText(this, "Collector profile created.", LENGTH_LONG).show()
             finish()
         }.addTo(compositeDisposable)
-
-
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -150,12 +152,11 @@ class CreateCollectorActivity : AppCompatActivity() {
         if (requestCode == PLACE_PICKER_REQUEST) {
             if (resultCode == Activity.RESULT_OK) {
                 val place = PlacePicker.getPlace(data, this)
-                val toastMsg = String.format("Place: %s", place.name)
-                Toast.makeText(this, toastMsg, Toast.LENGTH_LONG).show()
-                //Need an API key.
+                createCollectorSelectLocationBtn.text = place.address
+                Toast.makeText(this, place.address, Toast.LENGTH_LONG).show()
+                this.place = place
             }
         }
-
     }
 
 

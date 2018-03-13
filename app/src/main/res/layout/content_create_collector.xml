@@ -183,8 +183,9 @@
                 android:id="@+id/createCollectorSelectLocationBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/select"/>
-
+                android:layout_marginEnd="50dp"
+                android:layout_marginRight="50dp"
+                android:text="@string/select" />
 
 
         </LinearLayout>
@@ -196,9 +197,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_margin="@dimen/stdMargin1"
-        android:text="@string/fui_done"
-        android:layout_alignParentEnd="true" />
+        android:text="@string/fui_done" />
 
 </RelativeLayout>
