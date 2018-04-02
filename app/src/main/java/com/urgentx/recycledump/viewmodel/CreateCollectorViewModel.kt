@@ -14,7 +14,6 @@ class CreateCollectorViewModel @Inject constructor(collector: Observable<Collect
     val createCollectorSuccess: Observable<Unit>
 
     init {
-
         val createCollectorResults = collector.flatMap {
             createCollectorApiInteractor.createCollector(it)
         }
