@@ -1,18 +1,25 @@
 package com.urgentx.recycledump.view
 
+import android.app.Activity
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
+import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.os.Environment
+import android.provider.MediaStore
+import android.support.v4.content.FileProvider
 import android.support.v7.app.AppCompatActivity
 import android.widget.Toast
 import android.widget.Toast.LENGTH_LONG
 import com.borax12.materialdaterangepicker.time.TimePickerDialog
-import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.location.places.Place
+import com.google.android.gms.location.places.ui.PlacePicker
 import com.jakewharton.rxbinding2.view.clicks
+import com.jakewharton.rxbinding2.widget.RxTextView
 import com.urgentx.recycledump.R
 import com.urgentx.recycledump.generateCategoryNames
 import com.urgentx.recycledump.model.Collector
-import com.urgentx.recycledump.util.MultiSelectSpinner
+import com.urgentx.recycledump.model.OpeningHours
 import com.urgentx.recycledump.util.helpers.hourMinToDouble
 import com.urgentx.recycledump.viewmodel.CreateCollectorViewModel
 import com.urgentx.recycledump.viewmodel.RDViewModelFactory
@@ -22,22 +29,10 @@ import io.reactivex.rxkotlin.addTo
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.activity_create_collector.*
 import kotlinx.android.synthetic.main.content_create_collector.*
+import java.io.File
+import java.io.IOException
+import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.HashMap
-import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.location.places.ui.PlacePicker
-import android.R.attr.data
-import android.app.Activity
-import com.google.android.gms.location.places.Place
-import com.jakewharton.rxbinding2.view.enabled
-import com.jakewharton.rxbinding2.widget.RxAdapterView
-import com.jakewharton.rxbinding2.widget.RxTextView
-import com.urgentx.recycledump.model.OpeningHours
-import kotlinx.android.synthetic.main.content_recycle_info.*
-
-
-private const val PLACE_PICKER_REQUEST = 1
 
 class CreateCollectorActivity : AppCompatActivity() {
 
@@ -49,6 +44,8 @@ class CreateCollectorActivity : AppCompatActivity() {
 
     private lateinit var place: Place
     private val places = PublishSubject.create<Place>()
+
+    var currentPhotoPath: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -71,14 +68,16 @@ class CreateCollectorActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == PLACE_PICKER_REQUEST) {
-            if (resultCode == Activity.RESULT_OK) {
-                val place = PlacePicker.getPlace(data, this)
-                places.onNext(place)
-                createCollectorSelectLocationBtn.text = place.address
-                Toast.makeText(this, place.address, Toast.LENGTH_LONG).show()
-                this.place = place
-            }
+        if (requestCode == PLACE_PICKER_REQUEST && resultCode == Activity.RESULT_OK) {
+            val place = PlacePicker.getPlace(this, data)
+            places.onNext(place)
+            createCollectorSelectLocationBtn.text = place.address
+            Toast.makeText(this, place.address, Toast.LENGTH_LONG).show()
+            this.place = place
+        } else if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == Activity.RESULT_OK) {
+            Toast.makeText(this, "File saved at:$currentPhotoPath", Toast.LENGTH_LONG).show()
+            val drawable = Drawable.createFromPath(currentPhotoPath)
+            createCollectorImage.setImageDrawable(drawable)
         }
     }
 
@@ -154,7 +153,7 @@ class CreateCollectorActivity : AppCompatActivity() {
             prev.combine(next)
         }
 
-        openingHours.subscribe ({
+        openingHours.subscribe({
             openingHoursSelected = it
         })
 
@@ -172,7 +171,9 @@ class CreateCollectorActivity : AppCompatActivity() {
             val builder = PlacePicker.IntentBuilder()
             startActivityForResult(builder.build(this), PLACE_PICKER_REQUEST)
         }.addTo(compositeDisposable)
-
+        createCollectorPhotoBtn.setOnClickListener({
+            dispatchTakePictureIntent()
+        })
         setupValidation(openingHours)
     }
 
@@ -202,5 +203,40 @@ class CreateCollectorActivity : AppCompatActivity() {
         }).subscribe {
             createCollectorDoneBtn.isEnabled = it
         }
+    }
+
+    private fun dispatchTakePictureIntent() {
+        val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        if (takePictureIntent.resolveActivity(packageManager) != null) {
+            //File where photo should go
+            var photoFile: File? = null
+            try {
+                photoFile = createImageFile()
+            } catch (e: IOException) {
+                //Error during file creation
+            }
+            if (photoFile != null) {
+                val photoURI = FileProvider.getUriForFile(this, "com.urgentx.recycledump.fileprovider",
+                        photoFile)
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
+                startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
+            }
+        }
+    }
+
+    private fun createImageFile(): File {
+        //Create an image file name
+        val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
+        val fileName = "JPEG_" + timeStamp + "_"
+        val storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+        val image = File.createTempFile(fileName, ".jpg", storageDir)
+        //Save file: path for use with ACTION_VIEW intents
+        currentPhotoPath = image.absolutePath
+        return image
+    }
+
+    companion object {
+        private const val REQUEST_IMAGE_CAPTURE = 1
+        private const val PLACE_PICKER_REQUEST = 2
     }
 }
