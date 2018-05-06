@@ -159,9 +159,12 @@ class CreateCollectorActivity : AppCompatActivity() {
 
         //Push Collector to VM for processing.
         createCollectorDoneBtn.clicks().subscribe {
-            val collector = Collector(createCollectorName.text.toString(),
+            val collector = Collector(
+                    currentPhotoPath,
+                    createCollectorName.text.toString(),
                     openingHoursSelected!!,
                     createCollectorPhone.text.toString(),
+                    createCollectorMultiSelectSpinner.selectedIndicies,
                     place.latLng.latitude,
                     place.latLng.longitude)
             collectorObservable.onNext(collector)
@@ -199,7 +202,7 @@ class CreateCollectorActivity : AppCompatActivity() {
         }
 
         Observable.combineLatest(arrayOf(nameInputValid, phoneNumberValid, openingHoursValid, placeValid), {
-            it[0] as Boolean && it[1] as Boolean && it[2] as Boolean && it[3] as Boolean
+            return@combineLatest !it.contains(false) && createCollectorMultiSelectSpinner.selectedIndicies.isNotEmpty()
         }).subscribe {
             createCollectorDoneBtn.isEnabled = it
         }
