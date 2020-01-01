@@ -28,13 +28,13 @@ class PlacesApiInteractor {
             }
 
             override fun onKeyEntered(key: String?, location: GeoLocation?) {
-                val locationQuery = database.getReference("places").child(key)
+                val locationQuery = database.getReference("places").child(key!!)
                 locationQuery.addValueEventListener(object : ValueEventListener {
-                    override fun onDataChange(p0: DataSnapshot?) {
+                    override fun onDataChange(p0: DataSnapshot) {
                         processGeoQueryResult(p0, key, callback)
                     }
 
-                    override fun onCancelled(p0: DatabaseError?) {
+                    override fun onCancelled(p0: DatabaseError) {
                         Log.d("firebase", p0.toString())
                     }
                 })

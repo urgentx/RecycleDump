@@ -3,15 +3,13 @@ package com.urgentx.recycledump.util.firebase
 import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.iid.FirebaseInstanceIdService
-import com.google.firebase.iid.FirebaseInstanceId
+import com.google.firebase.messaging.FirebaseMessagingService
 
-class MyFirebaseInstanceIdService: FirebaseInstanceIdService() {
+class MyFirebaseInstanceIdService: FirebaseMessagingService() {
 
-    override fun onTokenRefresh() {
-        // Get updated InstanceID token.
-        val refreshedToken = FirebaseInstanceId.getInstance().token
-        Log.d("notifications", "Refreshed token: " + refreshedToken!!)
+    override fun onNewToken(refreshedToken: String) {
+        super.onNewToken(refreshedToken)
+        Log.d("notifications", "Refreshed token: $refreshedToken")
         sendRegistrationToServer(refreshedToken)
     }
 

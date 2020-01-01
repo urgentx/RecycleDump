@@ -1,6 +1,6 @@
 package com.urgentx.recycledump.viewmodel
 
-import android.arch.lifecycle.ViewModel
+import androidx.lifecycle.ViewModel
 import com.urgentx.recycledump.model.Collector
 import com.urgentx.recycledump.model.api.CreateCollectorApiInteractor
 import com.urgentx.recycledump.util.firebase.FirebaseResult

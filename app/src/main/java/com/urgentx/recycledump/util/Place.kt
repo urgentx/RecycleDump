@@ -30,12 +30,12 @@ class Place : Parcelable {
         this.img = ""
     }
     constructor(parcel: Parcel) : this() {
-        name = parcel.readString()
+        name = parcel.readString()!!
         type = parcel.readValue(Int::class.java.classLoader) as Int
         categories = parcel.readValue(ArrayList::class.java.classLoader) as ArrayList<Int>
         lat = parcel.readValue(Double::class.java.classLoader) as Double
         long = parcel.readValue(Double::class.java.classLoader) as Double
-        img = parcel.readString()
+        img = parcel.readString()!!
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {

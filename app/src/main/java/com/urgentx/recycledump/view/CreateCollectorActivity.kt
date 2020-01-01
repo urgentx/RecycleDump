@@ -1,14 +1,14 @@
 package com.urgentx.recycledump.view
 
 import android.app.Activity
-import android.arch.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
-import android.support.v4.content.FileProvider
-import android.support.v7.app.AppCompatActivity
+import androidx.core.content.FileProvider
+import androidx.appcompat.app.AppCompatActivity
 import android.widget.Toast
 import android.widget.Toast.LENGTH_LONG
 import com.borax12.materialdaterangepicker.time.TimePickerDialog

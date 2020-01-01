@@ -7,12 +7,12 @@ import android.view.ViewGroup
 import android.widget.*
 import com.urgentx.recycledump.R
 
-class CategorySpinnerAdapter(context: Context?, resource: Int, textViewResourceId: Int, objects: Array<out String>?) : ArrayAdapter<String>(context, resource, textViewResourceId, objects) {
+class CategorySpinnerAdapter(context: Context?, resource: Int, textViewResourceId: Int, objects: Array<out String>?) : ArrayAdapter<String>(context!!, resource, textViewResourceId, objects!!) {
 
     private val layoutInflater: LayoutInflater = context?.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
     private val resourceId = resource
 
-    override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
+    override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
 
         return if (convertView == null) { //If new item, construct it
             val view = layoutInflater.inflate(resourceId, parent, false) as LinearLayout

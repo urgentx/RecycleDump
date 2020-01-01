@@ -18,7 +18,7 @@ class RecycleInfoApiInteractor {
         val itemsReference = database.getReference("items")
         val usersReference = database.getReference("users")
 
-        val key = itemsReference.push().key
+        val key = itemsReference.push().key!!
 
         val uid = user!!.uid
 

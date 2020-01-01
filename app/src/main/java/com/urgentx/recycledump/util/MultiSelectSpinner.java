@@ -25,14 +25,13 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnMultiChoiceClickListener;
 import android.util.AttributeSet;
 import android.widget.ArrayAdapter;
-import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 
 /**
  * A Spinner view that does not dismiss the dialog displayed when the control is "dropped down"
  * and the user presses it. This allows for the selection of more than one option.
  */
-public class MultiSelectSpinner extends android.support.v7.widget.AppCompatSpinner implements OnMultiChoiceClickListener {
+public class MultiSelectSpinner extends androidx.appcompat.widget.AppCompatSpinner implements OnMultiChoiceClickListener {
     String[] _items = null;
     boolean[] _selection = null;
 

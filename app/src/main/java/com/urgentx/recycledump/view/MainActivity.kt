@@ -3,12 +3,12 @@ package com.urgentx.recycledump.view
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import android.support.design.widget.NavigationView
-import android.support.v4.app.Fragment
-import android.support.v4.view.GravityCompat
-import android.support.v4.widget.DrawerLayout
-import android.support.v7.app.ActionBarDrawerToggle
-import android.support.v7.app.AppCompatActivity
+import com.google.android.material.navigation.NavigationView
+import androidx.fragment.app.Fragment
+import androidx.core.view.GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout
+import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AppCompatActivity
 import android.transition.Fade
 import android.transition.Scene
 import android.transition.TransitionManager
@@ -167,7 +167,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             }
 
             val fragmentManager = supportFragmentManager
-            fragmentManager.beginTransaction().replace(R.id.mainContainerBelowToolbar, fragment).addToBackStack("maincontainerfrag").commit()
+            fragmentManager.beginTransaction().replace(R.id.mainContainerBelowToolbar, fragment!!).addToBackStack("maincontainerfrag").commit()
 
         }
         drawer_layout.closeDrawer(Gravity.START, true)

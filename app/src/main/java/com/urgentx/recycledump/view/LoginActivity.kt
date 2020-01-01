@@ -2,7 +2,7 @@ package com.urgentx.recycledump.view
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import android.widget.Toast
 import android.widget.Toast.LENGTH_LONG
 import kotlinx.android.synthetic.main.activity_login.*
@@ -10,7 +10,6 @@ import com.google.firebase.auth.FirebaseAuth
 import com.firebase.ui.auth.AuthUI
 import java.util.*
 import com.firebase.ui.auth.ErrorCodes
-import com.firebase.ui.auth.ResultCodes
 import com.firebase.ui.auth.IdpResponse
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.iid.FirebaseInstanceId
@@ -42,9 +41,9 @@ class LoginActivity : AppCompatActivity() {
                 AuthUI.getInstance()
                         .createSignInIntentBuilder()
                         .setAvailableProviders(
-                                Arrays.asList(AuthUI.IdpConfig.Builder(AuthUI.EMAIL_PROVIDER).build(),
-                                        AuthUI.IdpConfig.Builder(AuthUI.GOOGLE_PROVIDER).build(),
-                                        AuthUI.IdpConfig.Builder(AuthUI.FACEBOOK_PROVIDER).build()))
+                                Arrays.asList(AuthUI.IdpConfig.EmailBuilder().build(),
+                                        AuthUI.IdpConfig.GoogleBuilder().build(),
+                                        AuthUI.IdpConfig.FacebookBuilder().build()))
                         .setIsSmartLockEnabled(!BuildConfig.DEBUG)
                         .build(),
                 RC_SIGN_IN)
@@ -57,7 +56,7 @@ class LoginActivity : AppCompatActivity() {
             val response = IdpResponse.fromResultIntent(data)
 
             // Successfully signed in
-            if (resultCode == ResultCodes.OK) {
+            if (response != null && response.error == null) {
                 sendTokenToServer()
                 startActivity(Intent(this, MainActivity::class.java))
                 finish()
@@ -70,12 +69,12 @@ class LoginActivity : AppCompatActivity() {
                     return
                 }
 
-                if (response.errorCode == ErrorCodes.NO_NETWORK) {
+                if (response.error?.errorCode == ErrorCodes.NO_NETWORK) {
                     Toast.makeText(this, R.string.no_internet_connection, LENGTH_LONG).show()
                     return
                 }
 
-                if (response.errorCode == ErrorCodes.UNKNOWN_ERROR) {
+                if (response.error?.errorCode == ErrorCodes.UNKNOWN_ERROR) {
                     Toast.makeText(this, R.string.unknown_error, LENGTH_LONG).show()
                     return
                 }

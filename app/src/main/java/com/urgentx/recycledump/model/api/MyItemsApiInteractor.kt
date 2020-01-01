@@ -28,7 +28,7 @@ class MyItemsApiInteractor {
                 for (itemSnapshot in dataSnapshot.children) {
                     val itemKey = itemSnapshot.key
                     Log.d("Firebase Database", "Item name is: $itemKey")
-                    itemNames.add(itemKey)
+                    itemNames.add(itemKey!!)
                 }
                 retrieveItems(itemNames, callback)
             }
@@ -52,7 +52,7 @@ class MyItemsApiInteractor {
             val itemListener = object : ValueEventListener {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
                     val item = dataSnapshot.getValue(Item::class.java)
-                    item?.id = dataSnapshot.key
+                    item?.id = dataSnapshot.key!!
                     if (item != null) {
                         //Get place image and add to Place object
                         FirebaseStorage.getInstance().reference.child("itempics").child(dataSnapshot.key + ".jpg").downloadUrl

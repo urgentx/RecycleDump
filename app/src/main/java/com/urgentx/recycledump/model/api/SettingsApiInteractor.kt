@@ -14,7 +14,7 @@ import io.reactivex.subjects.PublishSubject
 
 class SettingsApiInteractor {
 
-    private val userRef = FirebaseDatabase.getInstance().getReference("users").child(FirebaseAuth.getInstance().currentUser?.uid)
+    private val userRef = FirebaseDatabase.getInstance().getReference("users").child(FirebaseAuth.getInstance().currentUser!!.uid)
 
     fun updateSettings(settings: Settings): Observable<FirebaseResult> {
         val resultObservable = PublishSubject.create<FirebaseResult>()
@@ -31,7 +31,7 @@ class SettingsApiInteractor {
     fun retrieveSettings(): Observable<FirebaseResult> {
         val resultObservable = PublishSubject.create<FirebaseResult>()
         userRef.child("settings").addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(settingsSnapshot: DataSnapshot?) {
+            override fun onDataChange(settingsSnapshot: DataSnapshot) {
                 settingsSnapshot?.let {
                     val settings = it.getValue(Settings::class.java)
                     if (settings != null) {
@@ -42,7 +42,7 @@ class SettingsApiInteractor {
                 }
             }
 
-            override fun onCancelled(error: DatabaseError?) {
+            override fun onCancelled(error: DatabaseError) {
                 resultObservable.onNext(FirebaseResult.Error(NETWORK_ERROR))
             }
         })
